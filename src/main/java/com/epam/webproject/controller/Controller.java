@@ -28,7 +28,7 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(RequestParameter.COMMAND);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
-        Router router = command.execute(request);
+        Router router = command.execute(request,response);
         switch (router.getRouterType()) {
             case REDIRECT:
                 response.sendRedirect(router.getRouterPath());

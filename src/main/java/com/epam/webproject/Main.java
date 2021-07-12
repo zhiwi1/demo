@@ -1,8 +1,10 @@
 package com.epam.webproject;
 
+import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionCreator;
 import com.epam.webproject.model.connection.ConnectionPool;
 
+import com.epam.webproject.model.dao.impl.UserDaoImpl;
 import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.RoleType;
 import com.epam.webproject.model.entity.User;
@@ -18,7 +20,10 @@ import java.util.concurrent.BlockingQueue;
 
 class Main {
     private final static Logger logger=LogManager.getLogger();
-    public static void main(String args[]) {
+    public static void main(String args[]) throws DaoException {
+        logger.info(2);
+        UserDaoImpl dao=new UserDaoImpl();
+        System.out.println( dao.findAll());
 
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -47,27 +52,27 @@ class Main {
 //        properties.put("useUnicode", "true");
 //        try (
 //                Connection connection = DriverManager.getConnection(url, properties);
-        ConnectionPool connectionPool=ConnectionPool.INSTANCE;
-        Connection connection=connectionPool.getConnection();
-
-            try {
-
-
-
-                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
-                    String sql = "SELECT id,login FROM users";
-                    ResultSet resultSet = statement.executeQuery(sql);
-
-                    List<User> users = new ArrayList<>();
-
-                    resultSet.moveToInsertRow();
-
-                    resultSet.updateLong(1, 2);
-                    resultSet.updateString(2, "my first sql table");
-                    resultSet.updateString(3, "mail");
-                    resultSet.insertRow();
-                    while (resultSet.next()) {
+//        ConnectionPool connectionPool=ConnectionPool.INSTANCE;
+//        Connection connection=connectionPool.getConnection();
+//
+//            try {
+//
+//
+//
+//                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//
+//                    String sql = "SELECT id,login FROM users";
+//                    ResultSet resultSet = statement.executeQuery(sql);
+//
+//                    List<User> users = new ArrayList<>();
+//
+//                    resultSet.moveToInsertRow();
+//
+//                    resultSet.updateLong(1, 2);
+//                    resultSet.updateString(2, "my first sql table");
+//                    resultSet.updateString(3, "mail");
+//                    resultSet.insertRow();
+//                    while (resultSet.next()) {
                         //insert
 ////
 //                        long id = resultSet.getLong(1);
@@ -77,14 +82,14 @@ class Main {
 //                            resultSet.updateRow();
 //                        }
                         //get
-                            long id = resultSet.getLong(1);
-                        String login = resultSet.getString(2);
-                        users.add(new User(id, login, "", 0, RoleType.valueOf("user".toUpperCase()), RatesType.valueOf("newbie".toUpperCase())));
-//remove
-
-                    }
-                System.out.println(users.toString());
-                }catch (SQLException e){};
+//                            long id = resultSet.getLong(1);
+//                        String login = resultSet.getString(2);
+//                        users.add(new User(id, login, "", 0, RoleType.valueOf("user".toUpperCase()), RatesType.valueOf("newbie".toUpperCase())));
+////remove
+//
+//                    }
+//                System.out.println(users.toString());
+//                }catch (SQLException e){};
 
 
 

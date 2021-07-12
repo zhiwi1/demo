@@ -1,0 +1,9 @@
+2021-07-13 00:32:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:33:00 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM users JOIN `roles` ON `roles`.`id` = `users`.`role_id` ` request: Column 'id' in field list is ambiguous
+2021-07-13 00:33:36 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:33:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:33:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:33:36 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM users JOIN roles ON roles.id = users.role_id ` request: Column 'id' in field list is ambiguous
+2021-07-13 00:36:19 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:36:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:36:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver

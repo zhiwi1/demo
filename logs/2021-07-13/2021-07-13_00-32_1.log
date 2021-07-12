@@ -1,0 +1,48 @@
+2021-07-13 00:04:05 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:06:59 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:07:22 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:07:37 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:07:59 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:08:21 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:09:00 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:09:28 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:11:15 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:11:31 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:11:31 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:11:31 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:11:31 [main] FATAL epam.webproject.model.connection.ConnectionCreator- fatal error: config file java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+2021-07-13 00:14:26 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:14:26 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:14:26 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:14:26 [main] FATAL epam.webproject.model.connection.ConnectionCreator- fatal error: config file java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+2021-07-13 00:14:48 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:14:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:14:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.jdbc.Driver
+2021-07-13 00:14:48 [main] FATAL epam.webproject.model.connection.ConnectionCreator- fatal error: config file java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+2021-07-13 00:14:59 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:14:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:14:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:14:59 [main] FATAL epam.webproject.model.connection.ConnectionCreator- fatal error: config file java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+2021-07-13 00:15:47 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:15:48 [main] FATAL epam.webproject.model.connection.ConnectionCreator- fatal error: config file java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+2021-07-13 00:17:30 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:17:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:17:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:17:31 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM users` request: Column 'role' not found.
+2021-07-13 00:18:16 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:18:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:18:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:19:07 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:19:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:19:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:19:21 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:19:21 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:19:21 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:22:37 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:22:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-13 00:22:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-13 00:22:38 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM usersJOIN `roles` ON `roles`.`id` = `users`.`role_id` ` request: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON `roles`.`id` = `users`.`role_id`' at line 1
+2021-07-13 00:32:59 [main] INFO  com.epam.webproject.Main- 2
+2021-07-13 00:32:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
