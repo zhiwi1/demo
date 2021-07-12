@@ -50,7 +50,7 @@ public interface BaseDao<T extends Entity, K extends Number> {
                 connection.rollback();
             }
         } catch (SQLException e) {
-            logger.error("Rollback error: " + e.getMessage());
+            logger.error("Rollback error: ", e);
         }
     }
 }
