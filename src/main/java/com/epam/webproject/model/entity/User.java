@@ -1,20 +1,28 @@
 package com.epam.webproject.model.entity;
 
+import com.epam.webproject.model.entity.type.RatesType;
+import com.epam.webproject.model.entity.type.Role;
+import com.epam.webproject.model.entity.type.Status;
+
 public class User extends Entity {
     private long id;
     private String login;
     private String email;
     private int countOfSolve;
-    private RoleType roleType;
+    private Role roleType;
     private RatesType ratesType;
+    private Status status;
 
-    public User(long id, String login, String email, int countOfSolve, RoleType roleType, RatesType ratesType) {
+
+
+    public User(long id, String login, String email, int countOfSolve, Role roleType, RatesType ratesType,Status status) {
         this.id = id;
         this.login = login;
         this.email = email;
         this.countOfSolve = countOfSolve;
         this.roleType = roleType;
         this.ratesType = ratesType;
+        this.status=status;
     }
 
     public long getId() {
@@ -49,11 +57,11 @@ public class User extends Entity {
         this.countOfSolve = countOfSolve;
     }
 
-    public RoleType getRoleType() {
+    public Role getRoleType() {
         return roleType;
     }
 
-    public void setRoleType(RoleType roleType) {
+    public void setRoleType(Role roleType) {
         this.roleType = roleType;
     }
 
@@ -65,6 +73,14 @@ public class User extends Entity {
         this.ratesType = ratesType;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
@@ -74,6 +90,7 @@ public class User extends Entity {
         sb.append(", countOfSolve=").append(countOfSolve);
         sb.append(", roleType=").append(roleType);
         sb.append(", ratesType=").append(ratesType);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }

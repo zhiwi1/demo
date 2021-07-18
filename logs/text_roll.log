@@ -1,9 +1,44 @@
-2021-07-13 00:32:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-13 00:33:00 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM users JOIN `roles` ON `roles`.`id` = `users`.`role_id` ` request: Column 'id' in field list is ambiguous
-2021-07-13 00:33:36 [main] INFO  com.epam.webproject.Main- 2
-2021-07-13 00:33:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-13 00:33:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-13 00:33:36 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, role_id FROM users JOIN roles ON roles.id = users.role_id ` request: Column 'id' in field list is ambiguous
-2021-07-13 00:36:19 [main] INFO  com.epam.webproject.Main- 2
-2021-07-13 00:36:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-13 00:36:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:12:06 [main] INFO  webproject.model.dao.impl.UserDaoImpl- 0
+2021-07-17 20:12:37 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:12:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:12:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:12:38 [main] INFO  webproject.model.dao.impl.UserDaoImpl- 0
+2021-07-17 20:12:38 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, `role` FROM users` request: Cannot determine value type from string 'admin'
+2021-07-17 20:15:12 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:15:12 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:15:12 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:15:14 [main] INFO  webproject.model.dao.impl.UserDaoImpl- 2
+2021-07-17 20:16:33 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:16:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:16:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:16:35 [main] INFO  webproject.model.dao.impl.UserDaoImpl- 2
+2021-07-17 20:16:35 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, `role` FROM users` request: Cannot determine value type from string 'admin'
+2021-07-17 20:21:36 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:21:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:21:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:21:38 [main] INFO  webproject.model.dao.impl.UserDaoImpl- 2
+2021-07-17 20:21:38 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, `role` FROM users` request: Cannot determine value type from string 'admin'
+2021-07-17 20:43:41 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:43:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:43:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:44:18 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:44:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:44:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:44:48 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:44:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:44:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:47:54 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:47:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:47:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 20:47:55 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT id, login, email, count_of_solve, rates_of_solve, `role` FROM users` request: Column 'status' not found.
+2021-07-17 20:49:56 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 20:49:56 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 20:49:56 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-17 21:05:30 [main] INFO  com.epam.webproject.Main- 2
+2021-07-17 21:05:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-17 21:05:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-18 00:44:08 [main] INFO  com.epam.webproject.Main- 2
+2021-07-18 00:44:08 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-18 00:44:08 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-18 00:44:26 [main] INFO  com.epam.webproject.Main- 2
+2021-07-18 00:44:49 [main] INFO  com.epam.webproject.Main- 2

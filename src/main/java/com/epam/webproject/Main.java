@@ -1,29 +1,30 @@
 package com.epam.webproject;
 
 import com.epam.webproject.exception.DaoException;
-import com.epam.webproject.model.connection.ConnectionCreator;
-import com.epam.webproject.model.connection.ConnectionPool;
 
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
-import com.epam.webproject.model.entity.RatesType;
-import com.epam.webproject.model.entity.RoleType;
 import com.epam.webproject.model.entity.User;
+import com.epam.webproject.model.entity.type.RatesType;
+import com.epam.webproject.model.entity.type.Role;
+import com.epam.webproject.model.entity.type.Status;
+import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.concurrent.BlockingQueue;
+import java.util.Optional;
 
 class Main {
     private final static Logger logger=LogManager.getLogger();
     public static void main(String args[]) throws DaoException {
         logger.info(2);
         UserDaoImpl dao=new UserDaoImpl();
-        System.out.println( dao.findAll());
+    // Optional<User> user= dao.findUserByLoginAndPassword("2362","2S@1a.com");
+     ///   dao.createNewUser(new User(12,"2362","2S@1a.com",0, Role.ADMIN,RatesType.NEWBIE,Status.NORMAL),"123","23");
+        ///dao.createNewUser(new User(4,"m2ila3","2mi1l1a@11a.com",0, Role.USER, RatesType.HARDWORKER, Status.BLOCKED),"qwe123","123");
+       // System.out.println( user);
+     PasswordEncryptor encryptor=   PasswordEncryptor.getInstance();
+        System.out.println(encryptor.getHash("milena    "));
+        
 
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -60,7 +61,7 @@ class Main {
 //
 //
 //                Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//
+//w
 //                    String sql = "SELECT id,login FROM users";
 //                    ResultSet resultSet = statement.executeQuery(sql);
 //

@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class FirstJSP implements Command {
     @Override
-    public Router execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request) {
         return new Router(RouterType.FORWARD,PagePath.first_page);
     }
 }
