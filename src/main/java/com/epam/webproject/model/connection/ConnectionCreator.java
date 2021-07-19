@@ -17,14 +17,7 @@ public final class ConnectionCreator {
     private final static Logger logger = LogManager.getLogger();
 
     private final static String RELATIVE_PATH_TO_PROPERTIES = "database";
-    //private final static String DATABASE_PROPERTIES = "database.properties";
 
-//    Properties properties = new Properties();
-    //        properties.put("user", "root");
-//        properties.put("password", "Qwe123okA123");
-//        properties.put("autoReconnect", "true");
-//        properties.put("characterEncoding", "UTF-8");
-//        properties.put("useUnicode", "true");
     private final static String URL = "url";
 
     private final static String USERNAME = "username";

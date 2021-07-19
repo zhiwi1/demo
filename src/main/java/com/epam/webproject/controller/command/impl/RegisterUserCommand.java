@@ -18,9 +18,6 @@ public class RegisterUserCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws ProjectException {
-        //   String currentLocale = (String) request.getSession().getAttribute(SessionKey.CURRENT_LOCALE.name());
-        // Localizer localizer = Localizer.valueOf(currentLocale.toUpperCase());
-
 
             String email = request.getParameter(RequestParameter.EMAIL);
             String login = request.getParameter(RequestParameter.LOGIN);

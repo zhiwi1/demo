@@ -55,20 +55,6 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-//    public Optional<String> findPasswordHashByEmail(String email) throws DaoException {
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//             PreparedStatement statement = connection.prepareStatement(SQL_FIND_PASSWORD_HASH_BY_EMAIL)) {
-//            statement.setString(1, email);
-//            ResultSet resultSet = statement.executeQuery();
-//            String result = null;
-//            while (resultSet.next()) {
-//                result = resultSet.getString(USER_PASSWORD_HASH);
-//            }
-//            return Optional.ofNullable(result);
-//        } catch (SQLException e) {
-//            throw new DaoException("SQL request error. " + e.getMessage(), e);
-//        }
-//    }
     @Override
     public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException {
         Map<String, Optional<String>> result = new HashMap<>();
@@ -108,38 +94,6 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
-//    public List<User> findUsersByRole(Role role) throws DaoException {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//        //     PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ROLE)) {
-//            statement.setLong(1, Role.ordinal(role));
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//            //    User user = UserCreator.createUser(resultSet);
-//              //  users.add(user);
-//            }
-//        } catch (SQLException ex) {
-//            throw new DaoException("Error. Impossible get data from data base.", ex);
-//        }
-//        return users;
-//    }
-
-
-//    public List<User> findUsersByStatus(Status status) throws DaoException {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_STATUS)) {
-//            statement.setLong(1, Status.ordinal(status));
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                //User user = UserCreator.createUser(resultSet);
-//           //     users.add(user);
-//            }
-//        } catch (SQLException ex) {
-//            throw new DaoException("Error. Impossible get data from data base.", ex);
-//        }
-//        return users;
-//    }
 
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
@@ -234,47 +188,5 @@ public class UserDaoImpl implements UserDao {
 
 
 }
-//    @Override
-//    public Optional<User> findByEmail(String email) throws DaoException {
-//        Optional<User> userOptional = Optional.empty();
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
-//            preparedStatement.setString(1, email);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                User user = User.builder()
-//                        .setId(resultSet.getLong(1))
-//                        .setEmail(resultSet.getString(2))
-//                        .setName(resultSet.getString(3))
-//                        .setSurname(resultSet.getString(4))
-//                        .setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()))
-//                        .setEnabled(resultSet.getBoolean(6))
-//                        .setMoney(resultSet.getBigDecimal(7))
-//                        .build();
-//                userOptional = Optional.of(user);
-//            }
-//        } catch (SQLException e) {
-//            logger.error(e);
-//            throw new DaoException(e);
-//        }
-//        return userOptional;
-//    }
-//
-//    @Override
-//    public Long findMaxUserId() throws DaoException {
-//        Long id;
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MAX_USER_ID)) {
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            resultSet.next();
-//            id = resultSet.getLong(1);
-//        } catch (SQLException e) {
-//            logger.error(e);
-//            throw new DaoException(e);
-//        }
-//        return id;
-//    }
-
-
 
 

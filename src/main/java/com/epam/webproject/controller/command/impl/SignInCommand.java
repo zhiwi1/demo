@@ -20,7 +20,7 @@ public class SignInCommand implements Command {
         String password =request.getParameter(RequestParameter.PASSWORD);
 
         UserService userService = ServiceDefinition.getInstance().getUserService();
-        try {
+        try {//todo error page and other
             boolean is = userService.signInUser(loginOrPassword, password);
         } catch (ServiceException exception) {
             throw new ProjectException("SignIn command error ", exception);
