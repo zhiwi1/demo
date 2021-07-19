@@ -2,6 +2,7 @@ package com.epam.webproject.model.dao.impl;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
+import com.epam.webproject.model.dao.DatabaseColumnName;
 import com.epam.webproject.model.dao.UserDao;
 import com.epam.webproject.model.entity.type.RatesType;
 import com.epam.webproject.model.entity.type.Role;
@@ -13,20 +14,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
-    private static final String FIND_USER_BY_EMAIL = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE email = ?";
-
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE email = ? AND password = ?";
 
-    private static final String FIND_USER_BY_ID = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE user_id = ?";
+    private static final String FIND_LOGIN_DATA_BY_LOGIN = "SELECT password_hash,salt FROM users WHERE login = ?";
+
+    private static final String FIND_LOGIN_DATA_BY_EMAIL = "SELECT password_hash, salt FROM users WHERE email = ?";
+
 
     private static final String ADD_USER = "INSERT INTO `users` (`id`, `login`, `email`, `count_of_solve`, `rates_of_solve`, `role`, `password_hash`,`salt`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 
@@ -34,9 +34,7 @@ public class UserDaoImpl implements UserDao {
     //            + " JOIN roles ON roles.id = users.role_id ";
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
 
-    private static final String SQL_FIND_PASSWORD_HASH_BY_EMAIL = "SELECT `users`.`user_pswd_hash` " +
-            "FROM `users` " +
-            "WHERE `users`.`email`=?";
+
 
 
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
@@ -57,19 +55,57 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-    public Optional<String> findPasswordHashByEmail(String email) throws DaoException {
+//    public Optional<String> findPasswordHashByEmail(String email) throws DaoException {
+//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(SQL_FIND_PASSWORD_HASH_BY_EMAIL)) {
+//            statement.setString(1, email);
+//            ResultSet resultSet = statement.executeQuery();
+//            String result = null;
+//            while (resultSet.next()) {
+//                result = resultSet.getString(USER_PASSWORD_HASH);
+//            }
+//            return Optional.ofNullable(result);
+//        } catch (SQLException e) {
+//            throw new DaoException("SQL request error. " + e.getMessage(), e);
+//        }
+//    }
+    @Override
+    public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException {
+        Map<String, Optional<String>> result = new HashMap<>();
+        result.put(USER_PASSWORD_SALT, Optional.empty());
+        result.put(USER_PASSWORD_HASH,Optional.empty());
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_PASSWORD_HASH_BY_EMAIL)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_LOGIN_DATA_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result.put(USER_PASSWORD_HASH,Optional.of(resultSet.getString(USER_PASSWORD_HASH)));
+                result.put(USER_PASSWORD_SALT, Optional.of(resultSet.getString(USER_PASSWORD_SALT)));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_LOGIN_DATA_BY_LOGIN, e);
+        }
+        return result;
+    }
+    @Override
+    public Map<String, Optional<String>> findUserLoginDataByEmail(String email) throws DaoException {
+        Map<String, Optional<String>> result = new HashMap<>();
+        result.put(USER_PASSWORD_SALT, Optional.empty());
+        result.put(USER_PASSWORD_HASH,Optional.empty());
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_LOGIN_DATA_BY_EMAIL)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
-            String result = null;
-            while (resultSet.next()) {
-                result = resultSet.getString(USER_PASSWORD_HASH);
+            if (resultSet.next()) {
+                result.put(USER_PASSWORD_HASH,Optional.of(resultSet.getString(USER_PASSWORD_HASH)));
+                result.put(USER_PASSWORD_SALT, Optional.of(resultSet.getString(USER_PASSWORD_SALT)));
             }
-            return Optional.ofNullable(result);
         } catch (SQLException e) {
-            throw new DaoException("SQL request error. " + e.getMessage(), e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_LOGIN_DATA_BY_LOGIN, e);
         }
+        return result;
     }
 
 //    public List<User> findUsersByRole(Role role) throws DaoException {
@@ -117,7 +153,6 @@ public class UserDaoImpl implements UserDao {
                 String email = resultSet.getString(USER_EMAIL);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
                 RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-                System.out.println( resultSet.getString(USER_ROLE));
                 Role role = Role.valueOf(resultSet.getString(USER_ROLE));
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
 
@@ -130,6 +165,7 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
+
 
 
     public boolean createNewUser(User user, String password, String salt) throws DaoException {

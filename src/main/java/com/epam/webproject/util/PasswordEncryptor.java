@@ -21,7 +21,11 @@ public class PasswordEncryptor {
         return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
-    public static String generateRandomPassword() {
-        return RandomStringUtils.randomAlphanumeric(12).toUpperCase();
+    public String generateSalt() {
+        return BCrypt.gensalt(12);
+    }
+
+    public String getHash(String password, String salt) {
+        return BCrypt.hashpw(password, salt);
     }
 }

@@ -1,5 +1,8 @@
 package com.epam.webproject.controller.command;
 
+import com.epam.webproject.controller.command.impl.RegisterUserCommand;
+import com.epam.webproject.controller.command.impl.SignInCommand;
+
 import java.util.EnumMap;
 
 public class CommandProvider {
@@ -7,7 +10,8 @@ public class CommandProvider {
     private final EnumMap<CommandType, Command> commands = new EnumMap(CommandType.class);
 
     public CommandProvider() {
-       // commands.put(CommandType.GO_TO_ABOUT_PAGE_COMMAND, new GoToAboutPageCommand());
+        commands.put(CommandType.SIGN_UP_COMMAND, new RegisterUserCommand());
+        commands.put(CommandType.SIGN_IN_COMMAND, new SignInCommand());
 //        commands.put(CommandType.GO_TO_ERROR_PAGE_COMMAND, new GoToErrorPageCommand());
 //        commands.put(CommandType.GO_TO_LOGIN_PAGE_COMMAND, new GoToLoginPageCommand());
 //        commands.put(CommandType.GO_TO_ITEM_PAGE_COMMAND, new GoToItemPageCommand());
@@ -22,7 +26,7 @@ public class CommandProvider {
 //        commands.put(CommandType.GO_TO_ORDER_DETAIL_PAGE_COMMAND, new GoToOrderDetailPageCommand());
 //        commands.put(CommandType.CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
 //        commands.put(CommandType.SIGN_IN_COMMAND, new SignInCommand());
-//        commands.put(CommandType.SIGN_UP_COMMAND, new SignUpCommand());
+
 //        commands.put(CommandType.DEFAULT, new DefaultCommand());
 //        commands.put(CommandType.FORGET_PASSWORD_COMMAND, new ForgetPasswordCommand());
 //        commands.put(CommandType.LOG_OUT_COMMAND, new LogOutCommand());

@@ -2,11 +2,14 @@ package com.epam.webproject;
 
 import com.epam.webproject.exception.DaoException;
 
+import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
 import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.entity.type.RatesType;
 import com.epam.webproject.model.entity.type.Role;
 import com.epam.webproject.model.entity.type.Status;
+import com.epam.webproject.model.service.UserService;
+import com.epam.webproject.model.service.impl.UserServiceImpl;
 import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +22,17 @@ class Main {
         logger.info(2);
         UserDaoImpl dao=new UserDaoImpl();
     // Optional<User> user= dao.findUserByLoginAndPassword("2362","2S@1a.com");
-     ///   dao.createNewUser(new User(12,"2362","2S@1a.com",0, Role.ADMIN,RatesType.NEWBIE,Status.NORMAL),"123","23");
+       //(new User(12,"2362","2S@1a.com",0, Role.ADMIN,RatesType.NEWBIE,Status.NORMAL),"123","23");
         ///dao.createNewUser(new User(4,"m2ila3","2mi1l1a@11a.com",0, Role.USER, RatesType.HARDWORKER, Status.BLOCKED),"qwe123","123");
        // System.out.println( user);
      PasswordEncryptor encryptor=   PasswordEncryptor.getInstance();
         System.out.println(encryptor.getHash("milena    "));
-        
+        UserService service=new UserServiceImpl();
+        try {
+            service.signInUser("2","Qwe123");
+        } catch (ServiceException exception) {
+            exception.printStackTrace();
+        }
 
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
