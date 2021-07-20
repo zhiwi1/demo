@@ -12,27 +12,27 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public final class ConnectionCreator {
+ class ConnectionCreator {
 
-    private final static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
-    private final static String RELATIVE_PATH_TO_PROPERTIES = "database";
+    private static final String RELATIVE_PATH_TO_PROPERTIES = "database";
 
-    private final static String URL = "url";
+    private static final String URL = "url";
 
-    private final static String USERNAME = "username";
+    private static final String USERNAME = "username";
 
-    private final static String PASSWORD = "password";
+    private static final String PASSWORD = "password";
 
-    private final static String DRIVER = "driver";
+    private static final String DRIVER = "driver";
 
-    private final static String DATABASE_URL;
+    private static final String DATABASE_URL;
 
-    private final static String DATABASE_USERNAME;
+    private static final String DATABASE_USERNAME;
 
-    private final static String DATABASE_PASSWORD;
+    private static final String DATABASE_PASSWORD;
 
-    private final static ResourceBundle properties;
+    private static final ResourceBundle properties;
 
 
     static {
@@ -56,7 +56,7 @@ public final class ConnectionCreator {
     }
 
 
-    protected static Connection getConnection() throws SQLException {
+  static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
     }
 }

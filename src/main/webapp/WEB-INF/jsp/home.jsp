@@ -11,6 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-
+<a href="#slider"  role="button">
+add new post
+</a>
+<a href="#slider"  role="button">
+    show all posts
+</a>
+<a  href="controller?command=go_to_login_page_command" role="button">
+    выйти
+</a>
 </body>
 </html>

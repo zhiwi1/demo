@@ -2,13 +2,12 @@ package com.epam.webproject.model.dao.impl;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
-import com.epam.webproject.model.dao.DatabaseColumnName;
 import com.epam.webproject.model.dao.UserDao;
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
+import com.epam.webproject.model.entity.RatesType;
+import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
-import com.epam.webproject.model.entity.type.Status;
-import com.epam.webproject.model.factory.UserFactory;
+import com.epam.webproject.model.entity.Status;
+import com.epam.webproject.model.dao.UserFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,6 +48,7 @@ public class UserDaoImpl implements UserDao {
                 User userEntity=factory.createUser(resultSet);
                  user=Optional.of(userEntity);
         } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}",FIND_USER_BY_EMAIL_AND_PASSWORD, e.getMessage());
             throw new DaoException("Error with find User by login .", e);
         }
         return user;
@@ -180,7 +180,7 @@ public class UserDaoImpl implements UserDao {
                 //   userOptional = Optional.of(user);
             }
         } catch (SQLException e) {
-            logger.error(e);
+            logger.error("Can't find",e);
             throw new DaoException(e);
         }
         return userOptional;

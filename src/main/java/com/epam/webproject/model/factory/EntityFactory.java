@@ -1,9 +1,5 @@
 package com.epam.webproject.model.factory;
 
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
-import com.epam.webproject.model.entity.User;
-
 public class EntityFactory {
     private static EntityFactory instance;
 

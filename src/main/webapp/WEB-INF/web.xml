@@ -7,4 +7,9 @@
         <param-name>web-app-root-folder</param-name>
         <param-value>C:\Users\Иван\Desktop\demo\src\main\webapp</param-value>
     </context-param>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+
 </web-app>

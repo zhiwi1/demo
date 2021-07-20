@@ -4,17 +4,11 @@ import com.epam.webproject.exception.DaoException;
 
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
-import com.epam.webproject.model.entity.User;
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
-import com.epam.webproject.model.entity.type.Status;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.model.service.impl.UserServiceImpl;
 import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Optional;
 
 class Main {
     private final static Logger logger=LogManager.getLogger();

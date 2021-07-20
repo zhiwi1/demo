@@ -1,31 +1,27 @@
 package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
+import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ProjectException;
 import com.epam.webproject.exception.ServiceException;
-import com.epam.webproject.model.service.ServiceDefinition;
+import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Optional;
 
 public class SignInCommand implements Command {
 
     @Override
-    public Router execute(HttpServletRequest request) throws ProjectException {
+    public Router execute(HttpServletRequest request) throws CommandException {
         String loginOrPassword = request.getParameter(RequestParameter.EMAIL_LOGIN);
         String password =request.getParameter(RequestParameter.PASSWORD);
 
-        UserService userService = ServiceDefinition.getInstance().getUserService();
+        UserService userService = ServiceProvider.getInstance().getUserService();
         try {//todo error page and other
             boolean is = userService.signInUser(loginOrPassword, password);
-        } catch (ServiceException exception) {
-            throw new ProjectException("SignIn command error ", exception);
+        } catch (ServiceException e) {
+            throw new CommandException("SignIn command error ", e);
         }
-        return new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);}
+        return new Router(RouterType.FORWARD, PagePath.HOME_PAGE);}
 
     }
 

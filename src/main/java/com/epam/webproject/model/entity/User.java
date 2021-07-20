@@ -1,8 +1,6 @@
 package com.epam.webproject.model.entity;
 
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
-import com.epam.webproject.model.entity.type.Status;
+import java.util.Objects;
 
 public class User extends Entity {
     private long id;
@@ -79,6 +77,20 @@ public class User extends Entity {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && countOfSolve == user.countOfSolve && login.equals( user.login) &&email.equals( user.email)
+                && roleType == user.roleType && ratesType == user.ratesType && status == user.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, email, countOfSolve, roleType, ratesType, status);
     }
 
     @Override

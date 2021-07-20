@@ -1,4 +1,4 @@
-package com.epam.webproject.model.entity.type;
+package com.epam.webproject.model.entity;
 
 
 public enum RatesType {

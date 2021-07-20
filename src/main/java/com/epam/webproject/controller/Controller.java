@@ -1,5 +1,6 @@
 package com.epam.webproject.controller;
 import com.epam.webproject.controller.command.*;
+import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ProjectException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(Controller.class);
+    private static final Logger logger = LogManager.getLogger();
     private final CommandProvider COMMAND_PROVIDER = CommandProvider.getInstance();
 
     @Override
@@ -33,8 +34,8 @@ public class Controller extends HttpServlet {
         Router router = null;
         try {
             router = command.execute(request);
-        } catch (ProjectException exception) {
-            throw new ServletException("Project Exception: " + exception.getMessage(), exception);
+        } catch (CommandException e) {
+            throw new ServletException("Project Exception: " + e.getMessage(), e);
         }
         switch (router.getRouterType()) {
             case REDIRECT:

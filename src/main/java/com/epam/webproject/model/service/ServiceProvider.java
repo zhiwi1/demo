@@ -2,18 +2,18 @@ package com.epam.webproject.model.service;
 
 import com.epam.webproject.model.service.impl.UserServiceImpl;
 
-public class ServiceDefinition {
-    private static ServiceDefinition instance;
+public class ServiceProvider {
+    private static ServiceProvider instance;
     private final UserService userService;
 //todo other services
-    private ServiceDefinition() {
+    private ServiceProvider() {
 
         this.userService = new UserServiceImpl();
     }
 
-    public static ServiceDefinition getInstance() {
+    public static ServiceProvider getInstance() {
         if (instance == null) {
-            instance = new ServiceDefinition();
+            instance = new ServiceProvider();
         }
 
         return instance;

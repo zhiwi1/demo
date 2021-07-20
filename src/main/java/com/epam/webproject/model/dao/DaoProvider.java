@@ -3,20 +3,18 @@ package com.epam.webproject.model.dao;
 
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
 
-public class DaoDefinition {
-        private static DaoDefinition instance;
+public class DaoProvider {
+        private static DaoProvider instance;
 
         private final UserDao userDao;
 
-        private DaoDefinition() {
-//            this.orderDao = new OrderDaoImpl();
-//            this.postDao = new PostDaoImpl();
+        private DaoProvider() {
             this.userDao = new UserDaoImpl();
         }
 
-        public static DaoDefinition getInstance() {
+        public static DaoProvider getInstance() {
             if (instance == null) {
-                instance = new DaoDefinition();
+                instance = new DaoProvider();
             }
 
             return instance;

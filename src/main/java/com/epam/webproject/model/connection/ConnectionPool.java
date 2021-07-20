@@ -16,8 +16,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public enum ConnectionPool {
     INSTANCE;
-    private final static Logger logger = LogManager.getLogger();
-    private final static int DEFAULT_POOL_SIZE = 8;
+    private static final Logger logger = LogManager.getLogger();
+    private static final int DEFAULT_POOL_SIZE = 8;
     private final BlockingQueue<ProxyConnection> freeConnections;
     private final BlockingQueue<ProxyConnection> usedConnections;
 
@@ -33,7 +33,7 @@ public enum ConnectionPool {
         ProxyConnection proxyConnection = null;
         try {
             proxyConnection = freeConnections.take();
-            usedConnections.offer(proxyConnection);
+            usedConnections.put(proxyConnection);
         } catch (InterruptedException e) {
             logger.error("The connection is not received " + e);
             Thread.currentThread().interrupt();
@@ -45,7 +45,12 @@ public enum ConnectionPool {
     public void releaseConnection(Connection connection) throws ConnectionException {
         if (connection instanceof ProxyConnection) {
             usedConnections.remove(connection);
-            freeConnections.offer((ProxyConnection) connection);
+            try {
+                freeConnections.put((ProxyConnection) connection);
+            } catch (InterruptedException e) {
+                logger.error("The connection is not received " + e);
+                Thread.currentThread().interrupt();
+            }
         } else {
             logger.error("Connection is not proxy or null!");
         }
@@ -77,7 +82,7 @@ public enum ConnectionPool {
         }
     }
 
-    public void initializePool() {
+    private void initializePool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 Connection connection = ConnectionCreator.getConnection();
@@ -85,7 +90,7 @@ public enum ConnectionPool {
                 freeConnections.offer(proxyConnection);
             } catch (SQLException e) {
                 logger.fatal(e);
-                throw new RuntimeException();
+                throw new RuntimeException(e);
             }
         }
     }

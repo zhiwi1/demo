@@ -16,5 +16,10 @@
     password:  <input type="text" name="password">
     <input type="submit" name="button" value="login">
 </form>
+<hr>
+<p>Вы не зарегистрированы?</p>
+<a href="controller?command=go_to_registration_page_command">
+    Зарегистрироваться
+</a>
 </body>
 </html>

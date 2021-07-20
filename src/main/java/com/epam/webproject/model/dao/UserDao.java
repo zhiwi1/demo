@@ -19,6 +19,9 @@ public interface UserDao {
     public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException;
 
     public Map<String, Optional<String>> findUserLoginDataByEmail(String email) throws DaoException;
+
+
+
 //    Long findMaxUserId() throws DaoException;
 //
 //    Optional<User> findByEmailAndPassword(String email, String password) throws DaoException;

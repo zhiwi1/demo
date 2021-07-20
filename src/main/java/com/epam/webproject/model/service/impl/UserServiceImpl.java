@@ -7,25 +7,23 @@ import java.util.Optional;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.exception.ServiceException;
-import com.epam.webproject.model.dao.DaoDefinition;
-import com.epam.webproject.model.dao.DatabaseColumnName;
+import com.epam.webproject.model.dao.DaoProvider;
+import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 import com.epam.webproject.model.dao.UserDao;
-import com.epam.webproject.model.dao.impl.UserDaoImpl;
 import com.epam.webproject.model.entity.User;
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
-import com.epam.webproject.model.entity.type.Status;
+import com.epam.webproject.model.entity.RatesType;
+import com.epam.webproject.model.entity.Role;
+import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.util.PasswordEncryptor;
 import com.epam.webproject.util.UserIdGenerator;
 import com.epam.webproject.validator.UserValidator;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
-    private final UserDao userDao = DaoDefinition.getInstance().getUserDao();
+    private final UserDao userDao = DaoProvider.getInstance().getUserDao();
     private static final int DEFAULT_COUNT_OF_SOLVE = 0;
 
     //
@@ -59,16 +57,16 @@ public class UserServiceImpl implements UserService {
             } else {
                 loginData = userDao.findUserLoginDataByLogin(loginOrEmail);
             }
-            if (loginData.get(DatabaseColumnName.USER_PASSWORD_HASH).isPresent() &&
-                    loginData.get(DatabaseColumnName.USER_PASSWORD_SALT).isPresent()) {
-                String salt = loginData.get(DatabaseColumnName.USER_PASSWORD_SALT).get();
-                String passwordHash = loginData.get(DatabaseColumnName.USER_PASSWORD_HASH).get();
+            if (loginData.get(USER_PASSWORD_HASH).isPresent() &&
+                    loginData.get(USER_PASSWORD_SALT).isPresent()) {
+                String salt = loginData.get(USER_PASSWORD_SALT).get();
+                String passwordHash = loginData.get(USER_PASSWORD_HASH).get();
                 String realPasswordHash = encryptor.getHash(password, salt);
                 result = passwordHash.equals(realPasswordHash);
             }
-        } catch (DaoException daoException) {
-            logger.error("Can't sign in", daoException.getMessage());
-            throw new ServiceException();
+        } catch (DaoException e) {
+            logger.error("Can't sign in", e.getMessage());
+            throw new ServiceException("Can't sign in",e);
         }
 
         return result;
@@ -85,9 +83,9 @@ public class UserServiceImpl implements UserService {
         logger.info(user);
         try {
             userDao.createNewUser(user, hashPassword, salt);
-        } catch (DaoException daoException) {
-            logger.error("Can't create new user : {}", daoException.getMessage());
-            throw new ServiceException("Can't create new user", daoException);
+        } catch (DaoException e) {
+            logger.error("Can't create new user : {}", e.getMessage());
+            throw new ServiceException("Can't create new user", e);
         }
         return true;
     }

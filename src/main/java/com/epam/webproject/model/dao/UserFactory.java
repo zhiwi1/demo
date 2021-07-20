@@ -1,11 +1,9 @@
-package com.epam.webproject.model.factory;
+package com.epam.webproject.model.dao;
 
 import com.epam.webproject.model.entity.User;
-import com.epam.webproject.model.entity.type.RatesType;
-import com.epam.webproject.model.entity.type.Role;
-import com.epam.webproject.model.entity.type.Status;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.epam.webproject.model.entity.RatesType;
+import com.epam.webproject.model.entity.Role;
+import com.epam.webproject.model.entity.Status;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +32,6 @@ public class UserFactory {
         String email = resultSet.getString(USER_EMAIL);
         int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
         RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-        System.out.println( resultSet.getString(USER_ROLE));
         Role role = Role.valueOf(resultSet.getString(USER_ROLE));
         Status status = Status.valueOf(resultSet.getString(USER_STATUS));
 return createUser(id, login, email, countOfSolve, role, ratesOfSolve,status);
