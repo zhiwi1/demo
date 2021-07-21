@@ -30,7 +30,7 @@ public final class RequestAttribute {
     public static final String EMPTY_BASKET = "emptyBasket";
     public static final String MISS_REQUIRED_FIELDS = "missingRequiredField";
     public static final String PREV_REQUEST = "prev_request";
-    public static final String CONTROLLER_URL = "Controller?";
+    public static final String CONTROLLER_URL = "controller?";
     public static final String REGEXP_USERNAME = "attribute_regexp_username";
     public static final String REGEXP_PASSWORD = "attribute_regexp_password";
     public static final String REGEXP_FIO = "attribute_regexp_fio";
