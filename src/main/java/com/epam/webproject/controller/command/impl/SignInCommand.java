@@ -17,7 +17,8 @@ public class SignInCommand implements Command {
 
         UserService userService = ServiceProvider.getInstance().getUserService();
         try {//todo error page and other
-            boolean is = userService.signInUser(loginOrPassword, password);
+            boolean isSignIn = userService.signInUser(loginOrPassword, password);
+            request.getSession().setAttribute(RequestAttribute.LOGIN,loginOrPassword);
         } catch (ServiceException e) {
             throw new CommandException("SignIn command error ", e);
         }

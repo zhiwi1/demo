@@ -14,5 +14,7 @@ package com.epam.webproject.validator;
         public static boolean checkPassword(String password) {
             return password.matches(PASSWORD_REGEXP);
         }
+
+        public static boolean checkPasswordAndConfirmPassword(String password,String confirmPassword){return password.equals(confirmPassword);}
     }
 

@@ -20,6 +20,8 @@ public interface UserDao {
 
     public Map<String, Optional<String>> findUserLoginDataByEmail(String email) throws DaoException;
 
+    public boolean existRowsByEmail(String email) throws DaoException;
+    public boolean existRowsByLogin(String login) throws DaoException ;
 
 
 //    Long findMaxUserId() throws DaoException;

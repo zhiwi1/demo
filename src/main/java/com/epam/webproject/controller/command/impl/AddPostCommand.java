@@ -2,30 +2,34 @@ package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
-import com.epam.webproject.exception.ProjectException;
 import com.epam.webproject.exception.ServiceException;
+
 import com.epam.webproject.model.service.Feedback;
+import com.epam.webproject.model.service.PostService;
 import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.UserService;
+import com.epam.webproject.model.service.impl.PostServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
-public class RegisterUserCommand implements Command {
-
+public class AddPostCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
-        String email = request.getParameter(RequestParameter.EMAIL);
-        String login = request.getParameter(RequestParameter.LOGIN);
-        String password = request.getParameter(RequestParameter.PASSWORD);
-        String passwordConfirm = request.getParameter(RequestParameter.CONFIRM_PASSWORD);
-        UserService userService = ServiceProvider.getInstance().getUserService();
+        String title = request.getParameter(RequestParameter.TITLE);
+        String text = request.getParameter(RequestParameter.TEXT);
+        String complexity = request.getParameter(RequestParameter.COMPLEXITY);
+        String countForSolve = request.getParameter(RequestParameter.COUNT_FOR_SOLVE);
+        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
+        String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
+        PostService postService = ServiceProvider.getInstance().getPostService();
         try {
-            Feedback feedback = userService.registerUser(login, email, password, passwordConfirm);
+
+
+            Feedback feedback = postService.createPost()
             Router router = new Router();
             switch (feedback) {
                 case SUCCESS: {
                     //todo messages
-
                     router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
                     break;
                 }
@@ -36,7 +40,7 @@ public class RegisterUserCommand implements Command {
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
-                 //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
+                    //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
                     router = new Router(RouterType.FORWARD, PagePath.REGISTRATION_PAGE);
                     break;
                 }
@@ -46,4 +50,3 @@ public class RegisterUserCommand implements Command {
             throw new CommandException("Registration command error", e);
         }
     }
-}

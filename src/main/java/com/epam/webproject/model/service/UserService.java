@@ -8,7 +8,7 @@ import java.util.Optional;
 
 
     public interface UserService {
-        public boolean registerUser(String login, String email, String password, String confirmPassword) throws ServiceException ;
+        public Feedback registerUser(String login, String email, String password, String confirmPassword) throws ServiceException ;
         public boolean signInUser(String loginOrEmail, String password) throws ServiceException;
 
 //

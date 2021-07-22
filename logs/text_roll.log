@@ -1,6 +1,4 @@
-2021-07-19 13:50:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-19 13:50:37 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT password_hash`,`salt` FROM users WHERE login = ?` request: Parameter index out of range (1 > number of parameters, which is 0).
-2021-07-19 13:50:37 [main] ERROR webproject.model.service.impl.UserServiceImpl- Can't sign in
-2021-07-19 13:55:39 [main] INFO  com.epam.webproject.Main- 2
-2021-07-19 13:55:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-19 13:55:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 15:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 15:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 15:17:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 15:17:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver

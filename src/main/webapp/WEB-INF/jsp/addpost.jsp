@@ -1,4 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" language="java" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Иван
+  Date: 7/21/2021
+  Time: 3:33 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:if test="${not empty sessionScope.locale}">
@@ -7,7 +14,7 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title><fmt:message key="registration.registration" bundle="${ rb }"/></title>
+    <title>Add post</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/templates/header.jsp"/>
@@ -25,10 +32,6 @@
 
     <button type="submit"> <fmt:message key="registration.signup" bundle="${ rb }" /></button>
 </form>
-
-<p>Вы зарегистрированы?</p>
-<a href="controller?command=go_to_login_page_command">
-    Войти</a>
 
 </body>
 </html>

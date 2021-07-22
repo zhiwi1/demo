@@ -6,11 +6,12 @@ public final class DatabaseColumnName {
     public static final String USER_ID = "id";
     public static final String USER_EMAIL = "email";
     public static final String USER_LOGIN = "login";
-      public static final String COUNT_OF_SOLVE = "count_of_solve";
+    public static final String COUNT_OF_SOLVE = "count_of_solve";
     public static final String RATES_OF_SOLVE = "rates_of_solve";
     public static final String USER_ROLE = "role";
     public static final String USER_PASSWORD_HASH = "password_hash";
     public static final String USER_PASSWORD_SALT = "salt";
+    public static final String COUNT="count";
     // USERS_STATUS
     public static final String USER_STATUS = "status";
     // ROLE

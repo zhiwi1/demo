@@ -26,6 +26,7 @@ public class UserFactory {
     public User createUser(long id, String login, String email, int countOfSolve, Role roleType, RatesType ratesType, Status status) {
         return new User(id, login, email, countOfSolve, roleType, ratesType, status);
     }
+
     public User createUser(ResultSet resultSet) throws SQLException {
         long id = resultSet.getInt(USER_ID);
         String login = resultSet.getString(USER_LOGIN);
@@ -34,7 +35,7 @@ public class UserFactory {
         RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
         Role role = Role.valueOf(resultSet.getString(USER_ROLE));
         Status status = Status.valueOf(resultSet.getString(USER_STATUS));
-return createUser(id, login, email, countOfSolve, role, ratesOfSolve,status);
+        return createUser(id, login, email, countOfSolve, role, ratesOfSolve, status);
     }
 
 }

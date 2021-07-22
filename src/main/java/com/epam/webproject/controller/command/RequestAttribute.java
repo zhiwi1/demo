@@ -1,6 +1,7 @@
 package com.epam.webproject.controller.command;
 
 public final class RequestAttribute {
+    public static final String GO_TO_LOGIN_PAGE ="command=go_to_login_page_command";
     public static final String EXCEPTION = "exception";
     public static final String ROLE = "role";
     public static final String DUPLICATE_EMAIL = "duplicateEmail";
@@ -18,6 +19,7 @@ public final class RequestAttribute {
     public static final String EMPTY_LIST = "emptyList";
     public static final String LOCALE = "locale";
     public static final String MESSAGE = "message";
+    public static final String LOGIN="login";
     public static final String SUCCESS_EDIT = "updateUserInfo";
     public static final String WRONG_CONFIRMATION = "passwordNotEquals";
     public static final String WRONG_PASSWORD = "currentPasswordNotEquals";

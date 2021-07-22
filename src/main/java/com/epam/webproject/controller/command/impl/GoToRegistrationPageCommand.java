@@ -1,9 +1,6 @@
 package com.epam.webproject.controller.command.impl;
 
-import com.epam.webproject.controller.command.Command;
-import com.epam.webproject.controller.command.PagePath;
-import com.epam.webproject.controller.command.Router;
-import com.epam.webproject.controller.command.RouterType;
+import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import jakarta.servlet.http.HttpServletRequest;
 

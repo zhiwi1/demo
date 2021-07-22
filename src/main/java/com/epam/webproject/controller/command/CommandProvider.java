@@ -15,6 +15,7 @@ public class CommandProvider {
         commands.put(CommandType.GO_TO_HOME_PAGE_COMMAND,new GoToHomePageCommand());
         commands.put(CommandType.GO_TO_REGISTRATION_PAGE_COMMAND,new GoToRegistrationPageCommand());
         commands.put(CommandType.CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
+        commands.put(CommandType.GO_TO_ADD_POST_PAGE_COMMAND,new GoToAddPostPageCommand());
     }
 
     public static CommandProvider getInstance() {

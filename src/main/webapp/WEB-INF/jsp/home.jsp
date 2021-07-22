@@ -14,9 +14,11 @@
 <a href="#slider"  role="button">
 add new post
 </a>
+<br>
 <a href="#slider"  role="button">
     show all posts
 </a>
+<br>
 <a  href="controller?command=go_to_login_page_command" role="button">
     выйти
 </a>

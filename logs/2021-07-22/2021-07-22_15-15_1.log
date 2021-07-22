@@ -1,0 +1,48 @@
+2021-07-19 13:50:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-19 13:50:37 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed `SELECT password_hash`,`salt` FROM users WHERE login = ?` request: Parameter index out of range (1 > number of parameters, which is 0).
+2021-07-19 13:50:37 [main] ERROR webproject.model.service.impl.UserServiceImpl- Can't sign in
+2021-07-19 13:55:39 [main] INFO  com.epam.webproject.Main- 2
+2021-07-19 13:55:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-19 13:55:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 17:08:49 [main] INFO  com.epam.webproject.Main- 2
+2021-07-21 17:08:50 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 17:08:50 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 17:09:10 [main] INFO  com.epam.webproject.Main- 2
+2021-07-21 17:09:10 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 17:09:10 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 17:09:21 [main] INFO  com.epam.webproject.Main- 2
+2021-07-21 17:09:21 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 17:09:21 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 22:45:33 [main] INFO  com.epam.webproject.Main- SIGN_UP_COMMAND
+2021-07-21 22:45:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 22:45:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 22:45:59 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-21 22:45:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 22:45:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 22:51:59 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-21 22:51:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 22:51:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 23:33:53 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-21 23:33:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 23:33:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 23:38:31 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-21 23:38:31 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 23:38:31 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-21 23:43:20 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-21 23:43:20 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-21 23:43:20 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 13:57:24 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-22 13:57:24 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 13:57:24 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 13:57:33 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-22 13:57:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 13:57:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 14:53:40 [main] INFO  com.epam.webproject.Main- sign_up_command
+2021-07-22 14:53:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 14:53:40 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 15:14:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 15:14:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 15:14:52 [main] INFO  webproject.model.dao.impl.PostDaoImpl- SQL request error(0). No value specified for parameter 7
+2021-07-22 15:15:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-22 15:15:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-22 15:15:19 [main] INFO  webproject.model.dao.impl.PostDaoImpl- SQL request error(1146). Table 'first_project.posts' doesn't exist

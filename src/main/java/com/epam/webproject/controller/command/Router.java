@@ -4,6 +4,7 @@ public class Router {
     private RouterType routerType;
     private String routerPath;
 
+    public Router( ){}
     public Router(RouterType routerType, String routerPath) {
         this.routerType = routerType;
         this.routerPath = routerPath;
