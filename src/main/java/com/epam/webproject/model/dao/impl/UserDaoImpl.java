@@ -33,6 +33,9 @@ public class UserDaoImpl implements UserDao {
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
     private static final String SQL_COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count`FROM `users`WHERE `users`.`email`=?";
     private static final String SQL_COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
+    private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
+
+
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -49,6 +52,7 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
         }
     }
+
     @Override
     public boolean existRowsByLogin(String login) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -65,24 +69,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
-        Optional<User> user = Optional.empty();
-        UserFactory factory = UserFactory.getInstance();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)) {
-
-            statement.setString(1, login);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            User userEntity = factory.createUser(resultSet);
-            user = Optional.of(userEntity);
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_USER_BY_EMAIL_AND_PASSWORD, e.getMessage());
-            throw new DaoException("Error with find User by login .", e);
-        }
-        return user;
-
-    }
 
     @Override
     public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException {
@@ -215,6 +201,21 @@ public class UserDaoImpl implements UserDao {
         return userOptional;
     }
 
+
+    @Override
+    public Optional<Long> findUserIdByLogin(String login) throws DaoException {
+        Optional<Long> result = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_USER_ID_BY_LOGIN);) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            result = Optional.of(resultSet.getLong(USER_ID));
+        } catch (SQLException e) {
+            logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
+            throw new DaoException("Error with search of id. ", e);
+        }
+        return result;
+    }
 
 }
 

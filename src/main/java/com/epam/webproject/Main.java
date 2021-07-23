@@ -1,29 +1,19 @@
 package com.epam.webproject;
 
-import com.epam.webproject.controller.command.CommandType;
 import com.epam.webproject.exception.DaoException;
 
-import com.epam.webproject.exception.ServiceException;
-import com.epam.webproject.model.dao.PostDao;
-import com.epam.webproject.model.dao.impl.PostDaoImpl;
-import com.epam.webproject.model.dao.impl.UserDaoImpl;
-import com.epam.webproject.model.entity.Post;
-import com.epam.webproject.model.service.UserService;
-import com.epam.webproject.model.service.impl.UserServiceImpl;
-import com.epam.webproject.util.PasswordEncryptor;
+import com.epam.webproject.model.dao.TaskDao;
+import com.epam.webproject.model.dao.impl.TaskDaoImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Timer;
 
 class Main {
     private final static Logger logger=LogManager.getLogger();
     public static void main(String args[]) throws DaoException {
-    //    PostDao postDao=new PostDaoImpl();
+        TaskDao postDao=new TaskDaoImpl();
+        postDao.createNewPost("title","text",new Date(),"Qwe123",1);
       //  postDao.createNewPost(new Post("title","text",new Date(),null,1,6,9));
 //       Date date=new Date();
         java.util.Date date1=new java.util.Date();

@@ -3,8 +3,7 @@ package com.epam.webproject.model.service.impl;
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.dao.DaoProvider;
-import com.epam.webproject.model.dao.PostDao;
-import com.epam.webproject.model.dao.UserDao;
+import com.epam.webproject.model.dao.TaskDao;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.PostService;
 import com.epam.webproject.validator.PostValidator;
@@ -13,10 +12,10 @@ import org.apache.logging.log4j.Logger;
 
 public class PostServiceImpl implements PostService {
     private static final Logger logger = LogManager.getLogger();
-    private static final PostDao postDao = DaoProvider.getInstance().getPostDao();
+    private static final TaskDao taskDao = DaoProvider.getInstance().getTaskDao();
 
 
-    public Feedback createPost(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity, String countForSolve) throws ServiceException {
+    public Feedback createPost(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException {
 
         Feedback feedback;
         if (PostValidator.checkComplexity(complexity)) {
@@ -24,11 +23,8 @@ public class PostServiceImpl implements PostService {
             int complexityInt = Integer.parseInt(complexity);
             int countOfSolve = Integer.parseInt(complexity);
             try {
-                long idOfUser=-1;
-                if (postDao.findUserIdOfPost(loginOfUser).isPresent()) {
-                   idOfUser  = postDao.findUserIdOfPost(loginOfUser).get();
-                }
-                boolean isCreated = postDao.createNewPost(title, text, createdAt, idOfUser, complexityInt, countOfSolve);
+
+                boolean isCreated = taskDao.createNewPost(title, text, createdAt, loginOfUser, complexityInt);
                 if (isCreated) {
                     feedback = Feedback.SUCCESS;
                 } else {

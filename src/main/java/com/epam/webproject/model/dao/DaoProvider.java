@@ -1,19 +1,19 @@
 package com.epam.webproject.model.dao;
 
 
-import com.epam.webproject.model.dao.impl.PostDaoImpl;
+import com.epam.webproject.model.dao.impl.TaskDaoImpl;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
 
 public class DaoProvider {
     private static DaoProvider instance;
 
     private final UserDao userDao;
-    private final PostDao postDao;
+    private final TaskDao taskDao;
 
 
     private DaoProvider() {
         this.userDao = new UserDaoImpl();
-        this.postDao = new PostDaoImpl();
+        this.taskDao = new TaskDaoImpl();
     }
 
     public static DaoProvider getInstance() {
@@ -29,8 +29,8 @@ public class DaoProvider {
         return userDao;
     }
 
-    public PostDao getPostDao() {
-        return postDao;
+    public TaskDao getTaskDao() {
+        return taskDao;
     }
 }
 

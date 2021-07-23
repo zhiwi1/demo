@@ -7,9 +7,9 @@ import com.epam.webproject.model.entity.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface PostDao {
+public interface TaskDao {
     boolean createNewPost( Post post) throws DaoException;
-    public Optional<Long> findUserIdOfPost(String login) throws DaoException;
-    boolean createNewPost(String title, String text, java.util.Date createdAt,long id,int complexity,int countForSolve) throws DaoException;
-    List<Post> findAll() throws DaoException;
+
+   boolean createNewPost(String title, String text, java.util.Date createdAt, String login, int complexity) throws DaoException ;
+        List<Post> findAll() throws DaoException;
 }

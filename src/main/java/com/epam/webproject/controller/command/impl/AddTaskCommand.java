@@ -11,26 +11,29 @@ import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.model.service.impl.PostServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
-public class AddPostCommand implements Command {
+import java.util.Date;
+
+public class AddTaskCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
         String title = request.getParameter(RequestParameter.TITLE);
         String text = request.getParameter(RequestParameter.TEXT);
         String complexity = request.getParameter(RequestParameter.COMPLEXITY);
-        String countForSolve = request.getParameter(RequestParameter.COUNT_FOR_SOLVE);
-        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
+
+//        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         PostService postService = ServiceProvider.getInstance().getPostService();
+
         try {
 
 
-            Feedback feedback = postService.createPost()
+            Feedback feedback = postService.createPost(title, text, new Date(), loginOfUser, complexity);
             Router router = new Router();
             switch (feedback) {
                 case SUCCESS: {
                     //todo messages
-                    router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
+                    router = new Router(RouterType.FORWARD, PagePath.HOME_PAGE);
                     break;
                 }
                 case DATABASE_EXCEPTION: {
@@ -50,3 +53,4 @@ public class AddPostCommand implements Command {
             throw new CommandException("Registration command error", e);
         }
     }
+}

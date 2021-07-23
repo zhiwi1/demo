@@ -22,6 +22,7 @@ public interface UserDao {
 
     public boolean existRowsByEmail(String email) throws DaoException;
     public boolean existRowsByLogin(String login) throws DaoException ;
+    public Optional<Long> findUserIdByLogin(String login) throws DaoException;
 
 
 //    Long findMaxUserId() throws DaoException;
