@@ -14,3 +14,6 @@
 2021-07-24 17:33:50 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1048). Column 'task_id' cannot be null
 2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
 2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 18:12:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 18:12:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 18:12:20 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1048). Column 'task_id' cannot be null

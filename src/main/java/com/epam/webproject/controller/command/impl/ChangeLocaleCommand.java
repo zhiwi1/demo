@@ -12,13 +12,13 @@ public static final Logger logger= LogManager.getLogger();
     @Override
     public Router execute(HttpServletRequest req) {
 
-        HttpSession SESSION = req.getSession();
-        String LOCALE = req.getParameter(RequestParameter.LOCALE);
-        String PREVIOUS_REQUEST = (String) SESSION.getAttribute(RequestAttribute.PREV_REQUEST);
-        logger.info(PREVIOUS_REQUEST);
-        SESSION.setAttribute(RequestAttribute.LOCALE, LOCALE);
+        HttpSession session = req.getSession();
+        String locale = req.getParameter(RequestParameter.LOCALE);
+        String previousRequest = (String) session.getAttribute(RequestAttribute.PREV_REQUEST);
+        logger.info(previousRequest);
+        session.setAttribute(RequestAttribute.LOCALE, locale);
 
-        Router router = new Router(RouterType.REDIRECT, PREVIOUS_REQUEST);
+        Router router = new Router(RouterType.REDIRECT, previousRequest);
         return router;
     }
 }

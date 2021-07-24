@@ -19,7 +19,7 @@ add new post
     show all posts
 </a>
 <br>
-<a  href="controller?command=go_to_login_page_command" role="button">
+<a  href="controller?command=sign_out_command" role="button">
     выйти
 </a>
 </body>

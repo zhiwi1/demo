@@ -7,8 +7,6 @@ import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.PostService;
 import com.epam.webproject.model.service.ServiceProvider;
-import com.epam.webproject.model.service.UserService;
-import com.epam.webproject.model.service.impl.PostServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Date;
@@ -16,18 +14,13 @@ import java.util.Date;
 public class AddTaskCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-
         String title = request.getParameter(RequestParameter.TITLE);
         String text = request.getParameter(RequestParameter.TEXT);
         String complexity = request.getParameter(RequestParameter.COMPLEXITY);
-
 //        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         PostService postService = ServiceProvider.getInstance().getPostService();
-
         try {
-
-
             Feedback feedback = postService.createPost(title, text, new Date(), loginOfUser, complexity);
             Router router = new Router();
             switch (feedback) {

@@ -25,7 +25,7 @@ public class RegisterUserCommand implements Command {
             switch (feedback) {
                 case SUCCESS: {
                     //todo messages
-
+request.getSession().setAttribute(RequestParameter.LOGIN,login);
                     router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
                     break;
                 }

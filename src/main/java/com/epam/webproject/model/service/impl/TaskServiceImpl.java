@@ -10,20 +10,16 @@ import com.epam.webproject.validator.PostValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PostServiceImpl implements PostService {
+public class TaskServiceImpl implements PostService {
     private static final Logger logger = LogManager.getLogger();
     private static final TaskDao taskDao = DaoProvider.getInstance().getTaskDao();
 
 
     public Feedback createPost(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException {
-
         Feedback feedback;
         if (PostValidator.checkComplexity(complexity)) {
-
             int complexityInt = Integer.parseInt(complexity);
-            int countOfSolve = Integer.parseInt(complexity);
             try {
-
                 boolean isCreated = taskDao.createNewTask(title, text, createdAt, loginOfUser, complexityInt);
                 if (isCreated) {
                     feedback = Feedback.SUCCESS;
@@ -31,8 +27,8 @@ public class PostServiceImpl implements PostService {
                     feedback = Feedback.DATABASE_EXCEPTION;
                 }
             } catch (DaoException e) {
-                logger.error("Can't create post", e.getMessage());
-                throw new ServiceException("Can't sign in", e);
+                logger.error("Can't create task", e.getMessage());
+                throw new ServiceException("Can't create task", e);
             }
 
 

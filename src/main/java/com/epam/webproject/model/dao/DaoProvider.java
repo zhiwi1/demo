@@ -1,6 +1,8 @@
 package com.epam.webproject.model.dao;
 
 
+import com.epam.webproject.model.dao.impl.AnswerDaoImpl;
+import com.epam.webproject.model.dao.impl.CommentDaoImpl;
 import com.epam.webproject.model.dao.impl.TaskDaoImpl;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
 
@@ -9,12 +11,15 @@ public class DaoProvider {
 
     private final UserDao userDao;
     private final TaskDao taskDao;
-  //  private final AnswerDao answerDao;
+    private final AnswerDao answerDao;
+    private final CommentDao commentDao;
 
 
     private DaoProvider() {
         this.userDao = new UserDaoImpl();
         this.taskDao = new TaskDaoImpl();
+        this.answerDao=new AnswerDaoImpl();
+        this.commentDao=new CommentDaoImpl();
     }
 
     public static DaoProvider getInstance() {
@@ -32,6 +37,14 @@ public class DaoProvider {
 
     public TaskDao getTaskDao() {
         return taskDao;
+    }
+
+    public AnswerDao getAnswerDao() {
+        return answerDao;
+    }
+
+    public CommentDao getCommentDao() {
+        return commentDao;
     }
 }
 

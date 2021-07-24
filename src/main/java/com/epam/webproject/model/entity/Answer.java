@@ -1,16 +1,18 @@
 package com.epam.webproject.model.entity;
 
+import java.util.Objects;
+
 public class Answer extends Entity {
     private String content;
-    private Task post;
-    private User user;
-    private int like;
+    private long like;
+    private long taskId;
+    private long userId;
 
-    public Answer(String content, Task post, User user, int like) {
+    public Answer(String content,long like, long taskId, long userId) {
         this.content = content;
-        this.post = post;
-        this.user = user;
         this.like = like;
+        this.taskId = taskId;
+        this.userId = userId;
     }
 
     public String getContent() {
@@ -21,23 +23,7 @@ public class Answer extends Entity {
         this.content = content;
     }
 
-    public Task getPost() {
-        return post;
-    }
-
-    public void setPost(Task post) {
-        this.post = post;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getLike() {
+    public long getLike() {
         return like;
     }
 
@@ -45,13 +31,42 @@ public class Answer extends Entity {
         this.like = like;
     }
 
+    public long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(long taskId) {
+        this.taskId = taskId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+//todo equals and hashcode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Answer answer = (Answer) o;
+        return like == answer.like && taskId == answer.taskId && userId == answer.userId && Objects.equals(content, answer.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content, like, taskId, userId);
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Answer{");
         sb.append("content='").append(content).append('\'');
-        sb.append(", post=").append(post);
-        sb.append(", user=").append(user);
         sb.append(", like=").append(like);
+        sb.append(", taskId=").append(taskId);
+        sb.append(", userId=").append(userId);
         sb.append('}');
         return sb.toString();
     }

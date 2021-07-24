@@ -16,7 +16,7 @@ public final class DatabaseColumnName {
     public static final String USER_STATUS = "status";
     // TASK
     public static final String TASK_TITLE="title";
-    public static final String TASK_CONTENT="content";
+    public static final String CONTENT ="content";
     public static final String USER_ID ="user_id";
     public static final String TASK_COMPLEXITY="complexity";
     public static final String TASK_COUNT_FOR_SOLVE="count_for_solve";
@@ -25,6 +25,8 @@ public final class DatabaseColumnName {
     //comment
     public static final String COMMENT="comment";
     public static final String TASK_ID="task_id";
+    //answer
+    public static final String LIKES="likes";
 
 }
 //        public static final String USER_STATUS_ID = "user_status_id";

@@ -9,6 +9,7 @@ public class CommandProvider {
     private final EnumMap<CommandType, Command> commands = new EnumMap(CommandType.class);
 
     public CommandProvider() {
+        //todo import static
         commands.put(CommandType.SIGN_UP_COMMAND, new RegisterUserCommand());
         commands.put(CommandType.SIGN_IN_COMMAND, new SignInCommand());
         commands.put(CommandType.GO_TO_LOGIN_PAGE_COMMAND,new GoToLoginPageCommand());
@@ -17,6 +18,7 @@ public class CommandProvider {
         commands.put(CommandType.CHANGE_LOCALE_COMMAND, new ChangeLocaleCommand());
         commands.put(CommandType.GO_TO_ADD_TASK_PAGE_COMMAND,new GoToAddTaskPageCommand());
         commands.put(CommandType.ADD_TASK_COMMAND,new AddTaskCommand());
+        commands.put(CommandType.SIGN_OUT_COMMAND,new SignOutCommand());
     }
 
     public static CommandProvider getInstance() {

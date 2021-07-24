@@ -19,22 +19,6 @@ public class TaskDaoImpl implements TaskDao {
     private static final String ADD_TASK = "INSERT INTO `tasks` (`title`, `content`, `created_at`,  `user_id`, `complexity`) VALUES (?, ?, ?, (SELECT users.id FROM users WHERE login=?), ?)";
     private static final String FIND_ALL = "SELECT title, content, created_at, updated_at, user_id, complexity, count_for_solve FROM tasks";
 
-    @Override
-    public boolean createNewTask(Task task) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ADD_TASK);) {
-            statement.setString(1, task.getTitle());
-            statement.setString(2, task.getText());
-            statement.setTimestamp(3,new Timestamp( task.getTimeCreatedAt().getTime()));//date
-            statement.setLong(4, task.getIdOfUser());//user_id
-            statement.setInt(5, task.getComplexity());
-
-            return (statement.executeUpdate() == 1);
-        } catch (SQLException e) {
-            logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
-            throw new DaoException("Error with creating new User. ", e);
-        }
-    }
 
     @Override
     public boolean createNewTask(String title, String text, java.util.Date createdAt, String login, int complexity) throws DaoException {
@@ -64,7 +48,7 @@ public class TaskDaoImpl implements TaskDao {
 
             while (resultSet.next()) {
                 String title = resultSet.getString(TASK_TITLE);
-                String content = resultSet.getString(TASK_CONTENT);
+                String content = resultSet.getString(CONTENT);
                 java.util.Date created_at =resultSet.getTimestamp(CREATED_AT);
                 java.util.Date updated_at=resultSet.getTimestamp(UPDATED_AT);
                 long user_id=resultSet.getLong(USER_ID);
