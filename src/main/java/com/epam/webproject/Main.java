@@ -2,8 +2,12 @@ package com.epam.webproject;
 
 import com.epam.webproject.exception.DaoException;
 
+import com.epam.webproject.model.dao.CommentDao;
 import com.epam.webproject.model.dao.TaskDao;
+import com.epam.webproject.model.dao.impl.CommentDaoImpl;
 import com.epam.webproject.model.dao.impl.TaskDaoImpl;
+import com.epam.webproject.model.dao.impl.UserDaoImpl;
+import com.epam.webproject.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,8 +16,13 @@ import java.util.Date;
 class Main {
     private final static Logger logger=LogManager.getLogger();
     public static void main(String args[]) throws DaoException {
-        TaskDao postDao=new TaskDaoImpl();
-        postDao.createNewPost("title","text",new Date(),"Qwe123",1);
+//        TaskDao postDao=new TaskDaoImpl();
+//        postDao.createNewTask("title","text",new Date(),"Qwe123",1);
+        CommentDaoImpl commentDao=new CommentDaoImpl();
+        TaskDaoImpl taskDao=new TaskDaoImpl();
+        commentDao.createNewComment("hi",new Date(),"Qwe123","title");
+        System.out.println(   commentDao.findAll().toString());
+        System.out.println(taskDao.findAll().toString());
       //  postDao.createNewPost(new Post("title","text",new Date(),null,1,6,9));
 //       Date date=new Date();
         java.util.Date date1=new java.util.Date();

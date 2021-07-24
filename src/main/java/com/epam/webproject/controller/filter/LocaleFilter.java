@@ -52,6 +52,9 @@ public class LocaleFilter implements Filter {
             if (prevRequest.equals(c + CommandType.SIGN_IN_COMMAND.toString().toLowerCase())) {
                 result = CommandType.GO_TO_LOGIN_PAGE_COMMAND.toString().toLowerCase();
             }
+            if (prevRequest.equals(c + CommandType.ADD_TASK_COMMAND.toString().toLowerCase())) {
+                result = CommandType.GO_TO_ADD_TASK_PAGE_COMMAND.toString().toLowerCase();
+            }
 
             return result;
         }

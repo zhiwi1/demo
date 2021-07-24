@@ -2,11 +2,11 @@ package com.epam.webproject.model.entity;
 
 public class Answer extends Entity {
     private String content;
-    private Post post;
+    private Task post;
     private User user;
     private int like;
 
-    public Answer(String content, Post post, User user, int like) {
+    public Answer(String content, Task post, User user, int like) {
         this.content = content;
         this.post = post;
         this.user = user;
@@ -21,11 +21,11 @@ public class Answer extends Entity {
         this.content = content;
     }
 
-    public Post getPost() {
+    public Task getPost() {
         return post;
     }
 
-    public void setPost(Post post) {
+    public void setPost(Task post) {
         this.post = post;
     }
 

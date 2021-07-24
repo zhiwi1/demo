@@ -9,6 +9,7 @@ public class DaoProvider {
 
     private final UserDao userDao;
     private final TaskDao taskDao;
+  //  private final AnswerDao answerDao;
 
 
     private DaoProvider() {

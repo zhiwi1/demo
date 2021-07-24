@@ -1,11 +1,16 @@
-2021-07-22 15:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-22 15:15:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-22 15:17:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-22 15:17:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-23 14:18:00 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-23 14:18:00 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-23 15:26:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-23 15:26:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-23 15:26:17 [main] INFO  webproject.model.dao.impl.TaskDaoImpl- SQL request error(1064). You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') VALUES ('title', 'text', '2021-07-23', (SELECT users.id FROM users WHERE login' at line 1
-2021-07-23 15:26:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-23 15:26:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:21:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:21:39 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can not proceed `SELECT comment, created_at, updated_at, user_id, post_id FROM comments` request: Unknown column 'post_id' in 'field list'
+2021-07-24 17:26:04 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 17:26:04 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:26:06 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
+2021-07-24 17:28:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 17:28:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:28:53 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
+2021-07-24 17:29:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 17:29:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:29:57 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
+2021-07-24 17:33:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 17:33:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-24 17:33:50 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1048). Column 'task_id' cannot be null
+2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver

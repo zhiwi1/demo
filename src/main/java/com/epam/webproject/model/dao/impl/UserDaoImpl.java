@@ -7,7 +7,6 @@ import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.entity.Status;
-import com.epam.webproject.model.dao.UserFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -118,7 +117,7 @@ public class UserDaoImpl implements UserDao {
              ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
 
             while (resultSet.next()) {
-                long id = resultSet.getInt(USER_ID);
+                long id = resultSet.getInt(ID);
                 String login = resultSet.getString(USER_LOGIN);
                 String email = resultSet.getString(USER_EMAIL);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
@@ -177,7 +176,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long id = resultSet.getInt(USER_ID);
+                long id = resultSet.getInt(ID);
                 String login = resultSet.getString(USER_LOGIN);
                 String resultEmail = resultSet.getString(USER_EMAIL);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
@@ -209,7 +208,7 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_USER_ID_BY_LOGIN);) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            result = Optional.of(resultSet.getLong(USER_ID));
+            result = Optional.of(resultSet.getLong(ID));
         } catch (SQLException e) {
             logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
             throw new DaoException("Error with search of id. ", e);

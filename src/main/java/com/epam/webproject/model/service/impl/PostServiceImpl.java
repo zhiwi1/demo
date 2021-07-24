@@ -24,7 +24,7 @@ public class PostServiceImpl implements PostService {
             int countOfSolve = Integer.parseInt(complexity);
             try {
 
-                boolean isCreated = taskDao.createNewPost(title, text, createdAt, loginOfUser, complexityInt);
+                boolean isCreated = taskDao.createNewTask(title, text, createdAt, loginOfUser, complexityInt);
                 if (isCreated) {
                     feedback = Feedback.SUCCESS;
                 } else {

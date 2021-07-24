@@ -3,7 +3,7 @@ package com.epam.webproject.model.entity;
 
 import java.util.Date;
 
-public class Post extends Entity {
+public class Task extends Entity {
     private String title;
     private String text;
     private Date timeCreatedAt;
@@ -12,7 +12,7 @@ public class Post extends Entity {
     private int complexity;
     private int countForSolve;
 
-    public Post(String title, String text, Date timeCreatedAt, Date timeUpdatedAt, long idOfUser, int complexity, int countForSolve) {
+    public Task(String title, String text, Date timeCreatedAt, Date timeUpdatedAt, long idOfUser, int complexity, int countForSolve) {
         this.title = title;
         this.text = text;
         this.timeCreatedAt = timeCreatedAt;

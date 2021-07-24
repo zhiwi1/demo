@@ -28,7 +28,7 @@ public class UserFactory {
     }
 
     public User createUser(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getInt(USER_ID);
+        long id = resultSet.getInt(ID);
         String login = resultSet.getString(USER_LOGIN);
         String email = resultSet.getString(USER_EMAIL);
         int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
