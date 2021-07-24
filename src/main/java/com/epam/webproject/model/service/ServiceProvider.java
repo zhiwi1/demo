@@ -8,13 +8,13 @@ import com.epam.webproject.model.service.impl.UserServiceImpl;
 public class ServiceProvider {
     private static ServiceProvider instance;
     private final UserService userService;
-    private final PostService postService;
+    private final TaskService taskService;
     private final CommentService commentService;
     private final AnswerService answerService;
 
     //todo other services
     private ServiceProvider() {
-        this.postService = new TaskServiceImpl();
+        this.taskService = new TaskServiceImpl();
         this.userService = new UserServiceImpl();
         this.commentService = new CommentServiceImpl();
         this.answerService=new AnswerServiceImpl();
@@ -32,8 +32,8 @@ public class ServiceProvider {
         return this.userService;
     }
 
-    public PostService getPostService() {
-        return this.postService;
+    public TaskService getTaskService() {
+        return this.taskService;
     }
 
     public CommentService getCommentService() {

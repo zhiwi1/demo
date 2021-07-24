@@ -11,16 +11,9 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/templates/header.jsp"/>
-<a href="controller?command=go_to_add_task_page_command"  role="button">
-add new post
-</a>
-<br>
-<a href="controller?command=show_all_tasks_command"  role="button">
-    show all tasks
-</a>
-<br>
-<a  href="controller?command=sign_out_command" role="button">
-    выйти
-</a>
+<body>
+<c:forEach var="task" items="${tasks}">
+    <p>${task}</p>
+</c:forEach>
 </body>
 </html>

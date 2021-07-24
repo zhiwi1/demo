@@ -4,12 +4,8 @@ import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.service.AnswerService;
-import com.epam.webproject.model.service.Feedback;
-import com.epam.webproject.model.service.PostService;
 import com.epam.webproject.model.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Date;
 
 public class AddAnswerCommand implements Command {
     @Override

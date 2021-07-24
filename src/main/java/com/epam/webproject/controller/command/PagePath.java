@@ -7,6 +7,7 @@ public final class PagePath {
     public static final String LOGIN_PAGE= "/WEB-INF/jsp/login.jsp";
     public static final String REGISTRATION_PAGE="/WEB-INF/jsp/registration.jsp";
     public static final String ADD_TASK_PAGE ="/WEB-INF/jsp/addtask.jsp";
+    public static final String ALL_TASKS_PAGE="/WEB-INF/jsp/alltasks.jsp";
 
 
     private PagePath() {

@@ -25,7 +25,7 @@ public class RegisterUserCommand implements Command {
             switch (feedback) {
                 case SUCCESS: {
                     //todo messages
-request.getSession().setAttribute(RequestParameter.LOGIN,login);
+                    request.getSession().setAttribute(RequestParameter.LOGIN, login);
                     router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
                     break;
                 }
@@ -36,7 +36,7 @@ request.getSession().setAttribute(RequestParameter.LOGIN,login);
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
-                 //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
+                    //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
                     router = new Router(RouterType.FORWARD, PagePath.REGISTRATION_PAGE);
                     break;
                 }

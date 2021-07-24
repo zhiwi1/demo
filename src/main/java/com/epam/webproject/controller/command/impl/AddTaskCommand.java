@@ -5,7 +5,7 @@ import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ServiceException;
 
 import com.epam.webproject.model.service.Feedback;
-import com.epam.webproject.model.service.PostService;
+import com.epam.webproject.model.service.TaskService;
 import com.epam.webproject.model.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,9 +19,9 @@ public class AddTaskCommand implements Command {
         String complexity = request.getParameter(RequestParameter.COMPLEXITY);
 //        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
-        PostService postService = ServiceProvider.getInstance().getPostService();
+        TaskService postService = ServiceProvider.getInstance().getTaskService();
         try {
-            Feedback feedback = postService.createPost(title, text, new Date(), loginOfUser, complexity);
+            Feedback feedback = postService.createTask(title, text, new Date(), loginOfUser, complexity);
             Router router = new Router();
             switch (feedback) {
                 case SUCCESS: {

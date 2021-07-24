@@ -13,4 +13,5 @@ public enum CommandType {
     SIGN_OUT_COMMAND,
     ADD_ANSWER_COMMAND,
     ADD_COMMENT_COMMAND;
+
 }
