@@ -7,13 +7,23 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title>Home</title>
+    <title>All tasks</title>
 </head>
 <body>
-<jsp:include page="/WEB-INF/jsp/templates/header.jsp"/>
+<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
+<form name="add-post-form" method="POST" action="controller?command=add_task_command">
+    FIND
+ <input type="text" name="search">
+
+    <button type="submit"> <fmt:message key="addpost.submit" bundle="${ rb }" /></button>
+</form>
+<a href="controller?command=go_to_home_page_command">
+    Вернуться на домашнюю страницу
+</a>
 <c:forEach var="task" items="${tasks}">
-    <p>${task}</p>
+    <p>${task.title}</p>
+    <a href="controller?command=go_to_task_page_command" ></a> <p>Подробнее</p></a>
 </c:forEach>
 </body>
 </html>

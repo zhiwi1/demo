@@ -5,29 +5,18 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
 <fmt:setBundle basename="locale" var="rb" />
+
 <html>
 <head>
-    <title>Home</title>
+    <title>Profile</title>
 </head>
 <body>
 <c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
-<a href="controller?command=go_to_add_task_page_command"  role="button">
-add new task
-</a>
-<br>
-<a href="controller?command=show_all_tasks_command"  role="button">
-    show all tasks
-</a>
-<br>
-<c:out value="${role}"/>
-<c:if test = "${role == 'ADMIN'}">
+<body>
+<c:out value="${user}"/>;
 
-<a href="controller?command=show_all_users_command">
-    show all users
-</a>
-</c:if>
-<a  href="controller?command=sign_out_command" role="button">
-    выйти
+<a href="controller?command=go_to_home_page_command">
+    Вернуться на домашнюю страницу
 </a>
 
 </body>

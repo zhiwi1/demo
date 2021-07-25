@@ -16,10 +16,10 @@ public class RoleFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
-        Role role = (Role) session.getAttribute(RequestAttribute.ROLE);
+        String role = (String) session.getAttribute(RequestAttribute.ROLE);
 
         if (role == null) {
-            session.setAttribute(RequestAttribute.ROLE, Role.USER);
+            session.setAttribute(RequestAttribute.ROLE, Role.ADMIN.getValue());
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

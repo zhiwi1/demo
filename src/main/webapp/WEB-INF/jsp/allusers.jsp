@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Иван
-  Date: 7/21/2021
-  Time: 3:33 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -14,24 +7,23 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title>Add post</title>
+    <title>All users</title>
 </head>
 <body>
 <c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
-
+<body>
 <form name="add-post-form" method="POST" action="controller?command=add_task_command">
-    <fmt:message key="addpost.title" bundle="${ rb }" /> <input type="text" name="title">
-<%--    <input type="hidden" name="command" value=""/>--%>
-    <br/> <fmt:message key="addpost.text" bundle="${ rb }" />
-    <input type="text" name="text" value=""/>
-    <br/><fmt:message key="addpost.complexity" bundle="${ rb }" />
-    <input type="text" name="complexity" value="">
-
-    <br/>
-
+    FIND
+    <input type="text" name="search">
 
     <button type="submit"> <fmt:message key="addpost.submit" bundle="${ rb }" /></button>
 </form>
-
+<a href="controller?command=go_to_home_page_command">
+    Вернуться на домашнюю страницу
+</a>
+<c:forEach var="user" items="${users}">
+    <p>${user}</p>
+    <a href="controller?command=go_to_user_page_command" ></a> <p>Подробнее</p></a>
+</c:forEach>
 </body>
 </html>

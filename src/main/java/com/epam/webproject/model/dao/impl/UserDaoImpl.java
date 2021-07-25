@@ -3,6 +3,7 @@ package com.epam.webproject.model.dao.impl;
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
 import com.epam.webproject.model.dao.UserDao;
+import com.epam.webproject.model.dao.UserFactory;
 import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
@@ -17,9 +18,11 @@ import java.util.*;
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 public class UserDaoImpl implements UserDao {
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger();
 
-    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE email = ? AND password = ?";
+    private static final String FIND_USER_BY_LOGIN = "SELECT id, email, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE login = ? ";
+
+    private static final String FIND_USER_BY_EMAIL = "SELECT id, login, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE email = ? ";
 
     private static final String FIND_LOGIN_DATA_BY_LOGIN = "SELECT password_hash,salt FROM users WHERE login = ?";
 
@@ -33,7 +36,6 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count`FROM `users`WHERE `users`.`email`=?";
     private static final String SQL_COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
     private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
-
 
 
     @Override
@@ -109,7 +111,7 @@ public class UserDaoImpl implements UserDao {
         return resultMap;
     }
 
-
+    @Override
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -135,7 +137,7 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
-
+    @Override
     public boolean createNewUser(User user, String password, String salt) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_USER);) {
@@ -167,31 +169,47 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-
-    public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
+    @Override
+    public Optional<User> findByLogin(String login) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_LOGIN)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getInt(ID);
+                String email = resultSet.getString(USER_EMAIL);
+                int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
+                RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase());
+                //todo not upper case
+                Status status = Status.valueOf(resultSet.getString(USER_STATUS));
+                User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
+                userOptional = Optional.of(user);
+            }
+        } catch (SQLException e) {
+            logger.error("Can't find", e);
+            throw new DaoException(e);
+        }
+        return userOptional;
+    }
+    @Override
+    public Optional<User> findByEmail(String email) throws DaoException {
+        Optional<User> userOptional = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getInt(ID);
                 String login = resultSet.getString(USER_LOGIN);
-                String resultEmail = resultSet.getString(USER_EMAIL);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
-                Role userRole = null;
-                int roleId = resultSet.getInt(USER_ROLE);
-                if (roleId == 1) {
-                    userRole = Role.ADMIN;
-                } else if (roleId == 2) {
-                    userRole = Role.USER;
-                }
-                RatesType ratesType = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-
-
-                //   User user = new User(id, login, email, countOfSolve, userRole, ratesType);
-                //   userOptional = Optional.of(user);
+                RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase());
+                //todo not upper case
+                Status status = Status.valueOf(resultSet.getString(USER_STATUS));
+                User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
+                userOptional = Optional.of(user);
             }
         } catch (SQLException e) {
             logger.error("Can't find", e);

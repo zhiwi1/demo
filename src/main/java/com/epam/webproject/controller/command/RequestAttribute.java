@@ -9,6 +9,8 @@ public final class RequestAttribute {
     public static final String ROLE = "role";
     public static final String TITLE = "title";
     public static final String TASKS = "tasks";
+    public static final String USER = "user";
+    public static final String USERS="users";
 
     private RequestAttribute() {
     }

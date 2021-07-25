@@ -20,6 +20,18 @@
             <button form="localeForm" type="submit" name="locale" value="en">
                 <img class="image-header-dropdown" src="static/image/en.png"/></button>
         </li>
+        <li>
+            <c:if test="${ not empty login }" var = "firstOperation" scope = "page">
+                <a href="controller?command=find_profile_info_command">
+                    Профиль
+                </a>
+            </c:if>
+        </li>
     </ul>
+
+    <br/>
+
+
+    
 
 </header>

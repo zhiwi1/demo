@@ -10,7 +10,7 @@
     <title><fmt:message key="registration.registration" bundle="${ rb }"/></title>
 </head>
 <body>
-<jsp:include page="/WEB-INF/jsp/templates/header.jsp"/>
+<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <form name="reg-form" method="POST" action="controller?command=sign_up_command">
     <fmt:message key="registration.email" bundle="${ rb }" /> <input type="text" name="email">
     <input type="hidden" name="command" value="register"/>

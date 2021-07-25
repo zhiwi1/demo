@@ -3,11 +3,18 @@ package com.epam.webproject;
 import com.epam.webproject.exception.DaoException;
 
 import com.epam.webproject.model.dao.CommentDao;
+import com.epam.webproject.model.dao.DaoProvider;
 import com.epam.webproject.model.dao.TaskDao;
+import com.epam.webproject.model.dao.UserDao;
 import com.epam.webproject.model.dao.impl.CommentDaoImpl;
 import com.epam.webproject.model.dao.impl.TaskDaoImpl;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
+import com.epam.webproject.model.email.MailSender;
+import com.epam.webproject.model.entity.RatesType;
+import com.epam.webproject.model.entity.Role;
+import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.User;
+import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,11 +25,17 @@ class Main {
     public static void main(String args[]) throws DaoException {
 //        TaskDao postDao=new TaskDaoImpl();
 //        postDao.createNewTask("title","text",new Date(),"Qwe123",1);
-        CommentDaoImpl commentDao=new CommentDaoImpl();
-        TaskDaoImpl taskDao=new TaskDaoImpl();
-        commentDao.createNewComment("hi",new Date(),"Qwe123","title");
-        System.out.println(   commentDao.findAll().toString());
-        System.out.println(taskDao.findAll().toString());
+        UserDao dao= DaoProvider.getInstance().getUserDao();
+        String salt=PasswordEncryptor.getInstance().generateSalt();
+        dao.createNewUser(new User(14,"admin","zhyuliuk.ivan@gmail.com",0, Role.ADMIN, RatesType.PROFESSIONAL, Status.NORMAL),PasswordEncryptor.getInstance().getHash("1",salt), salt);
+        System.out.println(  dao.findByLogin("Qwe123"));
+      //  MailSender sender=new MailSender();
+        //MailSender.send("zhyuliuk.ivan@gmail.com","hello)))");
+//        CommentDaoImpl commentDao=new CommentDaoImpl();
+//        TaskDaoImpl taskDao=new TaskDaoImpl();
+//        commentDao.createNewComment("hi",new Date(),"Qwe123","title");
+//        System.out.println(   commentDao.findAll().toString());
+//        System.out.println(taskDao.findAll().toString());
       //  postDao.createNewPost(new Post("title","text",new Date(),null,1,6,9));
 //       Date date=new Date();
         java.util.Date date1=new java.util.Date();

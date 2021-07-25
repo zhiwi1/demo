@@ -2,6 +2,7 @@ package com.epam.webproject.model.service.impl;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,10 +13,7 @@ import com.epam.webproject.model.dao.DaoProvider;
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 import com.epam.webproject.model.dao.UserDao;
-import com.epam.webproject.model.entity.User;
-import com.epam.webproject.model.entity.RatesType;
-import com.epam.webproject.model.entity.Role;
-import com.epam.webproject.model.entity.Status;
+import com.epam.webproject.model.entity.*;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.util.PasswordEncryptor;
@@ -108,5 +106,32 @@ public class UserServiceImpl implements UserService {
         }
         return feedback;
     }
+
+    @Override
+    public Optional<User> findByLoginOrEmail(String loginOrEmail) throws ServiceException {
+        Optional<User> userOptional = Optional.empty();
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try {
+            if (UserValidator.checkEmail(loginOrEmail)) {
+                userOptional = (userDao.findByEmail(loginOrEmail));
+            } else {
+                userOptional = userDao.findByLogin(loginOrEmail);
+            }
+            return userOptional;
+        } catch (DaoException e) {
+            throw new ServiceException("Error occured when finding user by login " + loginOrEmail + " :" + e.getMessage(), e);
+        }
+    }
+    public List<User> showAllUsers() throws ServiceException {
+        try {
+            List<User> users = userDao.findAll();
+            return users;
+        } catch (DaoException e) {
+            logger.error("Can't create task", e.getMessage());
+            throw new ServiceException("Can't create task", e);
+        }
+
+    }
+
 }
 //}

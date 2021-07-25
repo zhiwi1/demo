@@ -1,19 +1,43 @@
-2021-07-24 17:21:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 17:21:39 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can not proceed `SELECT comment, created_at, updated_at, user_id, post_id FROM comments` request: Unknown column 'post_id' in 'field list'
-2021-07-24 17:26:04 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 17:26:04 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 17:26:06 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
-2021-07-24 17:28:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 17:28:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 17:28:53 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
-2021-07-24 17:29:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 17:29:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 17:29:57 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1062). Duplicate entry '4' for key 'comments.post_id_UNIQUE'
-2021-07-24 17:33:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 17:33:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 17:33:50 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1048). Column 'task_id' cannot be null
-2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 17:34:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 18:12:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
-2021-07-24 18:12:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-24 18:12:20 [main] INFO  webproject.model.dao.impl.CommentDaoImpl- SQL request error(1048). Column 'task_id' cannot be null
+2021-07-25 17:25:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:25:37 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:25:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:25:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:26:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:26:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:26:08 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can't find
+java.sql.SQLException: Column 'login' not found.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.findColumn(ResultSetImpl.java:581) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:888) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.UserFactory.createUser(UserFactory.java:32) ~[classes/:?]
+	at com.epam.webproject.model.dao.impl.UserDaoImpl.findByLogin(UserDaoImpl.java:178) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:25) [classes/:?]
+2021-07-25 17:27:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:27:30 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:27:32 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can't find
+java.sql.SQLException: Column 'login' not found.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.findColumn(ResultSetImpl.java:581) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:888) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.UserFactory.createUser(UserFactory.java:32) ~[classes/:?]
+	at com.epam.webproject.model.dao.impl.UserDaoImpl.findByLogin(UserDaoImpl.java:178) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:25) [classes/:?]
+2021-07-25 17:28:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:28:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:29:45 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:29:45 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:30:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:30:07 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 17:30:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 17:30:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 19:15:26 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 19:15:26 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 19:23:46 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-25 19:23:46 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 19:23:47 [main] INFO  webproject.model.dao.impl.UserDaoImpl- SQL request error(1062). Duplicate entry '14' for key 'users.PRIMARY'

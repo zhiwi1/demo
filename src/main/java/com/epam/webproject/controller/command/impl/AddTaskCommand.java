@@ -37,13 +37,13 @@ public class AddTaskCommand implements Command {
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
                     //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
-                    router = new Router(RouterType.FORWARD, PagePath.REGISTRATION_PAGE);
+                    router = new Router(RouterType.FORWARD, PagePath.ADD_TASK_PAGE);
                     break;
                 }
             }
             return router;
         } catch (ServiceException e) {
-            throw new CommandException("Registration command error", e);
+            throw new CommandException("Add task error", e);
         }
     }
 }

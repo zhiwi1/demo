@@ -12,8 +12,6 @@ import java.util.Optional;
 public interface UserDao {
     List<User> findAll() throws DaoException;
 
-    //public Optional<String> findLoginDataByEmail(String email) throws DaoException;
-
     boolean createNewUser(User user, String password, String salt) throws DaoException;
 
     public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException;
@@ -21,21 +19,13 @@ public interface UserDao {
     public Map<String, Optional<String>> findUserLoginDataByEmail(String email) throws DaoException;
 
     public boolean existRowsByEmail(String email) throws DaoException;
-    public boolean existRowsByLogin(String login) throws DaoException ;
+
+    public boolean existRowsByLogin(String login) throws DaoException;
+
     public Optional<Long> findUserIdByLogin(String login) throws DaoException;
 
+    public Optional<User> findByLogin(String login) throws DaoException;
 
-//    Long findMaxUserId() throws DaoException;
-//
-//    Optional<User> findByEmailAndPassword(String email, String password) throws DaoException;
-//
-//    Optional<User> findByEmail(String email) throws DaoException;
-//
-//    boolean addUser(User user, String password) throws DaoException;
-//
-//    boolean updatePassword(String password, Long userId) throws DaoException;
-//
-//    boolean updateNameAndSurname(User user) throws DaoException;
-
+    public Optional<User> findByEmail(String email) throws DaoException;
 }
 
