@@ -205,8 +205,7 @@ public class UserDaoImpl implements UserDao {
                 String login = resultSet.getString(USER_LOGIN);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
                 RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-                Role role = Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase());
-                //todo not upper case
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
                 User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
                 userOptional = Optional.of(user);

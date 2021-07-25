@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="customtag" prefix="mytag" %>
 <header class="header flex flex__justify-content_space-between flex__align-items_center">
     <script type = "text/javascript" >
         function preventBack(){window.history.forward();}
@@ -27,9 +28,11 @@
                 </a>
             </c:if>
         </li>
+
     </ul>
 
     <br/>
+    <mytag:image/>
 
 
     
