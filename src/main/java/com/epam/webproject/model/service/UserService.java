@@ -14,6 +14,10 @@ public interface UserService {
     public boolean signInUser(String loginOrEmail, String password) throws ServiceException;
 
     public Optional<User> findByLoginOrEmail(String login) throws ServiceException;
+
     public List<User> showAllUsers() throws ServiceException;
 
-}
+    public boolean updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail) throws ServiceException ;
+
+
+    }

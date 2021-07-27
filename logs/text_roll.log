@@ -1,2 +1,2 @@
-2021-07-25 20:08:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
-2021-07-25 20:08:52 [main] INFO  webproject.model.dao.impl.UserDaoImpl- SQL request error(1062). Duplicate entry '14' for key 'users.PRIMARY'
+2021-07-28 00:30:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-28 00:30:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver

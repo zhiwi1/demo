@@ -21,7 +21,13 @@ public class CommandProvider {
         commands.put(CommandType.SIGN_OUT_COMMAND, new SignOutCommand());
         commands.put(CommandType.SHOW_ALL_TASKS_COMMAND, new ShowAllTasksCommand());
         commands.put(CommandType.FIND_PROFILE_INFO_COMMAND, new FindProfileInfoCommand());
-        commands.put(CommandType.SHOW_ALL_USERS_COMMAND,new ShowAllUsersCommand());
+        commands.put(CommandType.SHOW_ALL_USERS_COMMAND, new ShowAllUsersCommand());
+        commands.put(CommandType.FIND_EDITING_INFO_COMMAND, new FindEditingInfoCommand());
+        commands.put(CommandType.EDIT_PAGE_COMMAND, new EditPageCommand());
+        commands.put(CommandType.OPEN_TASK_PAGE_COMMAND, new OpenTaskPageCommand());
+        commands.put(CommandType.ADD_COMMENT_COMMAND, new AddCommentCommand());
+        commands.put(CommandType.ADD_ANSWER_COMMAND, new AddAnswerCommand());
+        commands.put(CommandType.TASK_FULL_TEXT_SEARCH_COMMAND,new TasksFullTextSearchCommand());
     }
 
     public static CommandProvider getInstance() {

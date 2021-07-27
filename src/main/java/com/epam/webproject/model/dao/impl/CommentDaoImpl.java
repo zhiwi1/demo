@@ -10,8 +10,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
@@ -20,7 +22,9 @@ public class CommentDaoImpl implements CommentDao {
     private static final Logger logger = LogManager.getLogger();
     private static final String ADD_СOMMENT = "INSERT INTO `comments` (`created_at`,`comment`,`task_id` , `user_id`) VALUES (?, ?,(SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
     private static final String FIND_ALL = "SELECT comment, created_at, updated_at, user_id, task_id FROM comments";
-
+    private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at,updated_at , login FROM comments " +
+            " JOIN `users` ON `users`.`id` = `comments`.`user_id`" +
+            "WHERE comments.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?) ";
 
     public boolean createNewComment(String text, java.util.Date createdAt, String login, String title) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -51,7 +55,7 @@ public class CommentDaoImpl implements CommentDao {
                 long user_id = resultSet.getLong(USER_ID);
                 long task_id = resultSet.getLong(TASK_ID);
 
-                Comment comment = new Comment( commentContent,created_at, updated_at, user_id,task_id);
+                Comment comment = new Comment(commentContent, created_at, updated_at, user_id, task_id);
                 comments.add(comment);
             }
         } catch (SQLException e) {
@@ -61,6 +65,29 @@ public class CommentDaoImpl implements CommentDao {
         //   return users;
         return comments;
     }
+
+    @Override
+    public ArrayDeque<Comment> findCommentsByTitle(String title) throws DaoException {
+        ArrayDeque<Comment> arrayDeque = new ArrayDeque<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_COMMENTS_BY_TASK_TITLE)) {
+            preparedStatement.setString(1, title);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String commentContent = resultSet.getString(COMMENT);
+                java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
+                java.util.Date updated_at = resultSet.getTimestamp(UPDATED_AT);
+                String login = resultSet.getString(USER_LOGIN);
+                Comment comment = new Comment(commentContent, created_at, updated_at, login);
+                arrayDeque.add(comment);
+            }
+        } catch (SQLException e) {
+            logger.error("Can't find", e);
+            throw new DaoException(e);
+        }
+        return arrayDeque;
+    }
+
 }
 
 

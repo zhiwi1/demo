@@ -1,0 +1,48 @@
+2021-07-27 18:42:43 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:42:43 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 18:42:45 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'tasks.id' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitle(CommentDaoImpl.java:75) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:34) [classes/:?]
+2021-07-27 18:43:22 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:43:22 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 18:43:23 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'tasks.title' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitle(CommentDaoImpl.java:75) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:34) [classes/:?]
+2021-07-27 18:43:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:43:36 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 21:47:08 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 21:47:08 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 21:52:20 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 21:52:20 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 21:57:23 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 21:57:23 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-28 00:29:42 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-28 00:29:42 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-28 00:29:44 [main] ERROR webproject.model.dao.impl.AnswerDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'answers.content' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.AnswerDaoImpl.findAnswersByTitle(AnswerDaoImpl.java:71) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:35) [classes/:?]
+2021-07-28 00:30:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-28 00:30:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-28 00:30:18 [main] ERROR webproject.model.dao.impl.AnswerDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'content' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.AnswerDaoImpl.findAnswersByTitle(AnswerDaoImpl.java:71) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:35) [classes/:?]

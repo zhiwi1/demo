@@ -2,11 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="customtag" prefix="mytag" %>
 <header class="header flex flex__justify-content_space-between flex__align-items_center">
-    <script type = "text/javascript" >
-        function preventBack(){window.history.forward();}
-        setTimeout("preventBack()", 0);
-        window.onunload=function(){null};
-    </script>
+<%--    <script type = "text/javascript" >--%>
+<%--        function preventBack(){window.history.forward();}--%>
+<%--        setTimeout("preventBack()", 0);--%>
+<%--        window.onunload=function(){null};--%>
+<%--    </script>--%>
 
     <form id="localeForm" action="controller" method="post">
         <input type="hidden" name="command" value="change_locale_command">

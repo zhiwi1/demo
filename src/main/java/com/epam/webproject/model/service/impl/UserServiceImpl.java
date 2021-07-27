@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error occured when finding user by login " + loginOrEmail + " :" + e.getMessage(), e);
         }
     }
+
     public List<User> showAllUsers() throws ServiceException {
         try {
             List<User> users = userDao.findAll();
@@ -131,6 +132,27 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can't create task", e);
         }
 
+    }
+
+    @Override
+    public boolean updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail) throws ServiceException {
+        boolean result = false;
+        boolean isLoginExists = false;
+        boolean isEmailExists = false;
+        try {
+            if (!newLogin.equals(oldLogin)) {
+                isLoginExists = userDao.existRowsByLogin(newLogin);
+            }
+            if (!newEmail.equals(oldEmail) && UserValidator.checkEmail(newEmail)) {
+                isEmailExists = userDao.existRowsByEmail(newEmail);
+            }
+            if (!isLoginExists && !isEmailExists) {
+                result = userDao.updateUserName(newLogin, newEmail, oldLogin);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return result;
     }
 
 }

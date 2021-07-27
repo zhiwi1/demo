@@ -7,6 +7,7 @@ public class Comment  extends Entity{
     private String text;
     private Date timeCreatedAt;
     private Date timeUpdatedAt;
+    private String loginOfUser;
     private long userId;
     private long postId;
 
@@ -17,6 +18,15 @@ public class Comment  extends Entity{
         this.userId = userId;
         this.postId = postId;
     }
+
+    public Comment(String text, Date timeCreatedAt, Date timeUpdatedAt, String loginOfUser) {
+        this.text = text;
+        this.timeCreatedAt = timeCreatedAt;
+        this.timeUpdatedAt = timeUpdatedAt;
+        this.loginOfUser = loginOfUser;
+    }
+
+
 
     public String getText() {
         return text;
@@ -58,6 +68,14 @@ public class Comment  extends Entity{
         this.postId = postId;
     }
 
+    public String getLoginOfUser() {
+        return loginOfUser;
+    }
+
+    public void setLoginOfUser(String loginOfUser) {
+        this.loginOfUser = loginOfUser;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,8 +95,7 @@ public class Comment  extends Entity{
         sb.append("text='").append(text).append('\'');
         sb.append(", timeCreatedAt=").append(timeCreatedAt);
         sb.append(", timeUpdatedAt=").append(timeUpdatedAt);
-        sb.append(", userId=").append(userId);
-        sb.append(", postId=").append(postId);
+        sb.append(", loginOfUser='").append(loginOfUser).append('\'');
         sb.append('}');
         return sb.toString();
     }

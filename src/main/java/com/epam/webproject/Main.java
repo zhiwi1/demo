@@ -2,10 +2,7 @@ package com.epam.webproject;
 
 import com.epam.webproject.exception.DaoException;
 
-import com.epam.webproject.model.dao.CommentDao;
-import com.epam.webproject.model.dao.DaoProvider;
-import com.epam.webproject.model.dao.TaskDao;
-import com.epam.webproject.model.dao.UserDao;
+import com.epam.webproject.model.dao.*;
 import com.epam.webproject.model.dao.impl.CommentDaoImpl;
 import com.epam.webproject.model.dao.impl.TaskDaoImpl;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
@@ -21,32 +18,39 @@ import org.apache.logging.log4j.Logger;
 import java.util.Date;
 
 class Main {
-    private final static Logger logger=LogManager.getLogger();
+    private final static Logger logger = LogManager.getLogger();
+
     public static void main(String args[]) throws DaoException {
 //        TaskDao postDao=new TaskDaoImpl();
 //        postDao.createNewTask("title","text",new Date(),"Qwe123",1);
-        UserDao dao= DaoProvider.getInstance().getUserDao();
-        String salt=PasswordEncryptor.getInstance().generateSalt();
-        dao.createNewUser(new User(14,"admin","zhyuliuk.ivan@gmail.com",0, Role.ADMIN, RatesType.PROFESSIONAL, Status.NORMAL),PasswordEncryptor.getInstance().getHash("1",salt), salt);
-        System.out.println(  dao.findByLogin("Qwe123"));
-      //  MailSender sender=new MailSender();
+//        UserDao dao= DaoProvider.getInstance().getUserDao();
+//        String salt=PasswordEncryptor.getInstance().generateSalt();
+//        dao.createNewUser(new User(14,"admin","zhyuliuk.ivan@gmail.com",0, Role.ADMIN, RatesType.PROFESSIONAL, Status.NORMAL),PasswordEncryptor.getInstance().getHash("1",salt), salt);
+//        System.out.println(  dao.findByLogin("Qwe123"));
+//        CommentDao dao = DaoProvider.getInstance().getCommentDao();
+//        dao.createNewComment("hello",new Date(),"login","12");
+//        System.out.println(dao.findCommentsByTitle("12"));
+        AnswerDao dao=DaoProvider.getInstance().getAnswerDao();
+        dao.createNewAnswer("content","12","login");
+        System.out.println(  dao.findAnswersByTitle("12"));
+        //  MailSender sender=new MailSender();
         //MailSender.send("zhyuliuk.ivan@gmail.com","hello)))");
 //        CommentDaoImpl commentDao=new CommentDaoImpl();
 //        TaskDaoImpl taskDao=new TaskDaoImpl();
 //        commentDao.createNewComment("hi",new Date(),"Qwe123","title");
 //        System.out.println(   commentDao.findAll().toString());
 //        System.out.println(taskDao.findAll().toString());
-      //  postDao.createNewPost(new Post("title","text",new Date(),null,1,6,9));
+        //  postDao.createNewPost(new Post("title","text",new Date(),null,1,6,9));
 //       Date date=new Date();
-        java.util.Date date1=new java.util.Date();
+        java.util.Date date1 = new java.util.Date();
         System.out.println(date1.toString());
 //        java.sql.Date date=new java.sql.Date(date1.);
 //        System.out.println( date);
-    // Optional<User> user= dao.findUserByLoginAndPassword("2362","2S@1a.com");
-       //(new User(12,"2362","2S@1a.com",0, Role.ADMIN,RatesType.NEWBIE,Status.NORMAL),"123","23");
+        // Optional<User> user= dao.findUserByLoginAndPassword("2362","2S@1a.com");
+        //(new User(12,"2362","2S@1a.com",0, Role.ADMIN,RatesType.NEWBIE,Status.NORMAL),"123","23");
         ///dao.createNewUser(new User(4,"m2ila3","2mi1l1a@11a.com",0, Role.USER, RatesType.HARDWORKER, Status.BLOCKED),"qwe123","123");
-       // System.out.println( user);
-       // System.out.println(  dao.existRowsByEmail("12@j1.com"));
+        // System.out.println( user);
+        // System.out.println(  dao.existRowsByEmail("12@j1.com"));
 //     PasswordEncryptor encryptor=   PasswordEncryptor.getInstance();
 //        System.out.println(encryptor.getHash("milena    "));
 //        UserService service=new UserServiceImpl();
@@ -61,8 +65,6 @@ class Main {
 //        } catch (ClassNotFoundException exception) {
 //            exception.printStackTrace();
 //        }
-
-
 
 
 //try {
@@ -104,7 +106,7 @@ class Main {
 //                    resultSet.updateString(3, "mail");
 //                    resultSet.insertRow();
 //                    while (resultSet.next()) {
-                        //insert
+        //insert
 ////
 //                        long id = resultSet.getLong(1);
 //                        System.out.println(id);
@@ -112,7 +114,7 @@ class Main {
 //                            resultSet.updateLong(1, 23);
 //                            resultSet.updateRow();
 //                        }
-                        //get
+        //get
 //                            long id = resultSet.getLong(1);
 //                        String login = resultSet.getString(2);
 //                        users.add(new User(id, login, "", 0, RoleType.valueOf("user".toUpperCase()), RatesType.valueOf("newbie".toUpperCase())));
@@ -121,9 +123,6 @@ class Main {
 //                    }
 //                System.out.println(users.toString());
 //                }catch (SQLException e){};
-
-
-
 
 
     }

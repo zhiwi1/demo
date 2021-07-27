@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Answer extends Entity {
     private String content;
     private long like;
+    private String userLogin;
     private long taskId;
     private long userId;
 
@@ -13,6 +14,12 @@ public class Answer extends Entity {
         this.like = like;
         this.taskId = taskId;
         this.userId = userId;
+    }
+
+    public Answer(String content, long like, String userLogin) {
+        this.content = content;
+        this.like = like;
+        this.userLogin = userLogin;
     }
 
     public String getContent() {
@@ -65,8 +72,7 @@ public class Answer extends Entity {
         final StringBuilder sb = new StringBuilder("Answer{");
         sb.append("content='").append(content).append('\'');
         sb.append(", like=").append(like);
-        sb.append(", taskId=").append(taskId);
-        sb.append(", userId=").append(userId);
+        sb.append(", userLogin='").append(userLogin).append('\'');
         sb.append('}');
         return sb.toString();
     }

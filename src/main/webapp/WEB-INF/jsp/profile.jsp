@@ -15,6 +15,7 @@
 <body>
 <c:out value="${user}"/>;
 
+<a href="controller?command=find_editing_info_command">Редактировать страницу</a>
 <a href="controller?command=go_to_home_page_command">
     Вернуться на домашнюю страницу
 </a>

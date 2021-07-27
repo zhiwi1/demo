@@ -1,0 +1,47 @@
+2021-07-25 20:08:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-25 20:08:52 [main] INFO  webproject.model.dao.impl.UserDaoImpl- SQL request error(1062). Duplicate entry '14' for key 'users.PRIMARY'
+2021-07-26 16:44:09 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials p3sm14745732ejy.20 - gsmtp
+
+2021-07-26 16:45:44 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials h3sm1661218ejg.103 - gsmtp
+
+2021-07-26 16:48:52 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials o14sm11956439eds.55 - gsmtp
+
+2021-07-26 16:51:33 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials l10sm7393067edr.33 - gsmtp
+
+2021-07-26 20:55:09 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1
+2021-07-27 16:26:39 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1
+2021-07-27 16:37:03 [main] ERROR epam.webproject.model.email.MailSender- MessagingException: Couldn't connect to host, port: smtp.gmail.com, 587; timeout -1
+2021-07-27 18:33:28 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:33:28 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 18:33:29 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'title' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitle(CommentDaoImpl.java:76) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:34) [classes/:?]
+2021-07-27 18:34:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:34:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 18:34:50 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: Unknown column 'task.title' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitle(CommentDaoImpl.java:75) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:34) [classes/:?]
+2021-07-27 18:37:57 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-07-27 18:37:57 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-07-27 18:37:58 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT task.id FROM TASKS WHERE tasks.title ='12'' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitle(CommentDaoImpl.java:75) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:34) [classes/:?]

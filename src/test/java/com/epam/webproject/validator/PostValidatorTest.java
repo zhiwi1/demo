@@ -3,7 +3,6 @@ package com.epam.webproject.validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class PostValidatorTest {
@@ -12,9 +11,10 @@ public class PostValidatorTest {
 
     @Test
     public void validateComplexityTest() {
+     AnswerValidator.checkAnswer("1");
         String x = "1";
-        boolean actualResult = PostValidator.checkComplexity(x);
+        boolean actualResult = TaskValidator.checkComplexity(x);
         boolean expected = true;
-        Assert.assertTrue(actualResult);
+        Assert.assertTrue( AnswerValidator.checkAnswer("12"));
     }
 }

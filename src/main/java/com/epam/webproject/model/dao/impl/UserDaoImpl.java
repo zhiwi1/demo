@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
     private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
 
-
+    private static final String SQL_UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE `users` SET `login`=?, `email`=? WHERE `login`=?";
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -232,6 +232,19 @@ public class UserDaoImpl implements UserDao {
         }
         return result;
     }
+    @Override
+    public boolean updateUserName(String newLogin, String newEmail, String oldLogin) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_LOGIN_AND_EMAIL)) {
+            statement.setString(1, newLogin);
+            statement.setString(2, newEmail);
+            statement.setString(3, oldLogin);
+            return (statement.executeUpdate() == 1);
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
+
 
 }
 

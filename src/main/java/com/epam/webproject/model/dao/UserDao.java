@@ -27,5 +27,7 @@ public interface UserDao {
     public Optional<User> findByLogin(String login) throws DaoException;
 
     public Optional<User> findByEmail(String email) throws DaoException;
+
+    public boolean updateUserName(String newLogin, String newEmail, String oldLogin) throws DaoException;
 }
 

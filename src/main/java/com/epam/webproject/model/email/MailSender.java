@@ -23,8 +23,8 @@ public class MailSender {
     private static final String MAIL_USER_PASSWORD = "mail.user.password";
     private static final String MAIL_FROM = "mail.from";
     private static final String MAIL_SUBJECT = "Tasks";
-    private static final String MAIN_MESSAGE = "Hello, %s! \n" + "Welcome to My FlowerShop. \n" + "Your password is %s.";
-    private static final String FORGET_PASSWORD_MESSAGE = "Hello, %s! \n" + "Welcome to My FlowerShop. \n" + "Your new password is %s \n Change your password in your account, if you wish";
+    private static final String MAIN_MESSAGE = "Hello, %s! \n" + "Welcome to TasksApp. \n" + "Your password is %s.";
+    private static final String FORGET_PASSWORD_MESSAGE = "Hello, %s! \n" + "Welcome to TasksApp. \n" + "Your new password is %s \n Change your password in your account, if you wish";
 
 
     static {

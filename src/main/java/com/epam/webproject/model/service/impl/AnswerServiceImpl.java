@@ -6,11 +6,14 @@ import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.dao.AnswerDao;
 import com.epam.webproject.model.dao.DaoProvider;
 
+import com.epam.webproject.model.entity.Answer;
+import com.epam.webproject.model.entity.Comment;
 import com.epam.webproject.model.service.AnswerService;
 import com.epam.webproject.validator.AnswerValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayDeque;
 import java.util.Date;
 
 public class AnswerServiceImpl implements AnswerService {
@@ -30,5 +33,16 @@ public class AnswerServiceImpl implements AnswerService {
 
         }
         return result;
+    }
+    @Override
+    public ArrayDeque<Answer> findAnswersByTitle(String title) throws ServiceException {
+        try {
+            return answerDao.findAnswersByTitle(title);
+        } catch (DaoException e) {
+            logger.error("Can't find", e.getMessage());
+            throw new ServiceException("Can't find", e);
+        }
+
+
     }
 }

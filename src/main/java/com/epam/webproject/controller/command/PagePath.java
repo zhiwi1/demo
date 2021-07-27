@@ -9,6 +9,8 @@ public final class PagePath {
     public static final String ALL_TASKS_PAGE="/WEB-INF/jsp/alltasks.jsp";
     public static final String PROFILE_PAGE="/WEB-INF/jsp/profile.jsp";
     public static final String ALL_USERS_PAGE="/WEB-INF/jsp/allusers.jsp";
+    public static final String EDITING_INFO_PAGE="/WEB-INF/jsp/editpage.jsp";
+    public static final String TASK_PAGE="/WEB-INF/jsp/task.jsp";
 
 
     private PagePath() {

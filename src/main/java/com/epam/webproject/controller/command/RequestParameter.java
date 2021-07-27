@@ -15,6 +15,8 @@ public final class RequestParameter {
     public static final String UPDATED_AT="updated_at";
     public static final String COUNT_FOR_SOLVE="count_for_solve";
     public static final String COMPLEXITY="complexity";
+    public static final String COMMENT="comment";
+    public static final String ANSWER="answer";
 
 
     private RequestParameter() {
