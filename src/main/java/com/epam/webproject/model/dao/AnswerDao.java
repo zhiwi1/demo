@@ -13,4 +13,9 @@ public interface AnswerDao {
     public List<Answer> findAll() throws DaoException;
 
     public ArrayDeque<Answer> findAnswersByTitle(String title) throws DaoException;
+
+    public boolean increaseLike(long id) throws DaoException;
+
+    public boolean decreaseLike(long id) throws DaoException;
+
 }

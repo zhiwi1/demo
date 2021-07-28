@@ -3,6 +3,7 @@ package com.epam.webproject.model.entity;
 import java.util.Objects;
 
 public class Answer extends Entity {
+    private long answerId;
     private String content;
     private long like;
     private String userLogin;
@@ -19,6 +20,32 @@ public class Answer extends Entity {
     public Answer(String content, long like, String userLogin) {
         this.content = content;
         this.like = like;
+        this.userLogin = userLogin;
+    }
+    public Answer(long answerId,String content, long like, String userLogin){
+        this.answerId=answerId;
+        this.content = content;
+        this.like = like;
+        this.userLogin = userLogin;
+    }
+
+    public long getAnswerId() {
+        return answerId;
+    }
+
+    public void setAnswerId(long answerId) {
+        this.answerId = answerId;
+    }
+
+    public void setLike(long like) {
+        this.like = like;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
 
@@ -70,7 +97,8 @@ public class Answer extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Answer{");
-        sb.append("content='").append(content).append('\'');
+        sb.append("answerId=").append(answerId);
+        sb.append(", content='").append(content).append('\'');
         sb.append(", like=").append(like);
         sb.append(", userLogin='").append(userLogin).append('\'');
         sb.append('}');

@@ -21,12 +21,22 @@
     <input type="text" name="answer">
     <input type="submit" name="button" value="answer">
 </form>
-<c:out value="${answers}"/>
+
+<c:forEach var="answer" items="${answers}">
+    <p>${answer}</p>
+
+    <form action="controller?command=like_answer_command&answer_id=${answer.answerId}" method="post">
+        <input type="submit" name="button" value="like">
+    </form>
+</c:forEach>
+
 <p>Add Comment</p>
 <form action="controller?command=add_comment_command&title=${task.title}" method="post">
     <input type="text" name="comment">
     <input type="submit" name="button" value="comment">
 </form>
 <c:out value="${comments}"/>
+
+</script>
 </body>
 </html>

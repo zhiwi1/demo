@@ -16,6 +16,9 @@ public final class RequestAttribute {
     public static final String COMMENTS="comments";
     public static final String ANSWERS="answers";
     public static final String FULL_TEXT_SEARCH_TITLES="fts_titles";
+    public static final String FULL_TEXT_SEARCH_USERS="fts_users";
+    public static final String ANSWER_ID="answer_id";
+    public static final String FLAG="flag";
 
     private RequestAttribute() {
     }

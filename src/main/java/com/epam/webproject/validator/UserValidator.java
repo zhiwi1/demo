@@ -4,6 +4,7 @@ package com.epam.webproject.validator;
     public class UserValidator {
         private static final String EMAIL_REGEXP = "^([A-Za-z0-9_.-])+@([A-Za-z0-9_-]){2,}.([a-za-zЁё]){2,}$";
         private static final String PASSWORD_REGEXP = "^([A-zА-яЁё0-9_!@ -]){6,}$";
+        private static final String TEXT_REGEXP = ".+";
 
         private UserValidator() {}
 
@@ -16,5 +17,9 @@ package com.epam.webproject.validator;
         }
 
         public static boolean checkPasswordAndConfirmPassword(String password,String confirmPassword){return password.equals(confirmPassword);}
+
+        public static boolean checkLength(String text) {
+            return text.matches(TEXT_REGEXP);
+        }
     }
 

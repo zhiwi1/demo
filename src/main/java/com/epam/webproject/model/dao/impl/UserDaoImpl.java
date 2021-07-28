@@ -3,7 +3,6 @@ package com.epam.webproject.model.dao.impl;
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
 import com.epam.webproject.model.dao.UserDao;
-import com.epam.webproject.model.dao.UserFactory;
 import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
@@ -33,15 +32,28 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
     //            + " JOIN roles ON roles.id = users.role_id ";
     private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
-    private static final String SQL_COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count`FROM `users`WHERE `users`.`email`=?";
-    private static final String SQL_COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
+
+    private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
+
+    private static final String UNBLOCK_USER = "UPDATE users SET status = 'NORMAL' WHERE login = ?";
+
+    private static final String COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count`FROM `users`WHERE `users`.`email`=?";
+
+    private static final String COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
+
     private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
 
-    private static final String SQL_UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE `users` SET `login`=?, `email`=? WHERE `login`=?";
+    private static final String UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE `users` SET `login`=?, `email`=? WHERE `login`=?";
+
+    private static final String USERS_FULL_TEXT_SEARCH = "SELECT  id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM `users` WHERE MATCH (login,email) AGAINST (?);";
+
+    private static final String FIND_STATUS_BY_USER_LOGIN = " SELECT `status` FROM users WHERE login = ?";
+
+
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_COUNT_BY_EMAIL)) {
+             PreparedStatement statement = connection.prepareStatement(COUNT_BY_EMAIL)) {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             boolean result = false;
@@ -57,7 +69,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean existRowsByLogin(String login) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_COUNT_BY_LOGIN)) {
+             PreparedStatement statement = connection.prepareStatement(COUNT_BY_LOGIN)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             boolean result = false;
@@ -193,6 +205,7 @@ public class UserDaoImpl implements UserDao {
         }
         return userOptional;
     }
+
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {
         Optional<User> userOptional = Optional.empty();
@@ -232,10 +245,11 @@ public class UserDaoImpl implements UserDao {
         }
         return result;
     }
+
     @Override
     public boolean updateUserName(String newLogin, String newEmail, String oldLogin) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_LOGIN_AND_EMAIL)) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_LOGIN_AND_EMAIL)) {
             statement.setString(1, newLogin);
             statement.setString(2, newEmail);
             statement.setString(3, oldLogin);
@@ -245,7 +259,72 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public ArrayDeque<User> findByFullText(String text) throws DaoException {
+        ArrayDeque<User> arrayDeque = new ArrayDeque<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(USERS_FULL_TEXT_SEARCH)) {
+            preparedStatement.setString(1, text);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getInt(ID);
+                String login = resultSet.getString(USER_LOGIN);
+                String email = resultSet.getString(USER_EMAIL);
+                int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
+                RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
+                Status status = Status.valueOf(resultSet.getString(USER_STATUS));
 
+                User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
+                arrayDeque.add(user);
+
+            }
+        } catch (SQLException e) {
+            logger.error("Can't find", e);
+            throw new DaoException(e);
+        }
+        return arrayDeque;
+    }
+
+    @Override
+    public boolean blockUser(String login) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(BLOCK_USER)) {
+            statement.setString(1, login);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing password. ", e);
+        }
+    }
+
+    @Override
+    public boolean unblockUser(String login) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UNBLOCK_USER)) {
+            statement.setString(1, login);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException("Error with changing password. ", e);
+        }
+    }
+
+    //todo nullable
+    @Override
+    public Optional<Status> findStatusByLogin(String login) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_STATUS_BY_USER_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+
+            Status userStatus = null;
+            while (resultSet.next()) {
+                userStatus = Status.valueOf(resultSet.getString(USER_STATUS));
+            }
+            return Optional.ofNullable(userStatus);
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
 }
 
 

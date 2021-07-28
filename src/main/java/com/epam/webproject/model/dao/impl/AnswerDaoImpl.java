@@ -20,9 +20,15 @@ public class AnswerDaoImpl implements AnswerDao {
     public static final Logger logger = LogManager.getLogger();
     private static final String ADD_ANSWER = "INSERT INTO `answers` (`content`,`task_id` , `user_id`) VALUES (?, (SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
     private static final String FIND_ALL = "SELECT content,  user_id, task_id,likes FROM comments";
-    private static final String FIND_ANSWERS_BY_TASK_TITLE = "SELECT content, login,likes FROM answers " +
+    private static final String FIND_ANSWERS_BY_TASK_TITLE = "SELECT answers.id, content, login,likes FROM answers " +
             " JOIN `users` ON `users`.`id` = `answers`.`user_id`" +
             "WHERE answers.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?) ";
+    private static final String PLUS_LIKE = "UPDATE answers" +
+            "SET likes = likes+1," +
+            "WHERE id = ?";
+    private static final String MINUS_LIKE = "UPDATE answers" +
+            "SET likes = likes-1," +
+            "WHERE id = ?";
 
 
     public boolean createNewAnswer(String content, String title, String login) throws DaoException {
@@ -70,10 +76,11 @@ public class AnswerDaoImpl implements AnswerDao {
             preparedStatement.setString(1, title);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                long answerId=resultSet.getLong(ID);
                 String commentContent = resultSet.getString(CONTENT);
                 String login = resultSet.getString(USER_LOGIN);
                 long likes = resultSet.getLong(LIKES);
-                Answer answer = new Answer(commentContent, likes, login);
+                Answer answer = new Answer(answerId,commentContent, likes, login);
                 arrayDeque.add(answer);
             }
         } catch (SQLException e) {
@@ -83,5 +90,27 @@ public class AnswerDaoImpl implements AnswerDao {
         return arrayDeque;
     }
 
+    @Override
+    public boolean increaseLike(long id) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(PLUS_LIKE)) {
+            preparedStatement.setLong(1, id);
+            return (preparedStatement.executeUpdate() == 1);
+        } catch (SQLException e) {
+            logger.error("Can't like", e);
+            throw new DaoException(e);
+        }
+    }
 
+    @Override
+    public boolean decreaseLike(long id) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(PLUS_LIKE)) {
+            preparedStatement.setLong(1, id);
+            return (preparedStatement.executeUpdate() == 1);
+        } catch (SQLException e) {
+            logger.error("Can't like", e);
+            throw new DaoException(e);
+        }
+    }
 }

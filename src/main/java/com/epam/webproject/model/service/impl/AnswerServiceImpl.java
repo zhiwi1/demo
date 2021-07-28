@@ -34,6 +34,7 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return result;
     }
+
     @Override
     public ArrayDeque<Answer> findAnswersByTitle(String title) throws ServiceException {
         try {
@@ -44,5 +45,22 @@ public class AnswerServiceImpl implements AnswerService {
         }
 
 
+    }
+
+    @Override
+    public boolean likeOrUnlike(long answerId, boolean flag) throws ServiceException {
+        boolean result = false;
+        try {
+
+            if (flag) {
+                result = answerDao.increaseLike(answerId);
+            } else {
+                result = answerDao.decreaseLike(answerId);
+            }
+        } catch (DaoException e) {
+            logger.error("Can't like", e.getMessage());
+            throw new ServiceException("Can't like", e);
+        }
+        return result;
     }
 }

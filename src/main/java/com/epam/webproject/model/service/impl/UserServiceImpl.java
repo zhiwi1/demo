@@ -1,10 +1,7 @@
 package com.epam.webproject.model.service.impl;
 
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.exception.ServiceException;
@@ -13,11 +10,13 @@ import com.epam.webproject.model.dao.DaoProvider;
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 import com.epam.webproject.model.dao.UserDao;
+import com.epam.webproject.model.dao.impl.UserDaoImpl;
 import com.epam.webproject.model.entity.*;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.util.PasswordEncryptor;
 import com.epam.webproject.util.UserIdGenerator;
+import com.epam.webproject.validator.TaskValidator;
 import com.epam.webproject.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -155,5 +154,48 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public ArrayDeque<User> findByFullText(String text) throws ServiceException {
+        try {
+            ArrayDeque<User> arrayDeque = new ArrayDeque<>();
+            if (UserValidator.checkLength(text)) {
+                arrayDeque = userDao.findByFullText(text);
+            }
+            return arrayDeque;
+        } catch (DaoException e) {
+            logger.error("Can't find task", e.getMessage());
+            throw new ServiceException("Can't find  task", e);
+        }
+
+    }
+@Override
+    public boolean blockUser(String login) throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try {
+            return userDao.blockUser(login);
+        } catch (DaoException e) {
+            logger.error("Can't block user", e.getMessage());
+            throw new ServiceException("Can't block user", e);
+        }
+    }
+    @Override
+    public boolean unblockUser(String login) throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try {
+            return userDao.unblockUser(login);
+        } catch (DaoException e) {
+            logger.error("Can't block user", e.getMessage());
+            throw new ServiceException("Can't block user", e);
+        }
+    }
+    @Override
+    public boolean checkUserStatus(String login, Status expectedStatus) throws ServiceException {
+        try {
+            Optional<Status> userStatusOptional = userDao.findStatusByLogin(login);
+            return (userStatusOptional.isPresent() && userStatusOptional.get() == expectedStatus);
+        } catch (DaoException e) {
+            throw new ServiceException("Can not check status: " + e.getMessage(), e);
+        }
+    }
 }
 //}
