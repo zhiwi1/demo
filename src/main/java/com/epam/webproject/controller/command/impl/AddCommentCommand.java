@@ -21,29 +21,19 @@ public class AddCommentCommand implements Command {
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         String titleOfTask = request.getParameter(RequestParameter.TITLE);
         CommentService commentService = ServiceProvider.getInstance().getCommentService();
-        AnswerService answerService=ServiceProvider.getInstance().getAnswerService();
         try {
             boolean isCreated = commentService.createComment(text, loginOfUser, titleOfTask);
             if (isCreated) {
-                TaskService taskService = ServiceProvider.getInstance().getTaskService();
-                Optional<Task> optionalTask = taskService.findTaskByTitle(titleOfTask);
-                if (optionalTask.isPresent()) {
-                    Task task = optionalTask.get();
-                    request.setAttribute(RequestAttribute.TASK, task);
-                    ArrayDeque<Comment> deque = commentService.findCommentsByTitle(titleOfTask);
-                    request.setAttribute(RequestAttribute.COMMENTS, deque);
-                    ArrayDeque<Answer> answerDeque = answerService.findAnswersByTitle(titleOfTask);
-                    request.setAttribute(RequestAttribute.ANSWERS, answerDeque);
-                    router = new Router(RouterType.FORWARD, PagePath.TASK_PAGE);
-                } else {
-                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
-                }
-                return router;
+                router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND+titleOfTask);
+            } else {
+                router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
+            return router;
+
         } catch (ServiceException e) {
             throw new CommandException("Add Answer command error", e);
         }
-        return router;
+
     }
 
 

@@ -11,7 +11,7 @@
     <title>Profile</title>
 </head>
 <body>
-<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 
 
 <body>

@@ -39,5 +39,7 @@ public interface UserDao {
     public boolean unblockUser(String login) throws DaoException;
 
     public Optional<Status> findStatusByLogin(String login) throws DaoException;
+
+    public Optional<String> findLoginByEmail(String login) throws DaoException;
 }
 

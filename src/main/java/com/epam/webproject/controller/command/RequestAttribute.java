@@ -19,6 +19,7 @@ public final class RequestAttribute {
     public static final String FULL_TEXT_SEARCH_USERS="fts_users";
     public static final String ANSWER_ID="answer_id";
     public static final String FLAG="flag";
+    public static final String LOGIN_ERROR_MESSAGE="login_error_message";
 
     private RequestAttribute() {
     }

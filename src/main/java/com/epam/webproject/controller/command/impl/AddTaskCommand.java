@@ -26,18 +26,18 @@ public class AddTaskCommand implements Command {
             switch (feedback) {
                 case SUCCESS: {
                     //todo messages
-                    router = new Router(RouterType.FORWARD, PagePath.HOME_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_HOME_PAGE);
                     break;
                 }
                 case DATABASE_EXCEPTION: {
-                    router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
                     break;
                 }
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
                     //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
-                    router = new Router(RouterType.FORWARD, PagePath.ADD_TASK_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_ADD_TASK_PAGE_COMMAND);
                     break;
                 }
             }

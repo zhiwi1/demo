@@ -10,7 +10,7 @@
     <title>Home</title>
 </head>
 <body>
-<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <a href="controller?command=go_to_add_task_page_command"  role="button">
 add new task
 </a>

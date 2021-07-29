@@ -17,7 +17,7 @@
     <title>Add post</title>
 </head>
 <body>
-<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 
 <form name="add-post-form" method="POST" action="controller?command=add_task_command">
     <fmt:message key="addpost.title" bundle="${ rb }" /> <input type="text" name="title">

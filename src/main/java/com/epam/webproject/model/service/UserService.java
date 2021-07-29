@@ -28,4 +28,6 @@ public interface UserService {
     public boolean blockUser(String login) throws ServiceException;
 
     public boolean checkUserStatus(String login, Status expectedStatus) throws ServiceException;
+
+    public Optional<String> findLogin(String loginOrEmail) throws ServiceException;
 }

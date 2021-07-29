@@ -49,6 +49,8 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_STATUS_BY_USER_LOGIN = " SELECT `status` FROM users WHERE login = ?";
 
+    private static final String FIND_LOGIN_BY_EMAIL="SELECT `login` FROM users WHERE email = ?";
+
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -93,8 +95,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                resultMap.put(USER_PASSWORD_HASH, Optional.of(resultSet.getString(USER_PASSWORD_HASH)));
-                resultMap.put(USER_PASSWORD_SALT, Optional.of(resultSet.getString(USER_PASSWORD_SALT)));
+                resultMap.put(USER_PASSWORD_HASH, Optional.ofNullable(resultSet.getString(USER_PASSWORD_HASH)));
+                resultMap.put(USER_PASSWORD_SALT, Optional.ofNullable(resultSet.getString(USER_PASSWORD_SALT)));
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_LOGIN, e.getMessage());
@@ -113,8 +115,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                resultMap.put(USER_PASSWORD_HASH, Optional.of(resultSet.getString(USER_PASSWORD_HASH)));
-                resultMap.put(USER_PASSWORD_SALT, Optional.of(resultSet.getString(USER_PASSWORD_SALT)));
+                resultMap.put(USER_PASSWORD_HASH, Optional.ofNullable(resultSet.getString(USER_PASSWORD_HASH)));
+                resultMap.put(USER_PASSWORD_SALT, Optional.ofNullable(resultSet.getString(USER_PASSWORD_SALT)));
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_LOGIN, e.getMessage());
@@ -197,7 +199,7 @@ public class UserDaoImpl implements UserDao {
                 //todo not upper case
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
                 User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
-                userOptional = Optional.of(user);
+                userOptional = Optional.ofNullable(user);
             }
         } catch (SQLException e) {
             logger.error("Can't find", e);
@@ -221,7 +223,7 @@ public class UserDaoImpl implements UserDao {
                 Role role = Role.valueOf(resultSet.getString(USER_ROLE));
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
                 User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
-                userOptional = Optional.of(user);
+                userOptional = Optional.ofNullable(user);
             }
         } catch (SQLException e) {
             logger.error("Can't find", e);
@@ -254,8 +256,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, newEmail);
             statement.setString(3, oldLogin);
             return (statement.executeUpdate() == 1);
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            throw new DaoException("SQL request error. " + e.getMessage(), e);
         }
     }
 
@@ -308,7 +310,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    //todo nullable
+
     @Override
     public Optional<Status> findStatusByLogin(String login) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -323,6 +325,21 @@ public class UserDaoImpl implements UserDao {
             return Optional.ofNullable(userStatus);
         } catch (SQLException sqlException) {
             throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
+
+    @Override
+    public Optional<String> findLoginByEmail(String email) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_LOGIN_BY_EMAIL)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            Optional<String> result = Optional.ofNullable(resultSet.getString(USER_LOGIN));
+            return result;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_BY_EMAIL, e.getMessage());
+            throw new DaoException("Can not proceed request: " +FIND_LOGIN_BY_EMAIL, e);
+
         }
     }
 }

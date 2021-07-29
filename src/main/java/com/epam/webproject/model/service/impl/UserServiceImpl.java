@@ -26,28 +26,6 @@ public class UserServiceImpl implements UserService {
     private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
     private static final int DEFAULT_COUNT_OF_SOLVE = 0;
 
-
-    //
-//        @Override
-//        public boolean checkLogin(String email, String password)
-//                throws ServiceException {
-//            boolean result = false;
-//            if (UserValidator.checkEmail(email) && UserValidator.checkPassword(password)) {
-//                try {
-//                    Optional<LogInData> logInDataOptional = userDao.findLoginDataByEmail(email);
-//                    if (logInDataOptional.isPresent()) {
-//                        LogInData logInData = logInDataOptional.get();
-//                        result = PasswordHash.check(password, logInData.getPasswordHash());
-//                    }
-//                } catch (DaoException daoException) {
-//                    logger.error("checkLogin > Can not read data from database: {}", daoException.getMessage());
-//                    throw new ServiceException("Can not read data from database", daoException);
-//                }
-//            }
-//            return result;
-//        }
-
-
     public boolean signInUser(String loginOrEmail, String password) throws ServiceException {
         boolean result = false;
         PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
@@ -56,17 +34,20 @@ public class UserServiceImpl implements UserService {
             if (UserValidator.checkPassword(password)) {
                 if (UserValidator.checkEmail(loginOrEmail)) {
                     loginData = userDao.findUserLoginDataByEmail(loginOrEmail);
-                } else {
+                } else if (UserValidator.checkLength(loginOrEmail)) {
                     loginData = userDao.findUserLoginDataByLogin(loginOrEmail);
                 }
             }
-            if (loginData.get(USER_PASSWORD_HASH).isPresent() &&
+
+            if (loginData.containsKey(USER_PASSWORD_HASH) && loginData.get(USER_PASSWORD_HASH).isPresent() &&
+                    loginData.containsKey(USER_PASSWORD_HASH) &&
                     loginData.get(USER_PASSWORD_SALT).isPresent()) {
                 String salt = loginData.get(USER_PASSWORD_SALT).get();
                 String passwordHash = loginData.get(USER_PASSWORD_HASH).get();
                 String realPasswordHash = encryptor.getHash(password, salt);
                 result = passwordHash.equals(realPasswordHash);
             }
+
         } catch (DaoException e) {
             logger.error("Can't sign in", e.getMessage());
             throw new ServiceException("Can't sign in", e);
@@ -168,7 +149,8 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-@Override
+
+    @Override
     public boolean blockUser(String login) throws ServiceException {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         try {
@@ -178,6 +160,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can't block user", e);
         }
     }
+
     @Override
     public boolean unblockUser(String login) throws ServiceException {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
@@ -188,6 +171,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can't block user", e);
         }
     }
+
     @Override
     public boolean checkUserStatus(String login, Status expectedStatus) throws ServiceException {
         try {
@@ -197,5 +181,21 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can not check status: " + e.getMessage(), e);
         }
     }
-}
+
+    @Override
+    public Optional<String> findLogin(String loginOrEmail) throws ServiceException{
+        Optional<String> loginOptional=Optional.empty();
+        try {
+        if (UserValidator.checkEmail(loginOrEmail)) {
+            loginOptional = userDao.findLoginByEmail(loginOrEmail);
+        } else if (UserValidator.checkLength(loginOrEmail)) {
+           loginOptional=Optional.of(loginOrEmail);
+        }
+    }catch (DaoException e){
+            throw new ServiceException("Can not check status: " + e.getMessage(), e);
+        }
+        return loginOptional;
+    }
+
+ }
 //}

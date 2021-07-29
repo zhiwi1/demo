@@ -33,11 +33,11 @@ private static final Logger logger= LogManager.getLogger();
                 request.getSession().setAttribute(RequestAttribute.LOGIN,newLogin);
                 request.getSession().setAttribute(RequestAttribute.EMAIL,newEmail);
                 request.setAttribute(RequestAttribute.USER, user);
-                router=new Router(RouterType.FORWARD, PagePath.PROFILE_PAGE);
+                router=new Router(RouterType.REDIRECT, PagePath.FIND_PROFILE_INFO_COMMAND);
             }else {
                 //todo loginoremail
                 request.setAttribute(RequestAttribute.MESSAGE,"Login Or Email exists");
-                router=new Router(RouterType.FORWARD,PagePath.EDITING_INFO_PAGE);
+                router=new Router(RouterType.REDIRECT,PagePath.FIND_EDITING_INFO_COMMAND);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);

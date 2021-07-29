@@ -26,18 +26,18 @@ public class RegisterUserCommand implements Command {
                 case SUCCESS: {
                     //todo messages
                   //  request.getSession().setAttribute(RequestParameter.LOGIN, login);
-                    router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_LOGIN_PAGE);
                     break;
                 }
                 case DATABASE_EXCEPTION: {
-                    router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
                     break;
                 }
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
                     //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
-                    router = new Router(RouterType.FORWARD, PagePath.REGISTRATION_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_REGISTRATION_PAGE_COMMAND);
                     break;
                 }
             }

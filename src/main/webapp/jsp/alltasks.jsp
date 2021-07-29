@@ -10,7 +10,7 @@
     <title>All tasks</title>
 </head>
 <body>
-<c:import url="/WEB-INF/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
 <form name="add-post-form" method="POST" action="controller?command=tasks_full_text_search_command">
     FIND
