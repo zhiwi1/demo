@@ -27,7 +27,7 @@ public class CommandProvider {
         commands.put(CommandType.OPEN_TASK_PAGE_COMMAND, new OpenTaskPageCommand());
         commands.put(CommandType.ADD_COMMENT_COMMAND, new AddCommentCommand());
         commands.put(CommandType.ADD_ANSWER_COMMAND, new AddAnswerCommand());
-        commands.put(CommandType.TASK_FULL_TEXT_SEARCH_COMMAND, new TasksFullTextSearchCommand());
+        commands.put(CommandType.TASKS_FULL_TEXT_SEARCH_COMMAND, new TasksFullTextSearchCommand());
         commands.put(CommandType.USERS_FULL_TEXT_SEARCH_COMMAND, new UsersFullTextSearchCommand());
         commands.put(CommandType.LIKE_ANSWER_COMMAND, new LikeAnswerCommand());
         commands.put(CommandType.BLOCK_USER_COMMAND, new BlockUserCommand());

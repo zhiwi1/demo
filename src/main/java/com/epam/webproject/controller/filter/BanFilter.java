@@ -32,9 +32,10 @@ public class BanFilter implements Filter {
         UserService userService = ServiceProvider.getInstance().getUserService();
         try {
             if (userService.checkUserStatus(login, Status.BLOCKED)) {
+                httpServletRequest.removeAttribute(RequestAttribute.LOGIN);
                 //todo message of block
                 RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher(PagePath.LOGIN_PAGE);
-                dispatcher.forward(httpServletRequest,httpServletResponse);
+                dispatcher.forward(httpServletRequest, httpServletResponse);
                 httpServletResponse.sendRedirect(PagePath.LOGIN_PAGE);
             } else {
                 filterChain.doFilter(servletRequest, servletResponse);

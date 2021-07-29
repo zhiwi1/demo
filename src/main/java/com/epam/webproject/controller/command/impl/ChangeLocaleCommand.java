@@ -14,10 +14,9 @@ public static final Logger logger= LogManager.getLogger();
 
         HttpSession session = req.getSession();
         String locale = req.getParameter(RequestParameter.LOCALE);
-        String previousRequest = (String) session.getAttribute(RequestAttribute.PREV_REQUEST);
+        String previousRequest = req.getParameter(RequestAttribute.PREV_REQUEST);
         logger.info(previousRequest);
         session.setAttribute(RequestAttribute.LOCALE, locale);
-
         Router router = new Router(RouterType.REDIRECT, previousRequest);
         return router;
     }

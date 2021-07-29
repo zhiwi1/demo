@@ -21,9 +21,9 @@ public class UnblockUserCommand implements Command {
             if (result) {
                 List<User> users=userService.showAllUsers();
                 request.setAttribute(RequestAttribute.USERS,users);
-                router = new Router(RouterType.FORWARD, PagePath.ALL_USERS_PAGE);
+                router = new Router(RouterType.REDIRECT, PagePath.SHOW_ALL_USERS_COMMAND);
             } else {
-                router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+                router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
         } catch (ServiceException e) {
             throw new CommandException(e);

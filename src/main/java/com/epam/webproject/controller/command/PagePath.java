@@ -19,6 +19,7 @@ public final class PagePath {
     public static final String GO_TO_ADD_TASK_PAGE_COMMAND = "controller?command=go_to_add_task_page_command";
     public static final String FIND_PROFILE_INFO_COMMAND = "controller?command=find_profile_info_command";
     public static final String FIND_EDITING_INFO_COMMAND = "controller?command=find_editing_info_command";
+    public static final String SHOW_ALL_USERS_COMMAND="controller?command=show_all_users_command";
 
 
     private PagePath() {

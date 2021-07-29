@@ -23,6 +23,18 @@
 </a>
 <c:forEach var="fts_user" items="${fts_users}">
     <p>${fts_user}</p>
+    <c:out value="${fts_user.status}"/>
+    <c:if test="${fts_user.status =='NORMAL'}">
+        <form name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
+            <button type="submit"> Block this user</button>
+        </form>
+    </c:if>
+    <c:if test="${fts_user.status =='BLOCKED'}">
+        <form name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
+            <button type="submit"> Unblock</button>
+        </form>
+    </c:if>
+
 </c:forEach>
 
 <c:forEach var="user" items="${users}">
