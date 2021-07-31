@@ -18,19 +18,20 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+
 <c:if test="${not empty error_message}">
     <c:out value="${error_message}"/>
 </c:if>
 <form action="controller?command=sign_in_command" method="post">
-    Email:  <input type="text" name="email-login">
+    <fmt:message key="login.login" bundle="${rb}"/>  <input type="text" name="email-login">
     <fmt:message key="login.password" bundle="${ rb }"/>:  <input type="text" name="password">
     <input type="submit" name="button" value="login">
 </form>
 <hr>
-<p>Вы не зарегистрированы?</p>
+<p><fmt:message key="login.are_register" bundle="${rb}"/></p>
 <a href="controller?command=go_to_registration_page_command">
-    Зарегистрироваться
+    <fmt:message key="login.register" bundle="${rb}"/>
 </a>
-
+<a href=""
 </body>
 </html>

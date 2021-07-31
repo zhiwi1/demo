@@ -7,19 +7,15 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title>Add post</title>
+    <title>   <fmt:message key="home.home" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
-<form name="edit-info-form" method="POST" action="controller?command=edit_page_command">
-Login: <input type="text" name="login" value="${login}">
-    <%--    <input type="hidden" name="command" value=""/>--%>
-Email:    <input type="text" name="email" value="${email}">
-
-    <br/>
-
-
-    <button type="submit"> Изменить</button>
-</form>
+<p>
+    на вашу старую почту будет выслан новый пароль
+</p>
+<a href="controller?command=send_password_command"  role="button">
+  Send new password
+</a>
 </body>
 </html>

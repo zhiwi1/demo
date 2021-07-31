@@ -7,30 +7,30 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title>All tasks</title>
+    <title><fmt:message key="alltasks.alltasks" bundle="${ rb }" /></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
 <form name="add-post-form" method="POST" action="controller?command=tasks_full_text_search_command">
-    FIND
+    <fmt:message key="find" bundle="${ rb }" />
  <input type="text" name="text">
 
-    <button type="submit">Find</button>
+    <button type="submit"><fmt:message key="go" bundle="${ rb }" /></button>
 </form>
 <a href="controller?command=go_to_home_page_command">
-    Вернуться на домашнюю страницу
+    <fmt:message key="alltasks.return" bundle="${ rb }" />
 </a>
 <c:forEach var="title" items="${fts_titles}">
     <p>${title}</p>
     <a href="controller?command=open_task_page_command&title=${title}" >
-        <p>Подробнее</p></a>
+        <p><fmt:message key="alltasks.more" bundle="${ rb }" /></p></a>
 </c:forEach>
 
 <c:forEach var="task" items="${tasks}">
     <p>${task.title}</p>
     <a href="controller?command=open_task_page_command&title=${task.title}" >
-    <p>Подробнее</p></a>
+    <p><fmt:message key="alltasks.more" bundle="${ rb }" /></p></a>
 </c:forEach>
 </body>
 </html>

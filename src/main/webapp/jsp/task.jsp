@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Profile</title>
+    <title><fmt:message key="task.profile" bundle="${ rb }" /></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
@@ -16,7 +16,7 @@
 
 <body>
 <c:out value="${task}"/>;
-<p>Add answer</p>
+<p><fmt:message key="task.add_answer" bundle="${ rb }" /></p>
 <form action="controller?command=add_answer_command&title=${task.title}" method="post">
     <input type="text" name="answer">
     <input type="submit" name="button" value="answer">
@@ -30,7 +30,7 @@
     </form>
 </c:forEach>
 
-<p>Add Comment</p>
+<p><fmt:message key="task.add_comment" bundle="${ rb }" /></p>
 <form action="controller?command=add_comment_command&title=${task.title}" method="post">
     <input type="text" name="comment">
     <input type="submit" name="button" value="comment">

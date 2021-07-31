@@ -1,6 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="customtag" prefix="mytag" %>
+<c:if test="${not empty sessionScope.locale}">
+    <fmt:setLocale value="${sessionScope.locale}"/>
+</c:if>
+<fmt:setBundle basename="locale" var="rb" />
 <header class="header flex flex__justify-content_space-between flex__align-items_center">
     <%--    <script type = "text/javascript" >--%>
     <%--        function preventBack(){window.history.forward();}--%>
@@ -22,7 +27,7 @@
         <li>
             <c:if test="${ not empty login }" var="firstOperation" scope="page">
                 <a href="controller?command=find_profile_info_command">
-                    Профиль
+                    <fmt:message key="header.profile" bundle="${rb}"/>
                 </a>
             </c:if>
         </li>

@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Profile</title>
+    <title><fmt:message key="header.profile" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>

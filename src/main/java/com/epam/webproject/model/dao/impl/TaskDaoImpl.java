@@ -24,7 +24,7 @@ public class TaskDaoImpl implements TaskDao {
     private static final String TASKS_FULL_TEXT_SEARCH = "SELECT title FROM `tasks` WHERE MATCH (title,content) AGAINST (?);";
     private static final String DELETE_TASK = "DELETE FROM tasks " +
             "WHERE title =?"+
-            "JOIN"
+            "JOIN";
     private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
 
     @Override
