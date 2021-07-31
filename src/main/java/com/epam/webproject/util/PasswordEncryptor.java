@@ -28,4 +28,8 @@ public class PasswordEncryptor {
     public String getHash(String password, String salt) {
         return BCrypt.hashpw(password, salt);
     }
+
+    public String generateRandomPassword() {
+        return RandomStringUtils.randomAlphanumeric(12).toUpperCase();
+    }
 }

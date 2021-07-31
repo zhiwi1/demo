@@ -7,6 +7,7 @@ import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.entity.Status;
+import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,6 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
     //            + " JOIN roles ON roles.id = users.role_id ";
-    private static final String CHANGE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
 
     private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
 
@@ -49,7 +49,9 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_STATUS_BY_USER_LOGIN = " SELECT `status` FROM users WHERE login = ?";
 
-    private static final String FIND_LOGIN_BY_EMAIL="SELECT `login` FROM users WHERE email = ?";
+    private static final String FIND_LOGIN_BY_EMAIL = "SELECT login FROM users WHERE email = ?";
+
+    private static final String SET_PASSWORD_BY_ID = "UPDATE users SET password_hash = ? , salt = ? WHERE id = ?";
 
 
     @Override
@@ -171,17 +173,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    public void changePassword(String login, String password) throws DaoException {
-
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CHANGE_PASSWORD)) {
-            statement.setString(1, password);
-            statement.setString(2, login);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException("Error with changing password. ", e);
-        }
-    }
 
     @Override
     public Optional<User> findByLogin(String login) throws DaoException {
@@ -332,14 +323,32 @@ public class UserDaoImpl implements UserDao {
     public Optional<String> findLoginByEmail(String email) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_LOGIN_BY_EMAIL)) {
+            Optional<String> result = Optional.empty();
+            logger.debug(email);
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
-            Optional<String> result = Optional.ofNullable(resultSet.getString(USER_LOGIN));
+            while (resultSet.next()) {
+                result = Optional.ofNullable(resultSet.getString(USER_LOGIN));
+            }
             return result;
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_BY_EMAIL, e.getMessage());
-            throw new DaoException("Can not proceed request: " +FIND_LOGIN_BY_EMAIL, e);
+            throw new DaoException("Can not proceed request: " + FIND_LOGIN_BY_EMAIL, e);
 
+        }
+    }
+
+    @Override
+    public void setPasswordById(long id, String password, String salt) throws DaoException {
+
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SET_PASSWORD_BY_ID)) {
+            statement.setString(1, password);
+            statement.setString(2, salt);
+            statement.setLong(3, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
         }
     }
 }

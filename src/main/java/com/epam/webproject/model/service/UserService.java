@@ -30,4 +30,6 @@ public interface UserService {
     public boolean checkUserStatus(String login, Status expectedStatus) throws ServiceException;
 
     public Optional<String> findLogin(String loginOrEmail) throws ServiceException;
+
+    public boolean forgetPassword(String email) throws ServiceException;
 }

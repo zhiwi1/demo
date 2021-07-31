@@ -9,8 +9,15 @@ import java.util.Optional;
 
 public interface TaskService {
     public Feedback createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException;
+
     public List<Task> findAllTasks() throws ServiceException;
+
     public Optional<Task> findTaskByTitle(String title) throws ServiceException;
+
     public ArrayDeque<String> findByFullText(String text) throws ServiceException;
+
+    public ArrayDeque<Task> findTasksByUserLogin(String login) throws ServiceException;
+
+    public boolean deleteTask(String title) throws ServiceException;
 }
 

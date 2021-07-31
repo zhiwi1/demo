@@ -22,6 +22,10 @@
 <c:if test="${not empty error_message}">
     <c:out value="${error_message}"/>
 </c:if>
+<c:if test="${not empty email_message}">
+    <c:out value="${email_message}"/>
+</c:if>
+
 <form action="controller?command=sign_in_command" method="post">
     <fmt:message key="login.login" bundle="${rb}"/>  <input type="text" name="email-login">
     <fmt:message key="login.password" bundle="${ rb }"/>:  <input type="text" name="password">
@@ -32,6 +36,8 @@
 <a href="controller?command=go_to_registration_page_command">
     <fmt:message key="login.register" bundle="${rb}"/>
 </a>
-<a href=""
+<a href="controller?command=go_to_send_password_command">
+    <fmt:message key="login.forget" bundle="${rb}"/>
+</a>
 </body>
 </html>

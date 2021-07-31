@@ -21,6 +21,7 @@ public final class RequestAttribute {
     public static final String FLAG="flag";
     public static final String LOGIN_ERROR_MESSAGE="login_error_message";
     public static final String ERROR_MESSAGE="error_message";
+    public static final String EMAIL_MESSAGE="email_message";
 
     private RequestAttribute() {
     }

@@ -7,17 +7,15 @@
 <fmt:setBundle basename="locale" var="rb" />
 <html>
 <head>
-    <title>   <fmt:message key="home.home" bundle="${rb}"/></title>
+    <title>Title</title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
-<p>
-    <fmt:message key="newpassword.on_your_email" bundle="${rb}"/>
-</p>
-<form action="controller?command=send_password_command" method="post">
-    <fmt:message key="newpassword.email" bundle="${rb}"/>  <input type="text" name="email">
-    <input type="submit" name="button" value="<fmt:message key="newpassword.send" bundle="${rb}"/>  ">
-</form>
-
+<c:forEach var="answer" items="${answers}">
+    <p>${answer}</p>
+    <form action="controller?command=mark_correct_answer_command&answer_id=${answer.answerId}" method="post">
+        <input type="submit" name="button" value="mark correct">
+    </form>
+</c:forEach>
 </body>
 </html>

@@ -41,5 +41,9 @@ public interface UserDao {
     public Optional<Status> findStatusByLogin(String login) throws DaoException;
 
     public Optional<String> findLoginByEmail(String login) throws DaoException;
+
+
+    public void setPasswordById(long id, String password,String salt) throws DaoException;
+
 }
 

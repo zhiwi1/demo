@@ -32,6 +32,12 @@ public class CommandProvider {
         commands.put(CommandType.LIKE_ANSWER_COMMAND, new LikeAnswerCommand());
         commands.put(CommandType.BLOCK_USER_COMMAND, new BlockUserCommand());
         commands.put(CommandType.UNBLOCK_USER_COMMAND, new UnblockUserCommand());
+        commands.put(CommandType.SEND_PASSWORD_COMMAND, new SendPasswordCommand());
+        commands.put(CommandType.GO_TO_SEND_PASSWORD_COMMAND, new GoToSendPasswordCommand());
+        commands.put(CommandType.SHOW_MY_TASKS_COMMAND, new ShowMyTasksCommand());
+        commands.put(CommandType.DELETE_TASK_BY_USER_COMMAND, new DeleteTaskByUserCommand());
+        commands.put(CommandType.FIND_ANSWERS_OF_TASK_COMMAND,new FindAnswersOfTaskCommand());
+        commands.put(CommandType.MARK_CORRECT_ANSWER_COMMAND,new MarkCorrectAnswerCommand());
     }
 
     public static CommandProvider getInstance() {

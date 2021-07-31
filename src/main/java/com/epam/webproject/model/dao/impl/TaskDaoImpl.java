@@ -23,8 +23,7 @@ public class TaskDaoImpl implements TaskDao {
     private static final String FIND_TASK_BY_TITLE = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE title = ? ";
     private static final String TASKS_FULL_TEXT_SEARCH = "SELECT title FROM `tasks` WHERE MATCH (title,content) AGAINST (?);";
     private static final String DELETE_TASK = "DELETE FROM tasks " +
-            "WHERE title =?"+
-            "JOIN";
+            "WHERE title =?";
     private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
 
     @Override
@@ -118,8 +117,9 @@ public class TaskDaoImpl implements TaskDao {
     public ArrayDeque<Task> findTasksByUserLogin(String login) throws DaoException {
         ArrayDeque<Task> tasks = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN);
-             ResultSet resultSet = statement.executeQuery();) {
+             PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN)){
+             statement.setString(1,login);
+             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString(TASK_TITLE);
                 String content = resultSet.getString(CONTENT);

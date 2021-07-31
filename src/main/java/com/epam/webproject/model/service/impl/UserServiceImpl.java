@@ -11,6 +11,7 @@ import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 import com.epam.webproject.model.dao.UserDao;
 import com.epam.webproject.model.dao.impl.UserDaoImpl;
+import com.epam.webproject.model.email.MailSender;
 import com.epam.webproject.model.entity.*;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.UserService;
@@ -183,19 +184,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<String> findLogin(String loginOrEmail) throws ServiceException{
-        Optional<String> loginOptional=Optional.empty();
+    public Optional<String> findLogin(String loginOrEmail) throws ServiceException {
+        Optional<String> loginOptional = Optional.empty();
         try {
-        if (UserValidator.checkEmail(loginOrEmail)) {
-            loginOptional = userDao.findLoginByEmail(loginOrEmail);
-        } else if (UserValidator.checkLength(loginOrEmail)) {
-           loginOptional=Optional.of(loginOrEmail);
-        }
-    }catch (DaoException e){
+            if (UserValidator.checkEmail(loginOrEmail)) {
+                loginOptional = userDao.findLoginByEmail(loginOrEmail);
+            } else if (UserValidator.checkLength(loginOrEmail)) {
+                loginOptional = Optional.of(loginOrEmail);
+            }
+        } catch (DaoException e) {
             throw new ServiceException("Can not check status: " + e.getMessage(), e);
         }
         return loginOptional;
     }
 
- }
+    @Override
+    public boolean forgetPassword(String email) throws ServiceException {
+        boolean result = false;
+        if (UserValidator.checkEmail(email)) {
+
+            try {
+                Optional<User> user = userDao.findByEmail(email);
+                if (user.isPresent()) {
+                    PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
+                    String newPassword = encryptor.generateRandomPassword();
+                    String salt = encryptor.generateSalt();
+                    String hashPassword = encryptor.getHash(newPassword, salt);
+                    userDao.setPasswordById(user.get().getId(),  hashPassword,salt);
+                    MailSender.send(email, MailSender.messageForgetPassword(user.get().getLogin(), newPassword));
+                    result = true;
+                }
+            } catch (DaoException e) {
+                throw new ServiceException("Can't handle forgetPassword request at UserService", e);
+            }
+        }
+        return result;
+    }
+}
 //}

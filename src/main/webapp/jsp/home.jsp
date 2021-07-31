@@ -19,6 +19,10 @@
     <fmt:message key="home.show" bundle="${rb}"/>
 </a>
 <br>
+<a href="controller?command=show_my_tasks_command"  role="button">
+Show my tasks
+</a>
+<br>
 <c:out value="${role}"/>
 <c:if test = "${role == 'ADMIN'}">
 

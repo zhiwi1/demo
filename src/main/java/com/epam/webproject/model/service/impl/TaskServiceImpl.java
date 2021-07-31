@@ -79,4 +79,26 @@ public class TaskServiceImpl implements TaskService {
         }
 
     }
+
+    public ArrayDeque<Task> findTasksByUserLogin(String login) throws ServiceException {
+        try {
+            ArrayDeque<Task> tasks = taskDao.findTasksByUserLogin(login);
+            return tasks;
+        } catch (DaoException e) {
+            logger.error("Can't find ", e.getMessage());
+            throw new ServiceException("Can't find", e);
+        }
+
+    }
+
+    @Override
+    public boolean deleteTask(String title) throws ServiceException {
+        try {
+            boolean result = taskDao.deleteTask(title);
+            return result;
+        } catch (DaoException e) {
+            logger.error("Can't show all tasks", e.getMessage());
+            throw new ServiceException("Can't show all task", e);
+        }
+    }
 }
