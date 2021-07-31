@@ -17,6 +17,10 @@ public final class RequestParameter {
     public static final String COMPLEXITY="complexity";
     public static final String COMMENT="comment";
     public static final String ANSWER="answer";
+    public static final String PREPARATION_FOR_ERROR_MESSAGE="&error_message=";
+    public static final String ERROR_MESSAGE="error_message";
+    public static final String TRUE="true";
+
 
 
     private RequestParameter() {

@@ -10,10 +10,12 @@ import jakarta.servlet.http.HttpSessionListener;
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent se) {
+        se.getSession().setAttribute(RequestAttribute.LOCALE,"en");
+
         HttpSessionListener.super.sessionCreated(se);
 
 
-      //  se.getSession().setAttribute(RequestAttribute.PREVIOUS_PAGE.name(), PagePath.HOME_PAGE);
+
 
     }
 

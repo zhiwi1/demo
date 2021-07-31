@@ -20,6 +20,7 @@ public final class RequestAttribute {
     public static final String ANSWER_ID="answer_id";
     public static final String FLAG="flag";
     public static final String LOGIN_ERROR_MESSAGE="login_error_message";
+    public static final String ERROR_MESSAGE="error_message";
 
     private RequestAttribute() {
     }

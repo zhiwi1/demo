@@ -33,11 +33,11 @@ public class RegisterUserCommand implements Command {
                     router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
                     break;
                 }
+                //todo if login and email equals
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
-                    //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
-                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_REGISTRATION_PAGE_COMMAND);
+                    router = new Router(RouterType.REDIRECT, PagePath.GO_TO_REGISTRATION_PAGE_COMMAND,RequestParameter.PREPARATION_FOR_ERROR_MESSAGE,feedback.toString());
                     break;
                 }
             }

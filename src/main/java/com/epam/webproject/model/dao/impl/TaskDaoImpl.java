@@ -22,6 +22,10 @@ public class TaskDaoImpl implements TaskDao {
     private static final String FIND_ALL = "SELECT title, content, created_at, updated_at, user_id, complexity, count_for_solve FROM tasks";
     private static final String FIND_TASK_BY_TITLE = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE title = ? ";
     private static final String TASKS_FULL_TEXT_SEARCH = "SELECT title FROM `tasks` WHERE MATCH (title,content) AGAINST (?);";
+    private static final String DELETE_TASK = "DELETE FROM tasks " +
+            "WHERE title =?"+
+            "JOIN"
+    private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
 
     @Override
     public boolean createNewTask(String title, String text, java.util.Date createdAt, String login, int complexity) throws DaoException {
@@ -109,6 +113,46 @@ public class TaskDaoImpl implements TaskDao {
         }
         return arrayDeque;
     }
+
+    @Override
+    public ArrayDeque<Task> findTasksByUserLogin(String login) throws DaoException {
+        ArrayDeque<Task> tasks = new ArrayDeque<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN);
+             ResultSet resultSet = statement.executeQuery();) {
+            while (resultSet.next()) {
+                String title = resultSet.getString(TASK_TITLE);
+                String content = resultSet.getString(CONTENT);
+                java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
+                java.util.Date updated_at = resultSet.getTimestamp(UPDATED_AT);
+                long user_id = resultSet.getLong(USER_ID);
+                int complexity = resultSet.getInt(TASK_COMPLEXITY);
+                int count_for_solve = resultSet.getInt(TASK_COUNT_FOR_SOLVE);
+                Task task = new Task(title, content, created_at, updated_at, user_id, complexity, count_for_solve);
+                tasks.add(task);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_ALL, e);
+        }
+        //   return users;
+        return tasks;
+    }
+
+
+
+    @Override
+    public boolean deleteTask(String title) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TASK)) {
+            preparedStatement.setString(1, title);
+            return (preparedStatement.executeUpdate() == 1);
+        } catch (SQLException e) {
+            logger.error("Can't delete", e);
+            throw new DaoException(e);
+        }
+    }
+
 }
 
 

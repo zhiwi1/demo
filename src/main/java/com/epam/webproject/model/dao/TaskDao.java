@@ -17,4 +17,8 @@ public interface TaskDao {
     public Optional<Task> findTaskByTitle(String title) throws DaoException;
 
     public ArrayDeque<String> findByFullText(String text) throws DaoException;
+
+    public ArrayDeque<Task> findTasksByUserLogin(String login) throws DaoException;
+
+    public boolean deleteTask(String title) throws DaoException;
 }

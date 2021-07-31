@@ -1,6 +1,7 @@
 package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
+import com.epam.webproject.localization.Localization;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 public class ChangeLocaleCommand implements Command {
 
-public static final Logger logger= LogManager.getLogger();
+    public static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest req) {
 

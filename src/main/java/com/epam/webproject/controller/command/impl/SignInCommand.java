@@ -25,16 +25,9 @@ public class SignInCommand implements Command {
             if (isSignIn) {
                 Optional<String> loginOptional = userService.findLogin(loginOrEmail);
                 loginOptional.ifPresent(login -> request.getSession().setAttribute(RequestAttribute.LOGIN, login));
-                router = new Router(RouterType.REDIRECT, PagePath.GO_TO_HOME_PAGE);
+                  router = new Router(RouterType.REDIRECT, PagePath.GO_TO_HOME_PAGE);
             } else {
-                String locale = (String) request.getAttribute(RequestAttribute.LOCALE);
-                System.out.println(locale);
-                if (locale!=null) {
-                    System.out.println(locale);
-                    Localization localization = Localization.valueOf(locale);
-                  //  request.setAttribute(RequestAttribute.LOGIN_ERROR_MESSAGE, localization.getText(LocalizationKey.LOGIN_ERROR_MESSAGE));
-                }
-                router = new Router(RouterType.REDIRECT,PagePath.GO_TO_LOGIN_PAGE);
+                router = new Router(RouterType.REDIRECT,PagePath.GO_TO_LOGIN_PAGE,RequestParameter.PREPARATION_FOR_ERROR_MESSAGE,RequestParameter.TRUE);
             }
 
         } catch (ServiceException e) {

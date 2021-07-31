@@ -9,6 +9,11 @@ public class Router {
         this.routerType = routerType;
         this.routerPath = routerPath;
     }
+    public Router(RouterType routerType, String routerPath,String preparationForParam,String param) {
+        this.routerType = routerType;
+        this.routerPath = routerPath+preparationForParam+param;
+    }
+
 
     public RouterType getRouterType() {
         return routerType;

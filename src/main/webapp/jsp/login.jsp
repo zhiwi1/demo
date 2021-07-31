@@ -18,8 +18,8 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
-<c:if test="${not empty login_error_message}">
-    <c:out value="${login_error_message}"/>
+<c:if test="${not empty error_message}">
+    <c:out value="${error_message}"/>
 </c:if>
 <form action="controller?command=sign_in_command" method="post">
     Email:  <input type="text" name="email-login">
