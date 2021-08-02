@@ -1,8 +1,6 @@
 package com.epam.webproject.model.dao;
 
 import com.epam.webproject.exception.DaoException;
-import com.epam.webproject.model.dao.BaseDao;
-import com.epam.webproject.model.entity.Entity;
 import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.User;
