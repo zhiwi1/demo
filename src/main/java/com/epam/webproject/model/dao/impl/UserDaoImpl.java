@@ -53,6 +53,12 @@ public class UserDaoImpl implements UserDao {
 
     private static final String SET_PASSWORD_BY_ID = "UPDATE users SET password_hash = ? , salt = ? WHERE id = ?";
 
+    private static final String FIND_INFO_FOR_RATES = " SELECT count_of_solve , sum(answers.likes) " +
+            "FROM users " +
+            "join answers on answers.user_id =users.id where users.id =" +
+            "(SELECT id FROM users WHERE login = ?);";
+    private static final String UPDATE_RATES = "UPDATE `first_project`.`users` SET `rates_of_solve`= ? WHERE  `login`=?;";
+
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -351,6 +357,38 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
         }
     }
+
+    @Override
+    public Map<String, Long> findInfoForRates(String login) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_INFO_FOR_RATES)) {
+            Map<String, Long> map = new HashMap<>();
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                map.put(COUNT_OF_SOLVE, resultSet.getLong(COUNT_OF_SOLVE));
+                map.put(LIKES, resultSet.getLong(SUM_OF_LIKES));
+            }
+            return map;
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_INFO_FOR_RATES, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_INFO_FOR_RATES, e);
+
+        }
+    }
+
+    public boolean setRates(String login, RatesType ratesType) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_RATES)) {
+            statement.setString(1, ratesType.toString());
+            statement.setString(2, login);
+
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
+        }
+    }
 }
+
 
 

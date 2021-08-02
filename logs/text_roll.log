@@ -19,3 +19,11 @@ java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check th
 	at com.epam.webproject.Main.main(Main.java:24) [classes/:?]
 2021-08-01 00:46:42 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
 2021-08-01 00:46:42 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-02 03:37:15 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-02 03:37:15 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-02 03:37:16 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed ` SELECT count_of_solve , sum(answers.likes) FROM users join answers on answers.user_id =users.id where users.id =(SELECT id FROM users WHERE login = ?);` request: Column 'likes' not found.
+2021-08-02 03:39:02 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-02 03:39:02 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-02 03:39:03 [main] ERROR webproject.model.dao.impl.UserDaoImpl- Can not proceed ` SELECT count_of_solve , sum(answers.likes) FROM users join answers on answers.user_id =users.id where users.id =(SELECT id FROM users WHERE login = ?);` request: Column 'likes' not found.
+2021-08-02 03:41:23 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-02 03:41:23 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver

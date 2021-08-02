@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean blockUser(String login) throws ServiceException {
-        UserDao userDao = DaoProvider.getInstance().getUserDao();
+
         try {
             return userDao.blockUser(login);
         } catch (DaoException e) {
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean unblockUser(String login) throws ServiceException {
-        UserDao userDao = DaoProvider.getInstance().getUserDao();
+
         try {
             return userDao.unblockUser(login);
         } catch (DaoException e) {
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
                     String newPassword = encryptor.generateRandomPassword();
                     String salt = encryptor.generateSalt();
                     String hashPassword = encryptor.getHash(newPassword, salt);
-                    userDao.setPasswordById(user.get().getId(),  hashPassword,salt);
+                    userDao.setPasswordById(user.get().getId(), hashPassword, salt);
                     MailSender.send(email, MailSender.messageForgetPassword(user.get().getLogin(), newPassword));
                     result = true;
                 }
@@ -219,6 +219,42 @@ public class UserServiceImpl implements UserService {
             }
         }
         return result;
+    }
+
+    @Override
+    public RatesType calculateRatesOfSolve(String login) throws ServiceException {
+        final class RatesBall {
+            private static final int BALL_OF_LIKE = 1;
+            private static final int BALL_OF_SOLVE = 5;
+        }
+        try {
+            RatesType ratesType = RatesType.NEWBIE;
+            Map<String, Long> infoForCalculating = userDao.findInfoForRates(login);
+            long countOfLikes = infoForCalculating.get(LIKES);
+            long countOfSolve = infoForCalculating.get(COUNT_OF_SOLVE);
+            long rates = RatesBall.BALL_OF_SOLVE * countOfSolve + countOfLikes * RatesBall.BALL_OF_LIKE;
+            if (rates > 10 && rates < 20) {
+                ratesType = RatesType.STUDENT;
+            } else if (rates >= 20 && rates < 30) {
+                ratesType = RatesType.HARDWORKER;
+            } else if (rates >= 30) {
+                ratesType = RatesType.PROFESSIONAL;
+            }
+            return ratesType;
+        } catch (DaoException e) {
+            throw new ServiceException("Can't process calculateRatesOfSolve request at UserService", e);
+
+        }
+    }
+
+    @Override
+    public boolean setRates(String login, RatesType ratesType) throws ServiceException {
+        try {
+            boolean result = userDao.setRates(login, ratesType);
+            return result;
+        } catch (DaoException e) {
+            throw new ServiceException("Can't process calculateRatesOfSolve request at UserService", e);
+        }
     }
 }
 //}

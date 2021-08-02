@@ -3,6 +3,7 @@ package com.epam.webproject.model.dao;
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.dao.BaseDao;
 import com.epam.webproject.model.entity.Entity;
+import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.User;
 
@@ -45,5 +46,8 @@ public interface UserDao {
 
     public void setPasswordById(long id, String password,String salt) throws DaoException;
 
-}
+    public Map<String, Long> findInfoForRates(String login) throws DaoException;
+
+    public boolean setRates(String login, RatesType ratesType) throws DaoException ;
+    }
 

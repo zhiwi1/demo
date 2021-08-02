@@ -20,7 +20,7 @@ class Main {
     private  static  final Logger logger = LogManager.getLogger();
 
     public static void main(String args[]) throws DaoException {
-        TaskDao dao=DaoProvider.getInstance().getTaskDao();
-       dao.deleteTask("title");
+        UserDao dao=DaoProvider.getInstance().getUserDao();
+        dao.findInfoForRates("login");
     }
 }

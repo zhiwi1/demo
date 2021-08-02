@@ -1,6 +1,8 @@
 package com.epam.webproject.model.service;
 
+import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.exception.ServiceException;
+import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.Task;
 import com.epam.webproject.model.entity.User;
@@ -32,4 +34,10 @@ public interface UserService {
     public Optional<String> findLogin(String loginOrEmail) throws ServiceException;
 
     public boolean forgetPassword(String email) throws ServiceException;
-}
+
+    public RatesType calculateRatesOfSolve(String login) throws ServiceException;
+
+    public boolean setRates(String login,RatesType ratesType) throws ServiceException;
+
+
+    }
