@@ -12,10 +12,21 @@
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <c:forEach var="answer" items="${answers}">
-    <p>${answer}</p>
-    <form action="controller?command=mark_correct_answer_command&answer_id=${answer.answerId}" method="post">
-        <input type="submit" name="button" value="mark correct">
-    </form>
+
+    <c:if test="${answer.correctness =='INCORRECT'}">
+        <p>${answer}</p>
+        <form action="controller?command=mark_correct_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}" method="post">
+            <input type="submit" name="button" value="mark correct">
+        </form>
+    </c:if>
+    <c:if test="${answer.correctness =='CORRECT'}">
+        <p>${answer}</p>
+        <form action="controller?command=mark_incorrect_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}" method="post">
+            <input type="submit" name="button" value="mark incorrect">
+        </form>
+    </c:if>
+
+
 </c:forEach>
 </body>
 </html>

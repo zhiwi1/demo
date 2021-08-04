@@ -10,6 +10,7 @@ import com.epam.webproject.model.service.TaskService;
 import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Deque;
 import java.util.List;
 
 public class ShowAllUsersCommand implements Command {
@@ -17,7 +18,7 @@ public class ShowAllUsersCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         UserService service = ServiceProvider.getInstance().getUserService();
         try {
-            List<User> users=service.showAllUsers();
+            Deque<User> users=service.showAllUsers();
             request.setAttribute(RequestAttribute.USERS,users);
             return new Router(RouterType.FORWARD, PagePath.ALL_USERS_PAGE);
         } catch (ServiceException e) {

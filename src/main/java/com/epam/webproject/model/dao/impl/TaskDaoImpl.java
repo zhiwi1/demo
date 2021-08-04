@@ -9,10 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
@@ -25,6 +22,26 @@ public class TaskDaoImpl implements TaskDao {
     private static final String DELETE_TASK = "DELETE FROM tasks " +
             "WHERE title =?";
     private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
+    private static final String FIND_TITLE_BY_ID = "SELECT title FROM tasks WHERE id=?";
+
+    @Override
+    public Optional<String> findTitleById(long id) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_TITLE_BY_ID)) {
+            Optional<String> result = Optional.empty();
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result = Optional.ofNullable(resultSet.getString(TASK_TITLE));
+            }
+            return result;
+        } catch (SQLException e) {
+            logger.error("Can't delete", e);
+            throw new DaoException(e);
+        }
+
+
+    }
 
     @Override
     public boolean createNewTask(String title, String text, java.util.Date createdAt, String login, int complexity) throws DaoException {
@@ -45,8 +62,8 @@ public class TaskDaoImpl implements TaskDao {
 
 
     @Override
-    public List<Task> findAll() throws DaoException {
-        List<Task> tasks = new LinkedList<>();
+    public Deque<Task> findAll() throws DaoException {
+        Deque<Task> tasks = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
@@ -96,8 +113,8 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public ArrayDeque<String> findByFullText(String text) throws DaoException {
-        ArrayDeque<String> arrayDeque = new ArrayDeque<>();
+    public Deque<String> findByFullText(String text) throws DaoException {
+        Deque<String> arrayDeque = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(TASKS_FULL_TEXT_SEARCH)) {
             preparedStatement.setString(1, text);
@@ -114,12 +131,12 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public ArrayDeque<Task> findTasksByUserLogin(String login) throws DaoException {
-        ArrayDeque<Task> tasks = new ArrayDeque<>();
+    public Deque<Task> findTasksByUserLogin(String login) throws DaoException {
+        Deque<Task> tasks = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN)){
-             statement.setString(1,login);
-             ResultSet resultSet = statement.executeQuery();
+             PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString(TASK_TITLE);
                 String content = resultSet.getString(CONTENT);
@@ -138,7 +155,6 @@ public class TaskDaoImpl implements TaskDao {
         //   return users;
         return tasks;
     }
-
 
 
     @Override

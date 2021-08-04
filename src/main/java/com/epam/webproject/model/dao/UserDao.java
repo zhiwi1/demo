@@ -5,13 +5,10 @@ import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.User;
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public interface UserDao {
-    List<User> findAll() throws DaoException;
+    Deque<User> findAll() throws DaoException;
 
     boolean createNewUser(User user, String password, String salt) throws DaoException;
 
@@ -31,7 +28,7 @@ public interface UserDao {
 
     public boolean updateUserName(String newLogin, String newEmail, String oldLogin) throws DaoException;
 
-    public ArrayDeque<User> findByFullText(String text) throws DaoException;
+    public Deque<User> findByFullText(String text) throws DaoException;
 
     public boolean blockUser(String login) throws DaoException;
 
@@ -40,7 +37,6 @@ public interface UserDao {
     public Optional<Status> findStatusByLogin(String login) throws DaoException;
 
     public Optional<String> findLoginByEmail(String login) throws DaoException;
-
 
     public void setPasswordById(long id, String password,String salt) throws DaoException;
 

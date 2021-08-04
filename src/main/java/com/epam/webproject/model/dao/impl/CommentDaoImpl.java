@@ -10,10 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
@@ -42,8 +39,8 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
-    public List<Comment> findAll() throws DaoException {
-        List<Comment> comments = new LinkedList<>();
+    public Deque<Comment> findAll() throws DaoException {
+        Deque<Comment> comments = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
@@ -67,8 +64,8 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public ArrayDeque<Comment> findCommentsByTitle(String title) throws DaoException {
-        ArrayDeque<Comment> arrayDeque = new ArrayDeque<>();
+    public Deque<Comment> findCommentsByTitle(String title) throws DaoException {
+        Deque<Comment> arrayDeque = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COMMENTS_BY_TASK_TITLE)) {
             preparedStatement.setString(1, title);

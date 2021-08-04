@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
 import java.util.Date;
+import java.util.Deque;
 
 
 public class CommentServiceImpl implements CommentService {
@@ -37,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ArrayDeque<Comment> findCommentsByTitle(String title) throws ServiceException {
+    public Deque<Comment> findCommentsByTitle(String title) throws ServiceException {
         try {
             return commentDao.findCommentsByTitle(title);
         } catch (DaoException e) {

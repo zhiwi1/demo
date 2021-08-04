@@ -38,6 +38,7 @@ public class CommandProvider {
         commands.put(CommandType.DELETE_TASK_BY_USER_COMMAND, new DeleteTaskByUserCommand());
         commands.put(CommandType.FIND_ANSWERS_OF_TASK_COMMAND,new FindAnswersOfTaskCommand());
         commands.put(CommandType.MARK_CORRECT_ANSWER_COMMAND,new MarkCorrectAnswerCommand());
+        commands.put(CommandType.MARK_INCORRECT_ANSWER_COMMAND,new MarkIncorrectAnswerCommand());
     }
 
     public static CommandProvider getInstance() {

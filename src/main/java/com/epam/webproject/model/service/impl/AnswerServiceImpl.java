@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
 import java.util.Date;
+import java.util.Deque;
 
 public class AnswerServiceImpl implements AnswerService {
     private static final Logger logger = LogManager.getLogger();
@@ -36,7 +37,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public ArrayDeque<Answer> findAnswersByTitle(String title) throws ServiceException {
+    public Deque<Answer> findAnswersByTitle(String title) throws ServiceException {
         try {
             return answerDao.findAnswersByTitle(title);
         } catch (DaoException e) {
@@ -62,5 +63,26 @@ public class AnswerServiceImpl implements AnswerService {
             throw new ServiceException("Can't like", e);
         }
         return result;
+    }
+
+    @Override
+    public boolean markCorrect(long answerId) throws ServiceException {
+
+        try {
+            return answerDao.markCorrect(answerId);
+        } catch (DaoException e) {
+            logger.error("Can't block user", e.getMessage());
+            throw new ServiceException("Can't block user", e);
+        }
+    }
+    @Override
+    public boolean markIncorrect(long answerId) throws ServiceException {
+
+        try {
+            return answerDao.markIncorrect(answerId);
+        } catch (DaoException e) {
+            logger.error("Can't block user", e.getMessage());
+            throw new ServiceException("Can't block user", e);
+        }
     }
 }

@@ -25,6 +25,7 @@ public final class PagePath {
     public static final String SHOW_ALL_USERS_COMMAND = "controller?command=show_all_users_command";
     public static final String GO_TO_NEW_PASSWORD_PAGE="controller?command=go_to_new_password_page_command";
     public static final String SHOW_MY_TASKS_COMMAND_PAGE="controller?command=show_my_tasks_command";
+    public static final String FIND_ANSWERS_OF_TASK_COMMAND="controller?command=find_answers_of_task_command";
 
     private PagePath() {
     }

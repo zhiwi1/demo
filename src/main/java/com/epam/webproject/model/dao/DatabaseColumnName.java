@@ -28,6 +28,7 @@ public final class DatabaseColumnName {
     //answer
     public static final String LIKES="likes";
     public static final String SUM_OF_LIKES="sum(answers.likes)";
+    public static final String CORRECTNESS="correctness";
 
 }
 //        public static final String USER_STATUS_ID = "user_status_id";

@@ -134,8 +134,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
-        List<User> users = new ArrayList<>();
+    public Deque<User> findAll() throws DaoException {
+        Deque<User> users = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
@@ -257,8 +257,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public ArrayDeque<User> findByFullText(String text) throws DaoException {
-        ArrayDeque<User> arrayDeque = new ArrayDeque<>();
+    public Deque<User> findByFullText(String text) throws DaoException {
+        Deque<User> arrayDeque = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(USERS_FULL_TEXT_SEARCH)) {
             preparedStatement.setString(1, text);

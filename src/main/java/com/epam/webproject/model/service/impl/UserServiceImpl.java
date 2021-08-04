@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
 
+
+
     public boolean signInUser(String loginOrEmail, String password) throws ServiceException {
         boolean result = false;
         PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
@@ -63,7 +65,7 @@ public class UserServiceImpl implements UserService {
                     PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
                     String salt = encryptor.generateSalt();
                     String hashPassword = encryptor.getHash(password, salt);
-                    User user = new User( login, email,  Role.USER, RatesType.NEWBIE, Status.NORMAL);
+                    User user = new User(login, email, Role.USER, RatesType.NEWBIE, Status.NORMAL);
                     logger.info(user);
                     boolean isCreated = userDao.createNewUser(user, hashPassword, salt);
 
@@ -97,9 +99,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public List<User> showAllUsers() throws ServiceException {
+    @Override
+    public Deque<User> showAllUsers() throws ServiceException {
         try {
-            List<User> users = userDao.findAll();
+            Deque<User> users = userDao.findAll();
             return users;
         } catch (DaoException e) {
             logger.error("Can't create task", e.getMessage());
@@ -130,9 +133,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ArrayDeque<User> findByFullText(String text) throws ServiceException {
+    public Deque<User> findByFullText(String text) throws ServiceException {
         try {
-            ArrayDeque<User> arrayDeque = new ArrayDeque<>();
+            Deque<User> arrayDeque = new ArrayDeque<>();
             if (UserValidator.checkLength(text)) {
                 arrayDeque = userDao.findByFullText(text);
             }

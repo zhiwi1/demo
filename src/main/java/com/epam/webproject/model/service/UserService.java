@@ -8,6 +8,7 @@ import com.epam.webproject.model.entity.Task;
 import com.epam.webproject.model.entity.User;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +20,11 @@ public interface UserService {
 
     public Optional<User> findByLoginOrEmail(String login) throws ServiceException;
 
-    public List<User> showAllUsers() throws ServiceException;
+    public Deque<User> showAllUsers() throws ServiceException;
 
     public boolean updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail) throws ServiceException;
 
-    public ArrayDeque<User> findByFullText(String text) throws ServiceException;
+    public Deque<User> findByFullText(String text) throws ServiceException;
 
     public boolean unblockUser(String login) throws ServiceException;
 

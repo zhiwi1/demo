@@ -9,8 +9,9 @@ public class Answer extends Entity {
     private String userLogin;
     private long taskId;
     private long userId;
+    private CorrectnessOfAnswer correctness;
 
-    public Answer(String content,long like, long taskId, long userId) {
+    public Answer(String content, long like, long taskId, long userId) {
         this.content = content;
         this.like = like;
         this.taskId = taskId;
@@ -22,11 +23,21 @@ public class Answer extends Entity {
         this.like = like;
         this.userLogin = userLogin;
     }
-    public Answer(long answerId,String content, long like, String userLogin){
-        this.answerId=answerId;
+
+    public Answer(long answerId, String content, long like, String userLogin) {
+        this.answerId = answerId;
         this.content = content;
         this.like = like;
         this.userLogin = userLogin;
+    }
+
+    public Answer(long answerId, String content, long like, String userLogin, CorrectnessOfAnswer correctness,long taskId) {
+        this.answerId = answerId;
+        this.content = content;
+        this.like = like;
+        this.userLogin = userLogin;
+        this.correctness = correctness;
+        this.taskId=taskId;
     }
 
     public long getAnswerId() {
@@ -80,7 +91,16 @@ public class Answer extends Entity {
     public void setUserId(long userId) {
         this.userId = userId;
     }
-//todo equals and hashcode
+
+    public CorrectnessOfAnswer getCorrectness() {
+        return correctness;
+    }
+
+    public void setCorrectness(CorrectnessOfAnswer correctness) {
+        this.correctness = correctness;
+    }
+
+    //todo equals and hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,6 +121,7 @@ public class Answer extends Entity {
         sb.append(", content='").append(content).append('\'');
         sb.append(", like=").append(like);
         sb.append(", userLogin='").append(userLogin).append('\'');
+        sb.append(", correctness").append(correctness);
         sb.append('}');
         return sb.toString();
     }

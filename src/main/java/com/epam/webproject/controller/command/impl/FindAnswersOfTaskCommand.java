@@ -9,6 +9,7 @@ import com.epam.webproject.model.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class FindAnswersOfTaskCommand implements Command {
 
@@ -17,8 +18,7 @@ public class FindAnswersOfTaskCommand implements Command {
         String title = request.getParameter(RequestParameter.TITLE);
         AnswerService service = ServiceProvider.getInstance().getAnswerService();
         try {
-            Router router = new Router();
-            ArrayDeque<Answer> answers = service.findAnswersByTitle(title);
+            Deque<Answer> answers = service.findAnswersByTitle(title);
             request.setAttribute(RequestAttribute.ANSWERS, answers);
             return new Router(RouterType.FORWARD, PagePath.ANSWERS_OF_TASK_PAGE);
         } catch (ServiceException e) {

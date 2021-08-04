@@ -8,6 +8,7 @@ import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Deque;
 import java.util.List;
 
 public class BlockUserCommand implements Command {
@@ -20,7 +21,7 @@ public class BlockUserCommand implements Command {
             boolean result = userService.blockUser(login);
             Router router = new Router();
             if (result) {
-                List<User> users=userService.showAllUsers();
+                Deque<User> users=userService.showAllUsers();
                 request.setAttribute(RequestAttribute.USERS,users);
                 router = new Router(RouterType.REDIRECT, PagePath.SHOW_ALL_USERS_COMMAND);
             } else {

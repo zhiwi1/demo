@@ -9,6 +9,7 @@ import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Deque;
 import java.util.List;
 
 public class ShowAllTasksCommand implements Command {
@@ -16,7 +17,7 @@ public class ShowAllTasksCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         TaskService service = ServiceProvider.getInstance().getTaskService();
         try {
-            List<Task> tasks=service.findAllTasks();
+            Deque<Task> tasks=service.findAllTasks();
             request.setAttribute(RequestAttribute.TASKS,tasks);
             return new Router(RouterType.FORWARD, PagePath.ALL_TASKS_PAGE);
         } catch (ServiceException e) {

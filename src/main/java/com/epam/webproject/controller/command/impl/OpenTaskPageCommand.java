@@ -13,10 +13,7 @@ import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OpenTaskPageCommand implements Command {
@@ -33,7 +30,7 @@ public class OpenTaskPageCommand implements Command {
             if (optionalTask.isPresent()) {
                 Task task = optionalTask.get();
                 request.setAttribute(RequestAttribute.TASK, task);
-                ArrayDeque<Comment> deque = commentService.findCommentsByTitle(title);
+                Deque<Comment> deque = commentService.findCommentsByTitle(title);
                 request.setAttribute(RequestAttribute.COMMENTS, deque);
                 List<Answer> dequeOfAnswers = new ArrayList<>(answerService.findAnswersByTitle(title));
                 request.setAttribute(RequestAttribute.ANSWERS, dequeOfAnswers);

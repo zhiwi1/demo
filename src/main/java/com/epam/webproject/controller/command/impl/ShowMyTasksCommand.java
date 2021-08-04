@@ -11,6 +11,7 @@ import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 public class ShowMyTasksCommand implements Command {
@@ -19,7 +20,7 @@ public class ShowMyTasksCommand implements Command {
         TaskService service = ServiceProvider.getInstance().getTaskService();
         String login = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         try {
-            ArrayDeque<Task> tasks = service.findTasksByUserLogin(login);
+            Deque<Task> tasks = service.findTasksByUserLogin(login);
             request.setAttribute(RequestAttribute.TASKS, tasks);
             return new Router(RouterType.FORWARD, PagePath.USER_TASKS_PAGE);
         } catch (ServiceException e) {

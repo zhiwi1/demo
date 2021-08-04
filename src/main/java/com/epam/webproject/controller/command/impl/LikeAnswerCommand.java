@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Deque;
 import java.util.List;
 
 public class LikeAnswerCommand implements Command {
@@ -27,7 +28,7 @@ public class LikeAnswerCommand implements Command {
         logger.debug(answer_id);
 
         try {
-            List<Task> tasks=taskService.findAllTasks();
+            Deque<Task> tasks=taskService.findAllTasks();
             request.setAttribute(RequestAttribute.TASKS,tasks);
             boolean isLike = answerService.likeOrUnlike(answer_id, true);
             if (isLike) {

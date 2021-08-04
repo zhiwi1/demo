@@ -10,6 +10,7 @@ import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class UsersFullTextSearchCommand implements Command {
     @Override
@@ -17,7 +18,7 @@ public class UsersFullTextSearchCommand implements Command {
         UserService service = ServiceProvider.getInstance().getUserService();
         String text = request.getParameter(RequestParameter.TEXT);
         try {
-            ArrayDeque<User> arrayDeque = service.findByFullText(text);
+            Deque<User> arrayDeque = service.findByFullText(text);
             request.setAttribute(RequestAttribute.FULL_TEXT_SEARCH_USERS, arrayDeque);
             return new Router(RouterType.FORWARD, PagePath.ALL_USERS_PAGE);
         } catch (ServiceException e) {
