@@ -21,8 +21,9 @@ USE `first_project` ;
 -- Table `first_project`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `first_project`.`users` (
-  `id` BIGINT NOT NULL,
-  `login` VARCHAR(100) NOT NULL,
+  FULLTEXT KEY `ft1` (`login`,`email`),
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `login` VARCHAR(100) NOT NULL ,
   `email` VARCHAR(255) NOT NULL,
   `count_of_solve` INT NOT NULL DEFAULT 0,
   `rates_of_solve` ENUM('NEWBIE', 'STUDENT', 'HARDWORKER', 'PROFESSIONAL') NULL DEFAULT 'NEWBIE',
@@ -34,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `first_project`.`users` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   PRIMARY KEY (`id`))
+
 ENGINE = InnoDB;
 
 
@@ -41,6 +43,7 @@ ENGINE = InnoDB;
 -- Table `first_project`.`tasks`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `first_project`.`tasks` (
+  FULLTEXT KEY `ft2` (`title`,`content`),
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
   `content` TEXT NOT NULL,
@@ -117,3 +120,4 @@ USE `first_project` ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
