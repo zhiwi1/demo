@@ -7,16 +7,11 @@ import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
 @WebListener
-public class SessionListener implements HttpSessionListener {
+public class SessionListenerImpl implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         se.getSession().setAttribute(RequestAttribute.LOCALE,"en");
-
         HttpSessionListener.super.sessionCreated(se);
-
-
-
-
     }
 
     @Override

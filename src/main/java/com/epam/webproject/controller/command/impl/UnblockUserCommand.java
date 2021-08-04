@@ -13,21 +13,24 @@ import java.util.List;
 public class UnblockUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         UserService userService = ServiceProvider.getInstance().getUserService();
         String login = request.getParameter(RequestParameter.LOGIN);
         try {
+            Router router = new Router();
             boolean result = userService.unblockUser(login);
             if (result) {
-                List<User> users=userService.showAllUsers();
-                request.setAttribute(RequestAttribute.USERS,users);
+                List<User> users = userService.showAllUsers();
+                request.setAttribute(RequestAttribute.USERS, users);
                 router = new Router(RouterType.REDIRECT, PagePath.SHOW_ALL_USERS_COMMAND);
             } else {
                 router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
+            return router;
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        return router;
+
+
     }
 }

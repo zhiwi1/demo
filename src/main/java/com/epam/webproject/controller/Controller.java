@@ -1,4 +1,5 @@
 package com.epam.webproject.controller;
+
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ProjectException;
@@ -8,7 +9,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +30,7 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String commandName = request.getParameter(RequestParameter.COMMAND);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
@@ -35,7 +38,7 @@ public class Controller extends HttpServlet {
         try {
             router = command.execute(request);
         } catch (CommandException e) {
-            throw new ServletException("Project Exception: " + e.getMessage(), e);
+            response.sendError(404, PagePath.ERROR_PAGE);
         }
         switch (router.getRouterType()) {
             case REDIRECT:
@@ -47,7 +50,7 @@ public class Controller extends HttpServlet {
                 break;
             default:
                 logger.error("incorrect route type " + router.getRouterType());
-                response.sendRedirect(PagePath.ERROR_PAGE);
+                response.sendError(404, PagePath.ERROR_PAGE);
         }
     }
 }

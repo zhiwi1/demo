@@ -10,19 +10,21 @@ import jakarta.servlet.http.HttpServletRequest;
 public class DeleteTaskByUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         String title = request.getParameter(RequestParameter.TITLE);
         TaskService service = ServiceProvider.getInstance().getTaskService();
         try {
-            boolean result = service.deleteTask(title);
-            if (result) {
+            boolean isDeleted = service.deleteTask(title);
+            Router router = new Router();
+            if (isDeleted) {
                 router = new Router(RouterType.REDIRECT, PagePath.SHOW_MY_TASKS_COMMAND_PAGE);
             } else {
                 router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
+            return router;
         } catch (ServiceException e) {
             throw new CommandException("Delete command error", e);
         }
-        return router;
+
     }
 }

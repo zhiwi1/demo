@@ -15,22 +15,25 @@ public class FindProfileInfoCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         String login = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         UserService service = ServiceProvider.getInstance().getUserService();
         try {
+
             RatesType ratesType = service.calculateRatesOfSolve(login);
             service.setRates(login, ratesType);
             Optional<User> optionalUser = service.findByLoginOrEmail(login);
+            Router router = new Router();
             if (optionalUser.isPresent()) {
                 request.setAttribute(RequestAttribute.USER, optionalUser.get());
                 router = new Router(RouterType.FORWARD, PagePath.PROFILE_PAGE);
             } else {
                 router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
             }
+            return router;
         } catch (ServiceException e) {
             throw new CommandException("Registration command error", e);
         }
-        return router;
+
     }
 }

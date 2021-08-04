@@ -17,17 +17,16 @@ public class EditPageCommand implements Command {
 private static final Logger logger= LogManager.getLogger();
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         String oldLogin = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         String oldEmail = (String) request.getSession().getAttribute(RequestAttribute.EMAIL);
         String newLogin = request.getParameter(RequestParameter.LOGIN);
         String newEmail = request.getParameter(RequestParameter.EMAIL);
-        logger.info(oldLogin+" ",newLogin);
-        logger.info(oldEmail+" "+newEmail);
         UserService service = ServiceProvider.getInstance().getUserService();
         try {
-            boolean result = service.updateUser(newLogin, newEmail, oldLogin, oldEmail);
-            if(result){
+            Router router = new Router();
+            boolean isUpdated = service.updateUser(newLogin, newEmail, oldLogin, oldEmail);
+            if(isUpdated){
                 Optional<User> optionalUser = service.findByLoginOrEmail(newLogin);
                 User user = optionalUser.get();
                 request.getSession().setAttribute(RequestAttribute.LOGIN,newLogin);
@@ -39,9 +38,10 @@ private static final Logger logger= LogManager.getLogger();
                 request.setAttribute(RequestAttribute.MESSAGE,"Login Or Email exists");
                 router=new Router(RouterType.REDIRECT,PagePath.FIND_EDITING_INFO_COMMAND);
             }
+            return router;
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        return router;
+
     }
 }

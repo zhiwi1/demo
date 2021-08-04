@@ -14,12 +14,11 @@ public class FindAnswersOfTaskCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
         String title = request.getParameter(RequestParameter.TITLE);
         AnswerService service = ServiceProvider.getInstance().getAnswerService();
         try {
+            Router router = new Router();
             ArrayDeque<Answer> answers = service.findAnswersByTitle(title);
-            System.out.println(answers);
             request.setAttribute(RequestAttribute.ANSWERS, answers);
             return new Router(RouterType.FORWARD, PagePath.ANSWERS_OF_TASK_PAGE);
         } catch (ServiceException e) {

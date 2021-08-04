@@ -13,11 +13,12 @@ import java.util.List;
 public class BlockUserCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         UserService userService = ServiceProvider.getInstance().getUserService();
         String login = request.getParameter(RequestParameter.LOGIN);
         try {
             boolean result = userService.blockUser(login);
+            Router router = new Router();
             if (result) {
                 List<User> users=userService.showAllUsers();
                 request.setAttribute(RequestAttribute.USERS,users);
@@ -25,9 +26,10 @@ public class BlockUserCommand implements Command {
             } else {
                 router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
+            return router;
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        return router;
+
     }
 }

@@ -23,6 +23,14 @@ public class User extends Entity {
         this.status=status;
     }
 
+    public User( String login, String email, Role roleType, RatesType ratesType,Status status) {
+        this.login = login;
+        this.email = email;
+        this.roleType = roleType;
+        this.ratesType = ratesType;
+        this.status=status;
+    }
+
     public long getId() {
         return id;
     }

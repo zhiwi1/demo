@@ -17,21 +17,23 @@ import java.util.Optional;
 
 public class AddAnswerCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         String text = request.getParameter(RequestParameter.ANSWER);
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         String titleOfTask = request.getParameter(RequestParameter.TITLE);
         AnswerService answerService = ServiceProvider.getInstance().getAnswerService();
 
         try {
+
             boolean isCreated = answerService.createAnswer(text, loginOfUser, titleOfTask);
+            Router router = new Router();
             if (isCreated) {
                 TaskService taskService = ServiceProvider.getInstance().getTaskService();
-                    router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND+titleOfTask);
-                } else {
-                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
-                }
-                return router;
+                router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND + titleOfTask);
+            } else {
+                router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
+            }
+            return router;
 
         } catch (ServiceException e) {
             throw new CommandException("Add Answer command error", e);

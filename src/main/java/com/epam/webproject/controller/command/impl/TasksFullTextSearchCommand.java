@@ -13,16 +13,17 @@ public class TasksFullTextSearchCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        Router router = new Router();
+
         TaskService service = ServiceProvider.getInstance().getTaskService();
         String text = request.getParameter(RequestParameter.TEXT);
         try {
+            Router router = new Router();
             ArrayDeque<String> arrayDeque = service.findByFullText(text);
             request.setAttribute(RequestAttribute.FULL_TEXT_SEARCH_TITLES, arrayDeque);
-            router = new Router(RouterType.FORWARD, PagePath.ALL_TASKS_PAGE);
+            return new Router(RouterType.FORWARD, PagePath.ALL_TASKS_PAGE);
         } catch (ServiceException e) {
             throw new CommandException("Fulltext search error", e);
         }
-        return router;
+
     }
 }

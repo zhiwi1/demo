@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_LOGIN_DATA_BY_EMAIL = "SELECT password_hash, salt FROM users WHERE email = ?";
 
-    private static final String ADD_USER = "INSERT INTO `users` (`id`, `login`, `email`, `count_of_solve`, `rates_of_solve`, `role`, `password_hash`,`salt`,`status`) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+    private static final String ADD_USER = "INSERT INTO `users` (`login`, `email`,`rates_of_solve`, `role`, `password_hash`,`salt`,`status`) VALUES ( ?, ?, ?, ?, ?,?,?)";
 
     private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
     //            + " JOIN roles ON roles.id = users.role_id ";
@@ -163,15 +163,13 @@ public class UserDaoImpl implements UserDao {
     public boolean createNewUser(User user, String password, String salt) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_USER);) {
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getEmail());
-            statement.setInt(4, user.getCountOfSolve());
-            statement.setString(5, user.getRatesType().toString());
-            statement.setString(6, user.getRoleType().toString());
-            statement.setString(7, password);
-            statement.setString(8, salt);
-            statement.setString(9, user.getStatus().toString());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getRatesType().toString());
+            statement.setString(4, user.getRoleType().toString());
+            statement.setString(5, password);
+            statement.setString(6, salt);
+            statement.setString(7, user.getStatus().toString());
             return (statement.executeUpdate() == 1);
         } catch (SQLException e) {
             logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());

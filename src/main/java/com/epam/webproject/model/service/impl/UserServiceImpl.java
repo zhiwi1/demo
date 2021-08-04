@@ -10,14 +10,11 @@ import com.epam.webproject.model.dao.DaoProvider;
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
 import com.epam.webproject.model.dao.UserDao;
-import com.epam.webproject.model.dao.impl.UserDaoImpl;
 import com.epam.webproject.model.email.MailSender;
 import com.epam.webproject.model.entity.*;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.util.PasswordEncryptor;
-import com.epam.webproject.util.UserIdGenerator;
-import com.epam.webproject.validator.TaskValidator;
 import com.epam.webproject.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
-    private static final int DEFAULT_COUNT_OF_SOLVE = 0;
 
     public boolean signInUser(String loginOrEmail, String password) throws ServiceException {
         boolean result = false;
@@ -64,13 +60,10 @@ public class UserServiceImpl implements UserService {
             try {
 
                 if (!userDao.existRowsByLogin(login) && !userDao.existRowsByEmail(email)) {
-
-                    long id = UserIdGenerator.generateId();
-                    logger.info(id);
                     PasswordEncryptor encryptor = PasswordEncryptor.getInstance();
                     String salt = encryptor.generateSalt();
                     String hashPassword = encryptor.getHash(password, salt);
-                    User user = new User(id, login, email, DEFAULT_COUNT_OF_SOLVE, Role.USER, RatesType.NEWBIE, Status.NORMAL);
+                    User user = new User( login, email,  Role.USER, RatesType.NEWBIE, Status.NORMAL);
                     logger.info(user);
                     boolean isCreated = userDao.createNewUser(user, hashPassword, salt);
 

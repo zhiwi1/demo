@@ -2,8 +2,9 @@ package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
-import com.epam.webproject.localization.Localization;
-import com.epam.webproject.localization.LocalizationKey;
+import com.epam.webproject.util.localization.LocalizationKey;
+import com.epam.webproject.util.localization.LocalizationType;
+import static com.epam.webproject.util.localization.LocalizationKey.*;
 import com.epam.webproject.model.service.Feedback;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,7 @@ public class GoToRegistrationPageCommand implements Command {
         if (feedbackToString != null) {
             Feedback feedback = Feedback.valueOf(feedbackToString);
             String locale = (String) request.getSession().getAttribute(RequestParameter.LOCALE);
-            Localization localization = Localization.valueOf(locale.toUpperCase());
+            LocalizationType localization = LocalizationType.valueOf(locale.toUpperCase());
             switch (feedback) {
                 case CHECK_DATA: {
                     String errorMessage = localization.getText(LocalizationKey.REGISTRATION_CHECK_DATA_MESSAGE);

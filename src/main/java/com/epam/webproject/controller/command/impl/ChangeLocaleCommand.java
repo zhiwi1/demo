@@ -1,7 +1,6 @@
 package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
-import com.epam.webproject.localization.Localization;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +12,9 @@ public class ChangeLocaleCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest req) {
-
         HttpSession session = req.getSession();
         String locale = req.getParameter(RequestParameter.LOCALE);
         String previousRequest = req.getParameter(RequestAttribute.PREV_REQUEST);
-        logger.info(previousRequest);
         session.setAttribute(RequestAttribute.LOCALE, locale);
         Router router = new Router(RouterType.REDIRECT, previousRequest);
         return router;

@@ -17,7 +17,6 @@ public class AddTaskCommand implements Command {
         String title = request.getParameter(RequestParameter.TITLE);
         String text = request.getParameter(RequestParameter.TEXT);
         String complexity = request.getParameter(RequestParameter.COMPLEXITY);
-//        String createdAt = request.getParameter(RequestParameter.CREATED_AT);
         String loginOfUser = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         TaskService postService = ServiceProvider.getInstance().getTaskService();
         try {
@@ -29,15 +28,14 @@ public class AddTaskCommand implements Command {
                     router = new Router(RouterType.REDIRECT, PagePath.GO_TO_HOME_PAGE);
                     break;
                 }
-                case DATABASE_EXCEPTION: {
-                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
-                    break;
-                }
                 case CHECK_DATA:
                 case LOGIN_OR_EMAIL_EXISTS: {
                     request.setAttribute(RequestAttribute.MESSAGE, feedback);
-                    //   request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.REGISTRATION_PAGE);
                     router = new Router(RouterType.REDIRECT, PagePath.GO_TO_ADD_TASK_PAGE_COMMAND);
+                    break;
+                }
+                default: {
+                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
                     break;
                 }
             }
