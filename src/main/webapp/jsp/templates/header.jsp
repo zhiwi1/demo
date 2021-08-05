@@ -15,20 +15,17 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/owfont-regular.css">
 
-
 </head>
-<header class="header flex flex__justify-content_space-between flex__align-items_center">
-
-
+<header class="header">
     <ul class="dropdown-menu">
         <li>
             <button class="button-en" type="submit" name="locale" value="ru" onclick="changeLocaleOnEn()">
-                <img class="image-header-dropdown" src="static/image/russia.png"/>
+                <img class="image-header-dropdown" src="assets/images/eng.jpg"/>
             </button>
         </li>
         <li>
             <button class="button-ru" type="submit" name="locale" value="en" onclick="changeLocaleOnRU()">
-                <img class="image-header-dropdown" src="static/image/en.png"/></button>
+                <img class="image-header-dropdown" src="assets/images/ru.jpg"/></button>
         </li>
         <li>
             <c:if test="${ not empty login }" var="firstOperation" scope="page">

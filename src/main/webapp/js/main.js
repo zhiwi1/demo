@@ -18,13 +18,13 @@ const btnText = document.querySelector('.btn-text');
 
 // если в ссылке заменить lang=en на lang=ru, цитаты будут на русском языке
 // префикс https://cors-anywhere.herokuapp.com используем для доступа к данным с других сайтов если браузер возвращает ошибку Cross-Origin Request Blocked
-async function getQuote() {
-    const url = ' https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en';
-    const res = await fetch(url);
-    const data = await res.json();
-    blockquote.textContent = data.quoteText;
-    figcaption.textContent = data.quoteAuthor;
-}
+// async function getQuote() {
+//     const url = ' https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en';
+//     const res = await fetch(url);
+//     const data = await res.json();
+//     blockquote.textContent = data.quoteText;
+//     figcaption.textContent = data.quoteAuthor;
+// }
 // Show Time
 function showTime() {
     let today = new Date(),
@@ -70,7 +70,7 @@ function shuffle(array) {
 function getImage() {
     if (x == 0 || x == 3 || x == 2) {
         document.body.style.color = 'white';
-        document.getElementById('quote').style.color = 'black';
+
     } else {
 
         document.body.style.color = 'black';
