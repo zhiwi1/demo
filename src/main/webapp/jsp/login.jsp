@@ -16,8 +16,44 @@
 <head>
     <title>LogInPage</title>
 </head>
-<body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+
+<body>
+<div class="time-weather"></div>
+<div class='title'>
+    <time id="time"> Monday, 25 September, 8:00:13 PM</time>
+    <div class="city" contenteditable="true">Минск</div>
+</div>
+<div class="box">
+    <div class="weather-description"></div>
+</div>
+<div class="box">
+    <div class="weatherWind"></div>
+</div>
+<div class="box">
+    <div class="temperature"></div>
+</div>
+<div class="box">
+    <div class="airHumidity"></div>
+</div>
+<div class="box"><i class="weather-icon owf"></i></div>
+<h1> <span id="greeting">Good Afternoon</span>
+    <span id="name" contenteditable="true"></span>
+</h1>
+<h2>What is your focus for today?</h2>
+<h2 class="focus"><span id="focus" contenteditable="true"></span></h2>
+<center><button class="btn"> Change Photo</button></center>
+<figure class="quote" id="quote">
+    <blockquote>
+        You were not born a winner, and you were not born a loser. You are what you make yourself be.
+    </blockquote>
+    <figcaption>
+        Lou Holtz
+    </figcaption>
+    <button class="btn-text"></button>
+</figure>
+<script src="js/main.js"></script>
+
 
 <c:if test="${not empty error_message}">
     <c:out value="${error_message}"/>
@@ -27,8 +63,8 @@
 </c:if>
 
 <form action="controller?command=sign_in_command" method="post">
-    <fmt:message key="login.login" bundle="${rb}"/>  <input type="text" name="email-login">
-    <fmt:message key="login.password" bundle="${ rb }"/>:  <input type="text" name="password">
+    <fmt:message key="login.login" bundle="${rb}"/>  <input type="text" name="email-login" pattern="${requestScope.regexp_email_or_login}" >>
+    <fmt:message key="login.password" bundle="${ rb }"/>:  <input type="text" name="password" pattern="${requestScope.regexp_password}">
     <input type="submit" name="button" value="login">
 </form>
 <hr>

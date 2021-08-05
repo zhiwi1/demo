@@ -22,7 +22,10 @@ public final class RequestAttribute {
     public static final String LOGIN_ERROR_MESSAGE="login_error_message";
     public static final String ERROR_MESSAGE="error_message";
     public static final String EMAIL_MESSAGE="email_message";
-
+    public static final String REGEXP_EMAIL= "regexp_email";
+    public static final String REGEXP_PASSWORD= "regexp_password";
+    public static final String REGEXP_SMALL_TEXT="regexp_small_text";
+    public static final String REGEXP_EMAIL_OR_LOGIN="regexp_email_or_login";
     private RequestAttribute() {
     }
 }
