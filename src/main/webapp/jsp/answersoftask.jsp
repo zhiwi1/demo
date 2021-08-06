@@ -10,7 +10,9 @@
     <title>Title</title>
 </head>
 <body>
+
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <c:forEach var="answer" items="${answers}">
 
     <c:if test="${answer.correctness =='INCORRECT'}">

@@ -11,6 +11,7 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <form name="edit-info-form" method="POST" action="controller?command=edit_page_command">
 Login: <input type="text" name="login" value="${login}">
     <%--    <input type="hidden" name="command" value=""/>--%>

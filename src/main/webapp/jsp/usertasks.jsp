@@ -12,6 +12,7 @@
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
 <a href="controller?command=go_to_home_page_command">
     <fmt:message key="alltasks.return" bundle="${ rb }"/>

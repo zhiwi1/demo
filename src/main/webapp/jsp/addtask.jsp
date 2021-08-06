@@ -18,19 +18,20 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
-<form name="add-post-form" method="POST" action="controller?command=add_task_command">
-    <fmt:message key="addtask.title" bundle="${ rb }" /> <input type="text" name="title">
+<form class="form" name="add-post-form" method="POST" action="controller?command=add_task_command">
+ <p class="cntr"> <fmt:message key="addtask.title" bundle="${ rb }" /> </p>
+    <input type="text" name="title">
 <%--    <input type="hidden" name="command" value=""/>--%>
-    <br/> <fmt:message key="addtask.text" bundle="${ rb }" />
-    <input type="text" name="text" value=""/>
-    <br/><fmt:message key="addtask.complexity" bundle="${ rb }" />
-    <input type="text" name="complexity" value="">
-
     <br/>
-
-
-    <button type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
+    <p class="cntr">  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
+   <input type="text" name="text" value=""/>
+    <br/>
+    <p class="cntr"><fmt:message key="addtask.complexity" bundle="${ rb }" /></p>
+    <input type="text" name="complexity" value="">
+    <br/>
+    <button class="bcenter button" type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
 </form>
 
 </body>

@@ -3,8 +3,11 @@
     margin: 0;
     padding: 0;
 }
-.hello{
+.cntr{
   text-align: center;
+}
+.form{
+  margin: 0 auto;
 }
 html { overflow-x: hidden; }
 .title{
@@ -15,16 +18,36 @@ html { overflow-x: hidden; }
   background-color: azure;
 }
 .button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  display:inline-block;
+  padding:0.2em 1.45em;
+  margin:0.1em;
+  border:0.15em solid #CCCCCC;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Segoe UI','Roboto',sans-serif;
+  font-weight:400;
+  color:#000000;
+  background-color:#CCCCCC;
+  text-align:center;
+  position:relative;
+  width: max-content;
 }
-
+.bcenter{
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.button:hover{
+  border-color:#7a7a7a;
+}
+.button:active{
+  background-color:#999999;
+}
+@media all and (max-width:30em){
+  .button{
+    display:block;
+    margin:0.2em auto;
+    }
+}
 body{
     font-family: 'Quicksand', sans-serif;
     display: flex;
@@ -48,31 +71,11 @@ body{
     letter-spacing: -5px;
     position: fixed;
   }
-  .city{
-    text-align: right;
-    width: 100px;
-    height: 20px;
-  }
-  .btn {
-    width: 60px;
-    height: 60px;
-    border: 0;
-    background: black;
-    color: white;
-    /* background: url("https://www.pngarts.com/files/7/Update-Button-PNG-Image.png"); */
-    background-size: contain;
-    background-repeat: no-repeat;
-    filter: grayscale(1);
-    margin: 10px;
-    
+  .a {
+   color: #eeeeee;
   }
  
-  .btn:hover {
-    filter: grayscale(.8);
-    cursor: pointer;
-    background-color:#16a085;
-    transition-duration: 1s;
-  }
+
   .focus{
     height: 40px;
     text-align: center;
@@ -103,14 +106,6 @@ body{
 
 
 
-
-.quote figcaption,
-.quote blockquote {
-  margin: 1em;
-}
-.quote figcaption {
-  text-align: right;
-}
 .btn-text {
   width: 60px;
   height: 60px;
@@ -121,9 +116,7 @@ body{
   filter: grayscale(1);
   margin: 10px;
 }
-.blockquote{
-  height: 20px;
-}
+
 .btn-text:hover {
   filter: grayscale(.8);
   cursor: pointer;
@@ -137,8 +130,6 @@ body{
 .btn-text:active{
   transform: scale(1.02)
 }
-.focus{
-  height: 50px;
-}
+
 
 

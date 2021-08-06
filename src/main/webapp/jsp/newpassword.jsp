@@ -11,6 +11,7 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <p>
     <fmt:message key="newpassword.on_your_email" bundle="${rb}"/>
 </p>

@@ -11,6 +11,7 @@
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <body>
 <form name="add-post-form" method="POST" action="controller?command=users_full_text_search_command">
     <fmt:message key="find" bundle="${ rb }" />

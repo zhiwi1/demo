@@ -17,7 +17,7 @@ public class CustomImageTag extends TagSupport {
     public int doStartTag() {
         try {
             JspWriter out = pageContext.getOut();
-            out.write("<img class=\"img-responsive\" src=\"img/logo.jpg\" style=\"margin-top: -75px;height: 50px;width: 50px\">");
+            out.write("<img class=\"img-responsive\" src=\"img/logo.png\" style=\"margin-top: -75px;height: 12px;width: 50px\">");
         } catch (IOException e) {
             logger.error("Error while writing to out stream for tag", e);
         }

@@ -9,7 +9,7 @@ public class SignOutCommand implements Command {
         request.getSession().setAttribute(RequestAttribute.PREV_REQUEST, PagePath.HOME_PAGE);
         request.getSession().removeAttribute(RequestAttribute.ROLE);
         request.getSession().removeAttribute(RequestAttribute.LOGIN);
-        return new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
+        return new Router(RouterType.FORWARD, PagePath.GO_TO_LOGIN_PAGE);
     }
 }
 

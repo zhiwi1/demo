@@ -17,28 +17,29 @@
 
 </head>
 <header class="header">
-    <ul class="dropdown-menu">
-        <li>
-            <button class="button-en" type="submit" name="locale" value="ru" onclick="changeLocaleOnEn()">
-                <img class="image-header-dropdown" src="assets/images/eng.jpg"/>
+    <mytag:image/>
+            <button class="button" type="submit" name="locale" value="ru" onclick="changeLocaleOnEn()">
+               en
             </button>
-        </li>
-        <li>
-            <button class="button-ru" type="submit" name="locale" value="en" onclick="changeLocaleOnRU()">
-                <img class="image-header-dropdown" src="assets/images/ru.jpg"/></button>
-        </li>
-        <li>
+
+
+            <button class="button" type="submit" name="locale" value="en" onclick="changeLocaleOnRU()">
+                ru
+            </button>
+
+
             <c:if test="${ not empty login }" var="firstOperation" scope="page">
                 <a href="controller?command=find_profile_info_command">
                     <fmt:message key="header.profile" bundle="${rb}"/>
                 </a>
             </c:if>
-        </li>
 
-    </ul>
+        <button class="button btn"> Change Photo</button>
+
+
 
     <br/>
-    <mytag:image/>
+
         <script>
         let PROJECT_ROOT = 'http://localhost:8080/demo_war/'
         function changeLocaleOnRU(event) {

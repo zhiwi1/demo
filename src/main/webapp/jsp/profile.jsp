@@ -13,6 +13,7 @@
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
+<c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <c:out value="${user}"/>;
 
 <a href="controller?command=find_editing_info_command">Редактировать страницу</a>
