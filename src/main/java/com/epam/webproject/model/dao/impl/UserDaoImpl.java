@@ -31,6 +31,11 @@ public class UserDaoImpl implements UserDao {
     private static final String ADD_USER = "INSERT INTO `users` (`login`, `email`,`rates_of_solve`, `role`, `password_hash`,`salt`,`status`) VALUES ( ?, ?, ?, ?, ?,?,?)";
 
     private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
+
+    private static final String FIND_ALL_USERS_WITH_LIMIT = ""+
+     " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status"+
+    "  FROM `users`"+
+    "  LIMIT ?, ?";
     //            + " JOIN roles ON roles.id = users.role_id ";
 
     private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
@@ -58,7 +63,7 @@ public class UserDaoImpl implements UserDao {
             "join answers on answers.user_id =users.id where users.id =" +
             "(SELECT id FROM users WHERE login = ?);";
     private static final String UPDATE_RATES = "UPDATE `first_project`.`users` SET `rates_of_solve`= ? WHERE  `login`=?;";
-
+    private static final String COUNT_OF_USERS ="SELECT COUNT(`id`) as `count` FROM `users`";
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -158,6 +163,32 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
+    @Override
+    public Deque<User> findAll(int offset, int limit) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS_WITH_LIMIT)) {
+            Deque<User> users = new ArrayDeque<>();
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getInt(ID);
+                String login = resultSet.getString(USER_LOGIN);
+                String email = resultSet.getString(USER_EMAIL);
+                int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
+                RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
+                Status status = Status.valueOf(resultSet.getString(USER_STATUS));
+
+                User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
+
 
     @Override
     public boolean createNewUser(User user, String password, String salt) throws DaoException {
@@ -386,6 +417,22 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
         }
     }
+
+    @Override
+    public int countOfUsers() throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_OF_USERS)) {
+            int result = 0;
+            while (resultSet.next()) {
+                result = resultSet.getInt(COUNT);
+            }
+            return result;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
+
 }
 
 

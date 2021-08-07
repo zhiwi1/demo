@@ -23,4 +23,5 @@ Email:    <input type="text" name="email" value="${email}">
     <button type="submit"> Изменить</button>
 </form>
 </body>
+<script src="js/main.js"></script>
 </html>

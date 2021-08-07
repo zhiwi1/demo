@@ -21,4 +21,3 @@
 </h1>
 
 
-<script src="js/main.js"></script>

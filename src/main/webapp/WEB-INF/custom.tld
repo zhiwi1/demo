@@ -9,4 +9,26 @@
         <tag-class>com.epam.webproject.tag.CustomImageTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+    <tag>
+        <name>pagination</name>
+        <tag-class>com.epam.webproject.tag.CustomPaginationTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <name>page</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Integer</type>s
+        </attribute>
+
+        <attribute>
+            <name>maxPage</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
 </taglib>
+
+
+

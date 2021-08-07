@@ -1,0 +1,45 @@
+2021-08-05 00:13:12 [main] ERROR webproject.model.service.impl.TaskServiceImpl- Can't create task
+2021-08-05 00:14:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:14:55 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:14:56 [main] ERROR webproject.model.dao.impl.TaskDaoImpl- Can't delete
+java.sql.SQLException: Before start of result set
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkRowPos(ResultSetImpl.java:517) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:870) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.result.ResultSetImpl.getString(ResultSetImpl.java:888) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.TaskDaoImpl.findTitleById(TaskDaoImpl.java:35) [classes/:?]
+	at com.epam.webproject.model.service.impl.TaskServiceImpl.findTitleById(TaskServiceImpl.java:26) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:22) [classes/:?]
+2021-08-05 00:14:56 [main] ERROR webproject.model.service.impl.TaskServiceImpl- Can't create task
+2021-08-05 00:15:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:15:16 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:17:38 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:17:38 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:17:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:17:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:19:44 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:19:44 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:20:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:20:59 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-05 00:22:03 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-05 00:22:03 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 20:53:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 20:53:48 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 20:54:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 20:54:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 20:54:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 20:54:49 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 20:55:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 20:55:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 21:19:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 21:19:33 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 21:19:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 21:19:54 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 21:20:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 21:20:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 22:32:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 22:32:18 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 22:32:50 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project

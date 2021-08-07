@@ -15,4 +15,5 @@
 <h1>Error 404</h1>
 <h2>Not founded</h2>
 </body>
+<script src="js/main.js"></script>
 </html>

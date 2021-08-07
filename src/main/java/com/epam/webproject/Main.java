@@ -18,10 +18,7 @@ class Main {
 
     public static void main(String args[]) throws DaoException , ServiceException
     {
-        TaskService service =ServiceProvider.getInstance().getTaskService();
-        Optional<String> taskTitle=service.findTitleById(1);
-        System.out.println(taskTitle);
-        AnswerService answerService=ServiceProvider.getInstance().getAnswerService();
-        System.out.println(answerService.markCorrect(2));
+        TaskService service=ServiceProvider.getInstance().getTaskService();
+        System.out.println( service.findAllTasksWithLimit(4,4));
     }
 }

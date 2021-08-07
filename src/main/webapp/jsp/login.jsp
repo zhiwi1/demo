@@ -40,11 +40,13 @@
 </form>
 <hr>
 <p class="cntr"><fmt:message key="login.are_register" bundle="${rb}"/></p>
-<a class="cntr" href="controller?command=go_to_registration_page_command">
+<a class="cntr transition" href="controller?command=go_to_registration_page_command">
     <fmt:message key="login.register" bundle="${rb}"/>
 </a>
 <a class="cntr" href="controller?command=go_to_send_password_command">
     <fmt:message key="login.forget" bundle="${rb}"/>
 </a>
 </body>
+<script src="js/main.js"></script>
+
 </html>

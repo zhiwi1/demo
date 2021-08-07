@@ -38,10 +38,14 @@ public interface UserDao {
 
     public Optional<String> findLoginByEmail(String login) throws DaoException;
 
-    public void setPasswordById(long id, String password,String salt) throws DaoException;
+    public void setPasswordById(long id, String password, String salt) throws DaoException;
 
     public Map<String, Long> findInfoForRates(String login) throws DaoException;
 
-    public boolean setRates(String login, RatesType ratesType) throws DaoException ;
-    }
+    public boolean setRates(String login, RatesType ratesType) throws DaoException;
+
+    public int countOfUsers() throws DaoException;
+
+    public Deque<User> findAll(int offset, int limit) throws DaoException;
+}
 

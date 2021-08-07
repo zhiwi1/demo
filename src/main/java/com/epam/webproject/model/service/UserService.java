@@ -38,7 +38,10 @@ public interface UserService {
 
     public RatesType calculateRatesOfSolve(String login) throws ServiceException;
 
-    public boolean setRates(String login,RatesType ratesType) throws ServiceException;
+    public boolean setRates(String login, RatesType ratesType) throws ServiceException;
 
+    public int countOfUsers() throws ServiceException;
 
-    }
+    public Deque<User> findAllUsersWithLimit(int offset, int limit) throws ServiceException;
+
+}

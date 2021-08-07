@@ -110,6 +110,17 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+    @Override
+    public Deque<User> findAllUsersWithLimit(int offset,int limit) throws ServiceException {
+        try {
+            Deque<User> users = userDao.findAll(offset, limit);
+            return users;
+        } catch (DaoException e) {
+            logger.error("Can't create task", e.getMessage());
+            throw new ServiceException("Can't create task", e);
+        }
+
+    }
 
     @Override
     public boolean updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail) throws ServiceException {
@@ -250,6 +261,15 @@ public class UserServiceImpl implements UserService {
             return result;
         } catch (DaoException e) {
             throw new ServiceException("Can't process calculateRatesOfSolve request at UserService", e);
+        }
+    }
+
+    @Override
+    public int countOfUsers() throws ServiceException {
+        try {
+            return userDao.countOfUsers();
+        } catch (DaoException daoException) {
+            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
         }
     }
 }

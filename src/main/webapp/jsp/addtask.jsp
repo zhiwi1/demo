@@ -20,19 +20,20 @@
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
-<form class="form" name="add-post-form" method="POST" action="controller?command=add_task_command">
+<form class="cntr form" name="add-post-form" method="POST" action="controller?command=add_task_command">
  <p class="cntr"> <fmt:message key="addtask.title" bundle="${ rb }" /> </p>
-    <input type="text" name="title">
+    <input class="cntr" type="text" name="title">
 <%--    <input type="hidden" name="command" value=""/>--%>
     <br/>
-    <p class="cntr">  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
-   <input type="text" name="text" value=""/>
+    <p >  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
+    <textarea rows = "12" cols = "100" name="text" >Write your task</textarea>
     <br/>
-    <p class="cntr"><fmt:message key="addtask.complexity" bundle="${ rb }" /></p>
-    <input type="text" name="complexity" value="">
+    <p ><fmt:message key="addtask.complexity" bundle="${ rb }" /></p>
+    <input class="cntr" type="text" name="complexity" value="">
     <br/>
-    <button class="bcenter button" type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
+    <button class="button" type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
 </form>
 
 </body>
+<script src="js/main.js"></script>
 </html>

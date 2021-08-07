@@ -1,24 +1,24 @@
-//lol
+//lol\
+
 // DOM Elements
 const time = document.getElementById('time'),
     greeting = document.getElementById('greeting');
 let x = 0;
 let statIndex = -1;
+let background = document.querySelector('body');
 // Options
 // const showAmPm = true;
-function colorLinks(hex)
-{
+function colorLinks(hex) {
     let links = document.getElementsByTagName("a");
-    for(let i=0;i<links.length;i++)
-    {
-        if(links[i].href)
-        {
+    for (let i = 0; i < links.length; i++) {
+        if (links[i].href) {
             links[i].style.color = hex;
 
 
         }
     }
 }
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -46,6 +46,7 @@ function showTime() {
     time.innerHTML = `${addZero(hour)}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
     setTimeout(showTime, 1000);
 }
+
 const bases = ["assets/images/night/", 'assets/images/morning/', 'assets/images/day/', 'assets/images/evening/'];
 let images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
 
@@ -54,9 +55,10 @@ const body = document.querySelector('body');
 const btn = document.querySelector('.btn');
 
 function viewBgImage(src) {
+
     const img = new Image();
 
-    img.src =src;
+    img.src = src;
     img.onload = () => {
         body.style.backgroundImage = `url(${src})`;
         if (x == 0 || x == 3 || x == 2) {
@@ -68,6 +70,7 @@ function viewBgImage(src) {
         }
     };
 }
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -83,15 +86,17 @@ function shuffle(array) {
 
     return array;
 }
+
 function getImage() {
     if (x == 0 || x == 3 || x == 2) {
         document.body.style.color = 'white';
+
         colorLinks('#ffffff');
     } else {
         colorLinks('#000000');
         document.body.style.color = 'black';
     }
-    let images2= shuffle(images);
+    let images2 = shuffle(images);
     let index = 0;
     do {
         index = getRandomInt(images2.length - 1);
@@ -103,12 +108,20 @@ function getImage() {
     viewBgImage(imageSrc);
     statIndex = images2[index];
     i++;
-    if (i == 20) { i = 0; x++; }
-    if (x == 4) { x = 0; }
+    if (i == 20) {
+        i = 0;
+        x++;
+    }
+    if (x == 4) {
+        x = 0;
+    }
     btn.disabled = true;
-    setTimeout(function () { btn.disabled = false }, 1000);
+    setTimeout(function () {
+        btn.disabled = false
+    }, 1000);
     setTimeout(getImage, 3600000);
 }
+
 //Name of day pf the week
 
 //Add Zeros
@@ -155,6 +168,7 @@ function getCity() {
         city.textContent = localStorage.getItem('city');
     }
 }
+
 // Set Name
 function setCity(e) {
     if (e.type === 'keypress') {
@@ -176,6 +190,7 @@ function setCity(e) {
         localStorage.setItem('city', e.target.innerText);
     }
 }
+
 // Get Focus
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
@@ -202,6 +217,21 @@ async function getWeather() {
         weatherIcon.className = null;
     }
 }
+
+const createLinksForPagination = () => {
+    let paginationItems = document.querySelectorAll("a.pagination__item");
+
+    if (paginationItems.length > 0) {
+
+        let command = window.location.search.match(/command=([a-z_])+/i)
+        let currentPageLink = window.location.pathname + ((command != null) ? `?${command[0]}&` : '?');
+
+        paginationItems.forEach((link) => {
+            let page = link.innerText;
+            link.href = currentPageLink + "page=" + page;
+        });
+    }
+}
 document.addEventListener('DOMContentLoaded', getWeather);
 
 city.addEventListener('keypress', setCity);
@@ -216,3 +246,4 @@ setBgGreet();
 getCity();
 getWeather();
 btn.addEventListener('click', getImage);
+createLinksForPagination();

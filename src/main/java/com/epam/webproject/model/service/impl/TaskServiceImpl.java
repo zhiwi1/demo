@@ -64,6 +64,16 @@ public Optional<String> findTitleById(long id) throws ServiceException{
         }
 
     }
+    public Deque<Task> findAllTasksWithLimit(int offset,int limit) throws ServiceException {
+        try {
+            Deque<Task> tasks = taskDao.findAll(offset, limit);
+            return tasks;
+        } catch (DaoException e) {
+            logger.error("Can't show all tasks", e.getMessage());
+            throw new ServiceException("Can't show all task", e);
+        }
+
+    }
 
     public Optional<Task> findTaskByTitle(String title) throws ServiceException {
         Optional<Task> task = Optional.empty();
@@ -109,6 +119,14 @@ public Optional<String> findTitleById(long id) throws ServiceException{
         } catch (DaoException e) {
             logger.error("Can't show all tasks", e.getMessage());
             throw new ServiceException("Can't show all task", e);
+        }
+    }
+    @Override
+    public int countOfTasks() throws ServiceException {
+        try {
+            return taskDao.countOfTasks();
+        } catch (DaoException daoException) {
+            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
         }
     }
 }

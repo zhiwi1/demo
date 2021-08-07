@@ -23,6 +23,10 @@ public class TaskDaoImpl implements TaskDao {
             "WHERE title =?";
     private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
     private static final String FIND_TITLE_BY_ID = "SELECT title FROM tasks WHERE id=?";
+    private static final String COUNT_OF_TASKS ="SELECT COUNT(`id`) as `count` FROM `tasks`";
+    private static final String FIND_ALL_TASKS_WITH_LIMIT = ""+
+            " SELECT title, content, created_at, updated_at, user_id, complexity, count_for_solve  FROM `tasks`"+
+            "  LIMIT ?, ?";
 
     @Override
     public Optional<String> findTitleById(long id) throws DaoException {
@@ -86,7 +90,31 @@ public class TaskDaoImpl implements TaskDao {
         //   return users;
         return tasks;
     }
+    @Override
+    public Deque<Task> findAll(int offset, int limit) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_TASKS_WITH_LIMIT)) {
+            Deque<Task> tasks = new ArrayDeque<>();
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                String title = resultSet.getString(TASK_TITLE);
+                String content = resultSet.getString(CONTENT);
+                java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
+                java.util.Date updated_at = resultSet.getTimestamp(UPDATED_AT);
+                long user_id = resultSet.getLong(USER_ID);
+                int complexity = resultSet.getInt(TASK_COMPLEXITY);
+                int count_for_solve = resultSet.getInt(TASK_COUNT_FOR_SOLVE);
+                Task task = new Task(title, content, created_at, updated_at, user_id, complexity, count_for_solve);
+                tasks.add(task);
+            }
+            return tasks;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
     @Override
     public Optional<Task> findTaskByTitle(String title) throws DaoException {
         Optional<Task> taskOptional = Optional.empty();
@@ -166,6 +194,20 @@ public class TaskDaoImpl implements TaskDao {
         } catch (SQLException e) {
             logger.error("Can't delete", e);
             throw new DaoException(e);
+        }
+    }
+    @Override
+    public int countOfTasks() throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_OF_TASKS)) {
+            int result = 0;
+            while (resultSet.next()) {
+                result = resultSet.getInt(COUNT);
+            }
+            return result;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
         }
     }
 
