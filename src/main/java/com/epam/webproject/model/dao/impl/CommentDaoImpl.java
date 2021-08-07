@@ -18,10 +18,12 @@ public class CommentDaoImpl implements CommentDao {
 
     private static final Logger logger = LogManager.getLogger();
     private static final String ADD_СOMMENT = "INSERT INTO `comments` (`created_at`,`comment`,`task_id` , `user_id`) VALUES (?, ?,(SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
-    private static final String FIND_ALL = "SELECT comment, created_at, updated_at, user_id, task_id FROM comments";
-    private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at,updated_at , login FROM comments " +
+    private static final String FIND_ALL_WITH_LIMIT = "SELECT comment, created_at, updated_at, user_id, task_id FROM comments LIMIT ?, ?";
+    private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at,updated_at , login FROM comments" +
             " JOIN `users` ON `users`.`id` = `comments`.`user_id`" +
-            "WHERE comments.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?) ";
+            "WHERE comments.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)  LIMIT ?, ?  ";
+    private static final String COUNT_OF_COMMENTS = "SELECT COUNT(`id`) as `count` FROM `comments` " +
+            "WHERE task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)";
 
     public boolean createNewComment(String text, java.util.Date createdAt, String login, String title) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -39,11 +41,13 @@ public class CommentDaoImpl implements CommentDao {
     }
 
 
-    public Deque<Comment> findAll() throws DaoException {
+    public Deque<Comment> findAllWithLimit(int offset, int limit) throws DaoException {
         Deque<Comment> comments = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_LIMIT)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String commentContent = resultSet.getString(COMMENT);
@@ -56,19 +60,21 @@ public class CommentDaoImpl implements CommentDao {
                 comments.add(comment);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL, e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_WITH_LIMIT, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_ALL_WITH_LIMIT, e);
         }
         //   return users;
         return comments;
     }
 
     @Override
-    public Deque<Comment> findCommentsByTitle(String title) throws DaoException {
+    public Deque<Comment> findCommentsByTitleWithLimit(String title, int offset, int limit) throws DaoException {
         Deque<Comment> arrayDeque = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COMMENTS_BY_TASK_TITLE)) {
             preparedStatement.setString(1, title);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String commentContent = resultSet.getString(COMMENT);
@@ -84,7 +90,21 @@ public class CommentDaoImpl implements CommentDao {
         }
         return arrayDeque;
     }
-
+    @Override
+    public int countOfComments(String titleOfTask) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_OF_COMMENTS)) {
+            statement.setString(1, titleOfTask);
+            ResultSet resultSet = statement.executeQuery();
+            int result = 0;
+            while (resultSet.next()) {
+                result = resultSet.getInt(COUNT);
+            }
+            return result;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        }
+    }
 }
 
 

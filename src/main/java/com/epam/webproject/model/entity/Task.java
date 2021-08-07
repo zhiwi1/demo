@@ -81,7 +81,7 @@ public class Task extends Entity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Post{");
+        final StringBuilder sb = new StringBuilder("Task{");
         sb.append("title='").append(title).append('\'');
         sb.append(", text='").append(text).append('\'');
         sb.append(", timeCreatedAt=").append(timeCreatedAt);

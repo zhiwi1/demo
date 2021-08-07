@@ -21,7 +21,7 @@ public class TaskDaoImpl implements TaskDao {
     private static final String TASKS_FULL_TEXT_SEARCH = "SELECT title FROM `tasks` WHERE MATCH (title,content) AGAINST (?);";
     private static final String DELETE_TASK = "DELETE FROM tasks " +
             "WHERE title =?";
-    private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) ";
+    private static final String FIND_TASKS_BY_USER_LOGIN = "SELECT  title, content, created_at, updated_at, user_id,complexity,count_for_solve FROM tasks WHERE user_id = (SELECT id FROM users WHERE login = ? ) LIMIT ?, ?";
     private static final String FIND_TITLE_BY_ID = "SELECT title FROM tasks WHERE id=?";
     private static final String COUNT_OF_TASKS ="SELECT COUNT(`id`) as `count` FROM `tasks`";
     private static final String FIND_ALL_TASKS_WITH_LIMIT = ""+
@@ -121,6 +121,8 @@ public class TaskDaoImpl implements TaskDao {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_TASK_BY_TITLE)) {
             preparedStatement.setString(1, title);
+
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String resultTitle = resultSet.getString(TASK_TITLE);
@@ -159,11 +161,14 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public Deque<Task> findTasksByUserLogin(String login) throws DaoException {
+    public Deque<Task> findTasksByUserLogin(String login,int offset,int limit) throws DaoException {
         Deque<Task> tasks = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_TASKS_BY_USER_LOGIN)) {
             statement.setString(1, login);
+            statement.setInt(2,offset);
+            statement.setInt(3,limit);
+
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String title = resultSet.getString(TASK_TITLE);

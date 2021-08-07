@@ -37,9 +37,9 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Deque<Answer> findAnswersByTitle(String title) throws ServiceException {
+    public Deque<Answer> findAnswersByTitle(String title,int offset,int limit) throws ServiceException {
         try {
-            return answerDao.findAnswersByTitle(title);
+            return answerDao.findAnswersByTitleWithLimit(title,offset,limit);
         } catch (DaoException e) {
             logger.error("Can't find", e.getMessage());
             throw new ServiceException("Can't find", e);
@@ -83,6 +83,15 @@ public class AnswerServiceImpl implements AnswerService {
         } catch (DaoException e) {
             logger.error("Can't block user", e.getMessage());
             throw new ServiceException("Can't block user", e);
+        }
+    }
+    @Override
+    public int countOfAnswers(String titleOfTask) throws ServiceException {
+        try {
+            return answerDao.countOfAnswers(titleOfTask);
+        } catch (DaoException e) {
+            logger.error("Can't find", e.getMessage());
+            throw new ServiceException("Can't find", e);
         }
     }
 }

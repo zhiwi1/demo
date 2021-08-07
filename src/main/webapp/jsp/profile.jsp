@@ -14,10 +14,15 @@
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
-<c:out value="${user}"/>;
+<p class="cntr">Login: ${user.login}</p>
+<p class="cntr">Email: ${user.email}</p>
+<p class="cntr">Count of solve: ${user.countOfSolve}</p>
+<p class="cntr">Role: ${user.roleType}</p>
+<p class="cntr">Rates: ${user.ratesType}</p>
+<p class="cntr">Status: ${user.status}</p>
 
-<a href="controller?command=find_editing_info_command">Редактировать страницу</a>
-<a href="controller?command=go_to_home_page_command">
+<a class="cntr" href="controller?command=find_editing_info_command">Редактировать страницу</a>
+<a class="cntr" href="controller?command=go_to_home_page_command">
     Вернуться на домашнюю страницу
 </a>
 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="mytag" uri="customtag" %>
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
@@ -14,20 +15,26 @@
 <body>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
-<a href="controller?command=go_to_home_page_command">
-    <fmt:message key="alltasks.return" bundle="${ rb }"/>
-</a>
 
 <c:forEach var="task" items="${tasks}">
-<p>${task.title}</p>
-    <a href="controller?command=open_task_page_command&title=${task.title}">
-    <a href="controller?command=find_answers_of_task_command&title=${task.title}">
-        <p> Посмотреть ответы на это задание от пользователей</p></a>
-    <a href="controller?command=delete_task_by_user_command&title=${task.title}">
+<h3 class="cntr">${task.title}</h3>
+<div class="cntr">${task.timeCreatedAt}</div>
+<a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
+    <div><fmt:message key="alltasks.more" bundle="${ rb }"/></div>
+</a>
+<a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
+    <a class="cntr" href="controller?command=find_answers_of_task_command&title=${task.title}">
+        <p class="cntr"> Посмотреть ответы на это задание от пользователей</p></a>
+    <a class="cntr" href="controller?command=delete_task_by_user_command&title=${task.title}">
         Удалить задание
     </a>
-
+    <br>
     </c:forEach>
+    <hr>
+    <mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}"/>
+    <a class="cntr" href="controller?command=go_to_home_page_command">
+        <fmt:message key="alltasks.return" bundle="${ rb }"/>
+    </a>
 </body>
 <script src="js/main.js"></script>
 </html>

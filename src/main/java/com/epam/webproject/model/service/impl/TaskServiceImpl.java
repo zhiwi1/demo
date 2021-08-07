@@ -20,15 +20,15 @@ public class TaskServiceImpl implements TaskService {
     private static final Logger logger = LogManager.getLogger();
     private static final TaskDao taskDao = DaoProvider.getInstance().getTaskDao();
 
-  @Override
-public Optional<String> findTitleById(long id) throws ServiceException{
-    try {
-      return   taskDao.findTitleById(id);
-    } catch (DaoException e) {
-        logger.error("Can't create task", e.getMessage());
-        throw new ServiceException("Can't create task", e);
+    @Override
+    public Optional<String> findTitleById(long id) throws ServiceException {
+        try {
+            return taskDao.findTitleById(id);
+        } catch (DaoException e) {
+            logger.error("Can't create task", e.getMessage());
+            throw new ServiceException("Can't create task", e);
+        }
     }
-}
 
     public Feedback createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException {
         Feedback feedback;
@@ -64,7 +64,8 @@ public Optional<String> findTitleById(long id) throws ServiceException{
         }
 
     }
-    public Deque<Task> findAllTasksWithLimit(int offset,int limit) throws ServiceException {
+
+    public Deque<Task> findAllTasksWithLimit(int offset, int limit) throws ServiceException {
         try {
             Deque<Task> tasks = taskDao.findAll(offset, limit);
             return tasks;
@@ -100,9 +101,10 @@ public Optional<String> findTitleById(long id) throws ServiceException{
 
     }
 
-    public Deque<Task> findTasksByUserLogin(String login) throws ServiceException {
+    @Override
+    public Deque<Task> findTasksByUserLogin(String login, int offset, int limit) throws ServiceException {
         try {
-           Deque<Task> tasks = taskDao.findTasksByUserLogin(login);
+            Deque<Task> tasks = taskDao.findTasksByUserLogin(login, offset, limit);
             return tasks;
         } catch (DaoException e) {
             logger.error("Can't find ", e.getMessage());
@@ -121,6 +123,7 @@ public Optional<String> findTitleById(long id) throws ServiceException{
             throw new ServiceException("Can't show all task", e);
         }
     }
+
     @Override
     public int countOfTasks() throws ServiceException {
         try {

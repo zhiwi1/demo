@@ -8,5 +8,6 @@ import java.util.Deque;
 
 public interface CommentService {
     public boolean createComment(String text, String login, String title) throws ServiceException;
-    public Deque<Comment> findCommentsByTitle(String title) throws ServiceException;
+    public Deque<Comment> findCommentsByTitle(String title,int offset,int limit) throws ServiceException;
+    public int countOfComments(String titleOfTask) throws ServiceException;
 }

@@ -7,11 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
-<fmt:setBundle basename="locale" var="rb" />
+<fmt:setBundle basename="locale" var="rb"/>
 <html>
 <head>
     <title>LogInPage</title>
@@ -23,20 +23,20 @@
 
 
 <c:if test="${not empty error_message}">
-   <p class="cntr"><c:out value="${error_message}"/></p>
+    <p class="cntr"><c:out value="${error_message}"/></p>
 </c:if>
 <c:if test="${not empty email_message}">
-  <p class="cntr"> <c:out value="${email_message}"/></p>
+    <p class="cntr"><c:out value="${email_message}"/></p>
 </c:if>
 
-<form  class="form" action="controller?command=sign_in_command" method="post">
-  <p class="cntr"> <fmt:message key="login.login" bundle="${rb}"/>  </p>
-   <input  type="text" name="email-login"  pattern="${requestScope.regexp_email_or_login}" >
+<form class="form" action="controller?command=sign_in_command" method="post">
+    <p class="cntr"><fmt:message key="login.login" bundle="${rb}"/></p>
+    <input class="textfield" type="text" name="email-login" pattern="${requestScope.regexp_email_or_login}">
     <br>
-    <p class="cntr"> <fmt:message key="login.password" bundle="${ rb }"/></p>
-    <input type="password" name="password" pattern="${requestScope.regexp_password}">
+    <p class="cntr"><fmt:message key="login.password" bundle="${ rb }"/></p>
+    <input class="textfield" type="password" name="password" pattern="${requestScope.regexp_password}">
     <br>
-    <input  class="bcenter button" type="submit" name="button" value="login">
+    <input class="bcenter button" type="submit" name="button" value="login">
 </form>
 <hr>
 <p class="cntr"><fmt:message key="login.are_register" bundle="${rb}"/></p>

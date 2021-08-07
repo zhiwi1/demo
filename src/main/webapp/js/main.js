@@ -19,6 +19,7 @@ function colorLinks(hex) {
     }
 }
 
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -224,6 +225,7 @@ const createLinksForPagination = () => {
     if (paginationItems.length > 0) {
 
         let command = window.location.search.match(/command=([a-z_])+/i)
+
         let currentPageLink = window.location.pathname + ((command != null) ? `?${command[0]}&` : '?');
 
         paginationItems.forEach((link) => {
@@ -232,6 +234,20 @@ const createLinksForPagination = () => {
         });
     }
 }
+// const createLinksForPaginationComments = () => {
+//     let paginationItems = document.querySelectorAll("a.pagination__item");
+//
+//     if (paginationItems.length > 0) {
+//
+//         let command = window.location.search.match(/command=([a-z_])+/i)
+//         let currentPageLink = window.location.pathname + ((command != null) ? `?${command[0]}&` : '?');
+//
+//         paginationItems.forEach((link) => {
+//             let page = link.innerText;
+//             link.href = currentPageLink + "comment_page=" + page;
+//         });
+//     }
+// }
 document.addEventListener('DOMContentLoaded', getWeather);
 
 city.addEventListener('keypress', setCity);

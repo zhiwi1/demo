@@ -17,16 +17,20 @@
 <body>
 <form name="add-post-form" method="POST" action="controller?command=users_full_text_search_command">
    <fmt:message key="find" bundle="${ rb }" />
-    <input type="text" name="text">
+    <input class="textfield" type="text" name="text">
 
-    <button type="submit"> <fmt:message key="go" bundle="${ rb }" /></button>
+    <button class="pb button" type="submit"> <fmt:message key="go" bundle="${ rb }" /></button>
 </form>
-<a href="controller?command=go_to_home_page_command">
-    <fmt:message key="allusers.return" bundle="${ rb }" />
-</a>
+<br>
+
 <c:forEach var="fts_user" items="${fts_users}">
-    <p class="cntr">${fts_user}</p>
-    <c:out value="${fts_user.status}"/>
+    <p >Login: ${fts_user.login}</p>
+    <p>Email: ${fts_user.email}</p>
+    <p>Count of solve: ${fts_user.countOfSolve}</p>
+    <p>Role: ${fts_user.roleType}</p>
+    <p>Rates: ${fts_user.ratesType}</p>
+    <p>Status: ${fts_user.status}</p>
+
     <c:if test="${fts_user.status =='NORMAL'}">
         <form class="form" name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
             <button type="submit">  <fmt:message key="allusers.block" bundle="${ rb }" /></button>
@@ -34,29 +38,38 @@
     </c:if>
     <c:if test="${fts_user.status =='BLOCKED'}">
         <form class="form" name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
-            <button type="submit">  <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
+            <button class="button" type="submit">  <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
         </form>
     </c:if>
-
+    <hr>
 </c:forEach>
 
 <c:forEach var="user" items="${users}">
-    <p class="cntr">${user}</p>
-    <c:out value="${user.status}"/>
+    <p>Login: ${user.login}</p>
+    <p>Email: ${user.email}</p>
+    <p>Count of solve: ${user.countOfSolve}</p>
+    <p>Role: ${user.roleType}</p>
+    <p>Rates: ${user.ratesType}</p>
+    <p>Status: ${user.status}</p>
+
     <c:if test="${user.status =='NORMAL'}">
-        <form class="form" name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
-            <button type="submit">
+        <form  name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
+            <button class="button" type="submit">
                <fmt:message key="allusers.block" bundle="${ rb }" /></button>
         </form>
     </c:if>
     <c:if test="${user.status =='BLOCKED'}">
-        <form class="form" name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
-            <button type="submit"> <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
+        <form  name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
+            <button class="button" type="submit"> <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
         </form>
     </c:if>
-
+<hr>
 </c:forEach>
+<br>
 <mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}" />
+<a href="controller?command=go_to_home_page_command">
+   <p class="cntr"><fmt:message key="allusers.return" bundle="${ rb }" /></p>
+</a>
 </body>
 <script src="js/main.js"></script>
 </html>

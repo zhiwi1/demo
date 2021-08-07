@@ -1,0 +1,43 @@
+2021-08-06 22:32:50 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-06 22:34:06 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-06 22:34:06 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:06:35 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:06:35 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:06:36 [main] ERROR webproject.model.service.impl.AnswerServiceImpl- Can't find
+2021-08-07 23:07:29 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:07:29 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:09:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:09:53 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:10:01 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:10:01 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:12:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:12:51 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:13:39 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:13:39 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:14:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:14:41 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:14:42 [main] ERROR webproject.model.dao.impl.AnswerDaoImpl- Can't find
+java.sql.SQLException: Parameter index out of range (2 > number of parameters, which is 1).
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1373) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1386) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.setInt(ClientPreparedStatement.java:1574) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.AnswerDaoImpl.findAnswersByTitleWithLimit(AnswerDaoImpl.java:116) [classes/:?]
+	at com.epam.webproject.model.service.impl.AnswerServiceImpl.findAnswersByTitle(AnswerServiceImpl.java:42) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:26) [classes/:?]
+2021-08-07 23:14:42 [main] ERROR webproject.model.service.impl.AnswerServiceImpl- Can't find
+2021-08-07 23:17:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- jdbc:mysql://localhost:3306/first_project
+2021-08-07 23:17:19 [main] INFO  epam.webproject.model.connection.ConnectionCreator- com.mysql.cj.jdbc.Driver
+2021-08-07 23:17:20 [main] ERROR webproject.model.dao.impl.CommentDaoImpl- Can't find
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''task', 0  JOIN `users` ON `users`.`id` = `comments`.`user_id`WHERE comments.tas' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1003) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.epam.webproject.model.dao.impl.CommentDaoImpl.findCommentsByTitleWithLimit(CommentDaoImpl.java:78) [classes/:?]
+	at com.epam.webproject.model.service.impl.CommentServiceImpl.findCommentsByTitle(CommentServiceImpl.java:43) [classes/:?]
+	at com.epam.webproject.Main.main(Main.java:27) [classes/:?]
+2021-08-07 23:17:20 [main] ERROR webproject.model.service.impl.CommentServiceImpl- Can't find

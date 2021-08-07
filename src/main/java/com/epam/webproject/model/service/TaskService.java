@@ -17,7 +17,7 @@ public interface TaskService {
 
     public Deque<String> findByFullText(String text) throws ServiceException;
 
-    public Deque<Task> findTasksByUserLogin(String login) throws ServiceException;
+    public Deque<Task> findTasksByUserLogin(String login, int offset, int limit) throws ServiceException;
 
     public boolean deleteTask(String title) throws ServiceException;
 
@@ -25,6 +25,6 @@ public interface TaskService {
 
     public int countOfTasks() throws ServiceException;
 
-    public Deque<Task> findAllTasksWithLimit(int offset,int limit) throws ServiceException;
+    public Deque<Task> findAllTasksWithLimit(int offset, int limit) throws ServiceException;
 }
 

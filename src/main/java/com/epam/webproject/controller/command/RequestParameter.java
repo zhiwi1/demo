@@ -26,6 +26,7 @@ public final class RequestParameter {
     public static final String EMAIL_MESSAGE = "email_message";
     public static final String TASK_ID = "task_id";
     public static final String KEY_PAGE = "page";
+    public static final String COMMENT_PAGE="comment_page";
 
 
     private RequestParameter() {

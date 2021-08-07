@@ -21,24 +21,27 @@
 
 <form class="form" name="add-post-form" method="POST" action="controller?command=tasks_full_text_search_command">
     <p class="cntr"><fmt:message key="find" bundle="${ rb }"/></p>
-    <input type="text" name="text">
-
-    <button class="bcenter button" type="submit"><fmt:message key="go" bundle="${ rb }"/></button>
+    <input class="textfield" type="text" name="text">
+    <button class="pb button" type="submit"><fmt:message key="go" bundle="${ rb }"/></button>
 </form>
 
 <c:forEach var="title" items="${fts_titles}">
-    <p class="cntr">${title}</p>
-    <a class="cntr" href="controller?command=open_task_page_command&title=${title}">
-        <p class="cntr"><fmt:message key="alltasks.more" bundle="${ rb }"/></p></a>
+    <h3 >${title}</h3>
+    <a  href="controller?command=open_task_page_command&title=${title}">
+        <p ><fmt:message key="alltasks.more" bundle="${ rb }"/></p></a>
+    <hr>
 </c:forEach>
-
+<hr>
 <c:forEach var="task" items="${tasks}">
-    <p class="cntr">${task}</p>
+    <h3 class="cntr">${task.title}</h3>
+    <div class="cntr">${task.timeCreatedAt}</div>
     <a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
-        <p><fmt:message key="alltasks.more" bundle="${ rb }"/></p></a>
+        <div><fmt:message key="alltasks.more" bundle="${ rb }"/></div></a>
+    <br>
 </c:forEach>
-
+<hr>
 <mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}" />
+
 <a class="cntr" href="controller?command=go_to_home_page_command">
     <fmt:message key="alltasks.return" bundle="${ rb }"/>
 </a>

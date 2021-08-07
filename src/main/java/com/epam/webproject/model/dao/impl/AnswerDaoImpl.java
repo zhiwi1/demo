@@ -21,10 +21,10 @@ import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 public class AnswerDaoImpl implements AnswerDao {
     public static final Logger logger = LogManager.getLogger();
     private static final String ADD_ANSWER = "INSERT INTO `answers` (`content`,`task_id` , `user_id`) VALUES (?, (SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
-    private static final String FIND_ALL = "SELECT content,  user_id, task_id,likes FROM comments";
+    private static final String FIND_ALL_WITH_LIMIT = "SELECT content,  user_id, task_id,likes FROM comments  LIMIT ?, ?";
     private static final String FIND_ANSWERS_BY_TASK_TITLE = "SELECT answers.id, content, login,likes,correctness,task_id FROM answers " +
             " JOIN `users` ON `users`.`id` = `answers`.`user_id`" +
-            "WHERE answers.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?) ";
+            "WHERE answers.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)  LIMIT ?, ?";
     private static final String PLUS_LIKE = "UPDATE answers" +
             "SET likes = likes+1," +
             "WHERE id = ?";
@@ -41,7 +41,7 @@ public class AnswerDaoImpl implements AnswerDao {
             " JOIN `tasks` ON `tasks`.`id` = answers.task_id  " +
             " SET correctness  = 'INCORRECT', count_of_solve = count_of_solve + 1, count_for_solve = count_for_solve+1 " +
             " WHERE answers.id = ?";
-
+    private static final String COUNT_OF_ANSWERS_OF_TASK = "SELECT COUNT(`id`) as `count` FROM `answers` WHERE `task_id` =(SELECT `id` FROM `tasks` WHERE `title` = ?)";
 
 
     @Override
@@ -49,23 +49,25 @@ public class AnswerDaoImpl implements AnswerDao {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(MARK_CORRECT)) {
             statement.setLong(1, id);
-            statement.execute() ;
+            statement.execute();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Error with " + MARK_CORRECT, e);
         }
     }
+
     @Override
     public boolean markIncorrect(long id) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(MARK_INCORRECT)) {
             statement.setLong(1, id);
-            statement.execute() ;
+            statement.execute();
             return true;
         } catch (SQLException e) {
             throw new DaoException("Error with " + MARK_CORRECT, e);
         }
     }
+
     public boolean createNewAnswer(String content, String title, String login) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_ANSWER);) {
@@ -81,11 +83,13 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
 
-    public Deque<Answer> findAll() throws DaoException {
+    public Deque<Answer> findAllWithLimit(int offset, int limit) throws DaoException {
         Deque<Answer> answers = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_LIMIT);) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String answerContent = resultSet.getString(CONTENT);
@@ -97,27 +101,30 @@ public class AnswerDaoImpl implements AnswerDao {
 
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL, e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_WITH_LIMIT, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_ALL_WITH_LIMIT, e);
         }
         return answers;
     }
 
     @Override
-    public Deque<Answer> findAnswersByTitle(String title) throws DaoException {
+    public Deque<Answer> findAnswersByTitleWithLimit(String title, int offset, int limit) throws DaoException {
         Deque<Answer> arrayDeque = new ArrayDeque<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ANSWERS_BY_TASK_TITLE)) {
             preparedStatement.setString(1, title);
+            preparedStatement.setInt(2, offset);
+            preparedStatement.setInt(3, limit);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long answerId = resultSet.getLong(ID);
                 String commentContent = resultSet.getString(CONTENT);
                 String login = resultSet.getString(USER_LOGIN);
                 long likes = resultSet.getLong(LIKES);
-                CorrectnessOfAnswer correctness=CorrectnessOfAnswer.valueOf(resultSet.getString(CORRECTNESS));
-                long taskId=resultSet.getLong(TASK_ID);
-                Answer answer = new Answer(answerId, commentContent, likes, login,correctness,taskId);
+                CorrectnessOfAnswer correctness = CorrectnessOfAnswer.valueOf(resultSet.getString(CORRECTNESS));
+                long taskId = resultSet.getLong(TASK_ID);
+                Answer answer = new Answer(answerId, commentContent, likes, login, correctness, taskId);
                 arrayDeque.add(answer);
             }
         } catch (SQLException e) {
@@ -148,6 +155,22 @@ public class AnswerDaoImpl implements AnswerDao {
         } catch (SQLException e) {
             logger.error("Can't like", e);
             throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public int countOfAnswers(String titleOfTask) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_OF_ANSWERS_OF_TASK)) {
+            statement.setString(1, titleOfTask);
+            ResultSet resultSet = statement.executeQuery();
+            int result = 0;
+            while (resultSet.next()) {
+                result = resultSet.getInt(COUNT);
+            }
+            return result;
+        } catch (SQLException sqlException) {
+            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
         }
     }
 }

@@ -15,18 +15,18 @@
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <form class="form" name="reg-form" method="POST" action="controller?command=sign_up_command">
 <p class="cntr"><fmt:message key="registration.email" bundle="${ rb }"/></p>
-<input type="text" name="email"/>
-<input type="hidden" name="command" value="register"/>
+<input class="textfield" type="text" name="email"/>
+<input  type="hidden" name="command" value="register"/>
 <br/>
     <p class="cntr"><fmt:message key="registration.login" bundle="${ rb }"/></p>
-<input type="text" name="login" value=""/>
+<input class="textfield" type="text" name="login" value=""/>
 <br/>
 <p class="cntr"><fmt:message key="registration.password" bundle="${ rb }"/></p>
 
-<input type="password" name="password" value="">
+<input class="textfield" type="password" name="password" value="">
 <br/>
 <p class="cntr"><fmt:message key="registration.confirm" bundle="${ rb }"/></p>
-<input class="cntr" type="password" name="confirm-password" value="">
+<input class="textfield cntr" type="password" name="confirm-password" value="">
 <br/>
 
 

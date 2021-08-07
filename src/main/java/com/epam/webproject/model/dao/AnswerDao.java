@@ -11,9 +11,9 @@ import java.util.List;
 public interface AnswerDao {
     public boolean createNewAnswer(String content, String title, String login) throws DaoException;
 
-    public Deque<Answer> findAll() throws DaoException;
+    public Deque<Answer> findAllWithLimit(int offset, int limit) throws DaoException;
 
-    public Deque<Answer> findAnswersByTitle(String title) throws DaoException;
+    public Deque<Answer> findAnswersByTitleWithLimit(String title, int offset, int limit) throws DaoException;
 
     public boolean increaseLike(long id) throws DaoException;
 
@@ -23,5 +23,6 @@ public interface AnswerDao {
 
     public boolean markIncorrect(long id) throws DaoException;
 
+    public int countOfAnswers(String titleOfTask) throws DaoException;
 
-    }
+}

@@ -12,12 +12,14 @@
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
-<p>
+<p class="cntr">
     <fmt:message key="newpassword.on_your_email" bundle="${rb}"/>
 </p>
-<form action="controller?command=send_password_command" method="post">
-    <fmt:message key="newpassword.email" bundle="${rb}"/>  <input type="text" name="email">
-    <input type="submit" name="button" value="<fmt:message key="newpassword.send" bundle="${rb}"/>  ">
+<form  class="form" action="controller?command=send_password_command" method="post">
+ <p class="cntr">  <fmt:message key="newpassword.email" bundle="${rb}"/> <input type="text" name="email"></p>
+
+    <br>
+    <input class="bcenter button" type="submit" name="button" value="<fmt:message key="newpassword.send" bundle="${rb}"/>  ">
 </form>
 
 </body>

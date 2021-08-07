@@ -9,12 +9,15 @@ import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.TaskService;
 import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 
 public class ShowAllUsersCommand implements Command {
+    private static final Logger logger= LogManager.getLogger();
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -40,8 +43,9 @@ public class ShowAllUsersCommand implements Command {
 
                 request.setAttribute(RequestAttribute.USERS, users);
                 request.setAttribute(RequestAttribute.CURRENT_PAGE, currentPage);
-                request.setAttribute(RequestAttribute.MAX_PAGE, maxPage);
 
+                request.setAttribute(RequestAttribute.MAX_PAGE, maxPage);
+logger.info(currentPage);
                 return new Router(RouterType.FORWARD, PagePath.ALL_USERS_PAGE);
             } catch (ServiceException e) {
                 throw new CommandException("Can't show USERS ", e);

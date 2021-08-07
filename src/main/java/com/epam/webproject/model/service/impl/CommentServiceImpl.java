@@ -38,14 +38,24 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Deque<Comment> findCommentsByTitle(String title) throws ServiceException {
+    public Deque<Comment> findCommentsByTitle(String title, int offset, int limit) throws ServiceException {
         try {
-            return commentDao.findCommentsByTitle(title);
+            return commentDao.findCommentsByTitleWithLimit(title, offset, limit);
         } catch (DaoException e) {
             logger.error("Can't find", e.getMessage());
             throw new ServiceException("Can't find", e);
         }
 
 
+    }
+
+    @Override
+    public int countOfComments(String titleOfTask) throws ServiceException {
+        try {
+            return commentDao.countOfComments(titleOfTask);
+        } catch (DaoException e) {
+            logger.error("Can't find", e.getMessage());
+            throw new ServiceException("Can't find", e);
+        }
     }
 }

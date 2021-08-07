@@ -17,7 +17,7 @@
     <div class="airHumidity"></div>
 </div>
 <div class="box"><i class="weather-icon owf"></i></div>
-<h1 class="cntr"> <span id="greeting">Good Afternoon</span>
+<h1 class="cntr"> <span id="greeting"></span>
 </h1>
 
 

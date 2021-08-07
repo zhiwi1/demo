@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Optional;
 
 public class FindAnswersOfTaskCommand implements Command {
 
@@ -18,7 +19,22 @@ public class FindAnswersOfTaskCommand implements Command {
         String title = request.getParameter(RequestParameter.TITLE);
         AnswerService service = ServiceProvider.getInstance().getAnswerService();
         try {
-            Deque<Answer> answers = service.findAnswersByTitle(title);
+            int limit = 3;
+
+            String pageString = Optional.ofNullable(request.getParameter(RequestParameter.KEY_PAGE))
+                    .orElse("1");
+            int currentPage = Integer.parseInt(pageString);
+
+            double countOfTasks = service.countOfAnswers(title);
+
+            int maxPage = (int) Math.ceil(countOfTasks / limit);
+
+            if (maxPage > 0 && maxPage < currentPage) {
+                currentPage = maxPage;
+            }
+            Deque<Answer> answers = service.findAnswersByTitle(title,(currentPage-1)*(limit),limit);
+            request.setAttribute(RequestAttribute.CURRENT_PAGE, currentPage);
+            request.setAttribute(RequestAttribute.MAX_PAGE, maxPage);
             request.setAttribute(RequestAttribute.ANSWERS, answers);
             return new Router(RouterType.FORWARD, PagePath.ANSWERS_OF_TASK_PAGE);
         } catch (ServiceException e) {

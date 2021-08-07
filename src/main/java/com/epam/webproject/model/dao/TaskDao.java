@@ -20,7 +20,7 @@ public interface TaskDao {
 
     public Deque<String> findByFullText(String text) throws DaoException;
 
-    public Deque<Task> findTasksByUserLogin(String login) throws DaoException;
+    public Deque<Task> findTasksByUserLogin(String login,int offset,int limit) throws DaoException;
 
     public boolean deleteTask(String title) throws DaoException;
 

@@ -28,6 +28,8 @@ public final class RequestAttribute {
     public static final String REGEXP_EMAIL_OR_LOGIN = "regexp_email_or_login";
     public static final String CURRENT_PAGE = "current_page";
     public static final String MAX_PAGE = "max_page";
+    public static final String COMMENT_CURRENT_PAGE = "comment_current_page";
+    public static final String COMMENT_MAX_PAGE = "comment_max_page";
 
     private RequestAttribute() {
     }
