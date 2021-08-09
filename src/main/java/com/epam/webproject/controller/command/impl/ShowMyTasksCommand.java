@@ -36,7 +36,7 @@ public class ShowMyTasksCommand implements Command {
                 currentPage = maxPage;
             }
 
-            Deque<Task> tasks = service.findTasksByUserLogin(login, (currentPage - 1) * (limit), maxPage);
+            Deque<Task> tasks = service.findTasksByUserLogin(login, (currentPage - 1) * (limit), limit);
             request.setAttribute(RequestAttribute.TASKS, tasks);
             request.setAttribute(RequestAttribute.CURRENT_PAGE, currentPage);
             request.setAttribute(RequestAttribute.MAX_PAGE, maxPage);

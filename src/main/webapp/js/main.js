@@ -224,13 +224,28 @@ const createLinksForPagination = () => {
 
     if (paginationItems.length > 0) {
 
-        let command = window.location.search.match(/command=([a-z_])+/i)
-
-        let currentPageLink = window.location.pathname + ((command != null) ? `?${command[0]}&` : '?');
 
         paginationItems.forEach((link) => {
             let page = link.innerText;
-            link.href = currentPageLink + "page=" + page;
+            let str2=window.location.href;
+            console.log(str2);
+            let str = str2.replace(/&page=\d+/, '');
+            link.href = str + "&page=" + page;
+        });
+    }
+}
+const createLinksForPaginationComments = () => {
+    let paginationItems = document.querySelectorAll("a.pagination_item_comment");
+
+    if (paginationItems.length > 0) {
+
+
+        paginationItems.forEach((link) => {
+            let page = link.innerText;
+            let str2=window.location.href;
+            console.log(str2);
+            let str = str2.replace(/&comment_page=\d+/, '');
+            link.href = str + "&comment_page=" + page;
         });
     }
 }
@@ -263,3 +278,4 @@ getCity();
 getWeather();
 btn.addEventListener('click', getImage);
 createLinksForPagination();
+createLinksForPaginationComments();

@@ -49,7 +49,7 @@
     <p > ${comment.loginOfUser}: ${comment.text}</p>
     <br>
 </c:forEach>
-<%--<mytag:pagination page="${requestScope.comment_current_page}" maxPage="${requestScope.comment_max_page}"/>--%>
+<mytag:pagination_comment commentPage="${requestScope.comment_current_page}" maxPage="${requestScope.comment_max_page}"/>
 </script>
 </body>
 <script src="js/main.js"></script>

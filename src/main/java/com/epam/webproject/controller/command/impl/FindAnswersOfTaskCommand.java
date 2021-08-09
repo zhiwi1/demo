@@ -19,7 +19,7 @@ public class FindAnswersOfTaskCommand implements Command {
         String title = request.getParameter(RequestParameter.TITLE);
         AnswerService service = ServiceProvider.getInstance().getAnswerService();
         try {
-            int limit = 3;
+            int limit = 4;
 
             String pageString = Optional.ofNullable(request.getParameter(RequestParameter.KEY_PAGE))
                     .orElse("1");

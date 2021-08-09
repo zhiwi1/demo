@@ -39,7 +39,7 @@ public class OpenTaskPageCommand implements Command {
                 }
                 String pageStringAnswer = Optional.ofNullable(request.getParameter(RequestParameter.KEY_PAGE))
                         .orElse("1");
-                int currentPageAnswer = Integer.parseInt(pageStringComment);
+                int currentPageAnswer = Integer.parseInt(pageStringAnswer);
                 double countOfAnswers = answerService.countOfAnswers(title);
                 int maxPageAnswer = (int) Math.ceil(countOfAnswers / limit);
                 if (maxPageAnswer > 0 && maxPageAnswer < currentPageAnswer) {

@@ -17,21 +17,23 @@
 <c:forEach var="answer" items="${answers}">
 
     <c:if test="${answer.correctness =='INCORRECT'}">
-        <p>${answer}</p>
+        <p>${answer.userLogin}:${answer.content}</p>
+        <p>Correctness: Incorrect</p>
         <form action="controller?command=mark_correct_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}" method="post">
-            <input type="submit" name="button" value="mark correct">
+            <input class="button" type="submit" name="button" value="mark correct">
         </form>
     </c:if>
     <c:if test="${answer.correctness =='CORRECT'}">
-        <p>${answer}</p>
+        <p>${answer.userLogin}:${answer.content}</p>
+        <p>Correctness: Correct</p>
         <form action="controller?command=mark_incorrect_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}" method="post">
-            <input type="submit" name="button" value="mark incorrect">
+            <input class="button" type="submit" name="button" value="mark incorrect">
         </form>
     </c:if>
 
 
 </c:forEach>
-<mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.comment_max_page}"/>
+<mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}"/>
 </body>
 <script src="js/main.js"></script>
 </html>
