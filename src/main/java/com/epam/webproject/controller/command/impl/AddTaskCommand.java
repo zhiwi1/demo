@@ -24,7 +24,6 @@ public class AddTaskCommand implements Command {
             Router router = new Router();
             switch (feedback) {
                 case SUCCESS: {
-                    //todo messages
                     router = new Router(RouterType.REDIRECT, PagePath.GO_TO_HOME_PAGE);
                     break;
                 }

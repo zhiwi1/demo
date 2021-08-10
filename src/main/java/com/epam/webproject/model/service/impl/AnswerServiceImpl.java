@@ -48,28 +48,13 @@ public class AnswerServiceImpl implements AnswerService {
 
     }
 
-    @Override
-    public boolean likeOrUnlike(long answerId, boolean flag) throws ServiceException {
-        boolean result = false;
-        try {
 
-            if (flag) {
-                result = answerDao.increaseLike(answerId);
-            } else {
-                result = answerDao.decreaseLike(answerId);
-            }
-        } catch (DaoException e) {
-            logger.error("Can't like", e.getMessage());
-            throw new ServiceException("Can't like", e);
-        }
-        return result;
-    }
 
     @Override
     public boolean markCorrect(long answerId) throws ServiceException {
 
         try {
-            return answerDao.markCorrect(answerId);
+            return answerDao.markCorrectTransaction(answerId);
         } catch (DaoException e) {
             logger.error("Can't block user", e.getMessage());
             throw new ServiceException("Can't block user", e);
@@ -79,7 +64,7 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean markIncorrect(long answerId) throws ServiceException {
 
         try {
-            return answerDao.markIncorrect(answerId);
+            return answerDao.markIncorrectTransaction(answerId);
         } catch (DaoException e) {
             logger.error("Can't block user", e.getMessage());
             throw new ServiceException("Can't block user", e);

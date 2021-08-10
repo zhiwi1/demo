@@ -4,7 +4,6 @@ import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
 import com.epam.webproject.model.dao.AnswerDao;
 import com.epam.webproject.model.entity.Answer;
-import com.epam.webproject.model.entity.Comment;
 import com.epam.webproject.model.entity.CorrectnessOfAnswer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -13,8 +12,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
 
 import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 
@@ -25,12 +22,7 @@ public class AnswerDaoImpl implements AnswerDao {
     private static final String FIND_ANSWERS_BY_TASK_TITLE = "SELECT answers.id, content, login,likes,correctness,task_id FROM answers " +
             " JOIN `users` ON `users`.`id` = `answers`.`user_id`" +
             "WHERE answers.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)  LIMIT ?, ?";
-    private static final String PLUS_LIKE = "UPDATE answers" +
-            "SET likes = likes+1," +
-            "WHERE id = ?";
-    private static final String MINUS_LIKE = "UPDATE answers" +
-            "SET likes = likes-1," +
-            "WHERE id = ?";
+    //Transaction
     private static final String MARK_CORRECT = "UPDATE answers " +
             " JOIN `users` ON `users`.`id` = answers.user_id  " +
             " JOIN `tasks` ON `tasks`.`id` = answers.task_id  " +
@@ -39,10 +31,151 @@ public class AnswerDaoImpl implements AnswerDao {
     private static final String MARK_INCORRECT = "UPDATE answers " +
             " JOIN `users` ON `users`.`id` = answers.user_id  " +
             " JOIN `tasks` ON `tasks`.`id` = answers.task_id  " +
-            " SET correctness  = 'INCORRECT', count_of_solve = count_of_solve + 1, count_for_solve = count_for_solve+1 " +
+            " SET correctness  = 'INCORRECT', count_of_solve = count_of_solve - 1, count_for_solve = count_for_solve-1 " +
             " WHERE answers.id = ?";
+
+    private static final String UPDATE_CORRECTNESS = "update answers SET correctness = 'CORRECT' where id=?";
+    private static final String UPDATE_COUNT_OF_SOLVE_PLUS = "update answers " +
+            "JOIN `users` ON `users`.`id` = answers.user_id " +
+            " SET  count_of_solve = count_of_solve + 1 where answers.id=?";
+    private static final String UPDATE_COUNT_FOR_SOLVE_PLUS = "update answers " +
+            "JOIN `tasks` ON `tasks`.`id` = answers.task_id" +
+            " SET  count_for_solve = count_for_solve + 1 where answers.id=?";
+
+    private static final String UPDATE_INCORRECTNESS = "update answers SET correctness = 'INCORRECT' where id=?";
+    private static final String UPDATE_COUNT_OF_SOLVE_MINUS = "update answers " +
+            "JOIN `users` ON `users`.`id` = answers.user_id " +
+            " SET  count_of_solve = count_of_solve - 1 where answers.id=?";
+    private static final String UPDATE_COUNT_FOR_SOLVE_MINUS = "update answers " +
+            "JOIN `tasks` ON `tasks`.`id` = answers.task_id" +
+            " SET  count_for_solve = count_for_solve + 1 where answers.id=?";
+
     private static final String COUNT_OF_ANSWERS_OF_TASK = "SELECT COUNT(`id`) as `count` FROM `answers` WHERE `task_id` =(SELECT `id` FROM `tasks` WHERE `title` = ?)";
 
+    @Override
+    public boolean markCorrectTransaction(long id) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        boolean result = false;
+        boolean resultOf = false;
+        boolean resultFor = false;
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement statementForUpdateCorrectness = null;
+            try {
+                statementForUpdateCorrectness = connection.prepareStatement(UPDATE_CORRECTNESS);
+                statementForUpdateCorrectness.setLong(1, id);
+                result = statementForUpdateCorrectness.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCorrectness != null) {
+                    statementForUpdateCorrectness.close();
+                }
+            }
+            PreparedStatement statementForUpdateCountForSolve = null;
+            try {
+                statementForUpdateCountForSolve = connection.prepareStatement(UPDATE_COUNT_FOR_SOLVE_PLUS);
+                statementForUpdateCountForSolve.setLong(1, id);
+
+                resultFor = statementForUpdateCountForSolve.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCountForSolve != null) {
+                    statementForUpdateCountForSolve.close();
+                }
+            }
+            PreparedStatement statementForUpdateCountOfSolve = null;
+            try {
+                statementForUpdateCountOfSolve = connection.prepareStatement(UPDATE_COUNT_OF_SOLVE_PLUS);
+                statementForUpdateCountOfSolve.setLong(1, id);
+                resultOf = statementForUpdateCountOfSolve.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCountOfSolve != null) {
+                    statementForUpdateCountOfSolve.close();
+                }
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException exception) {
+                throw new DaoException(e);
+            }
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new DaoException(e);
+                    //logger
+                }
+            }
+        }
+        logger.debug(result + " " + resultFor + resultOf);
+        return result && resultFor && resultOf;
+    }
+
+
+    @Override
+    public boolean markIncorrectTransaction(long id) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        boolean result = false;
+        boolean resultOf = false;
+        boolean resultFor = false;
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement statementForUpdateCorrectness = null;
+            try {
+                statementForUpdateCorrectness = connection.prepareStatement(UPDATE_INCORRECTNESS);
+                statementForUpdateCorrectness.setLong(1, id);
+                result = statementForUpdateCorrectness.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCorrectness != null) {
+                    statementForUpdateCorrectness.close();
+                }
+            }
+            PreparedStatement statementForUpdateCountForSolve = null;
+            try {
+                statementForUpdateCountForSolve = connection.prepareStatement(UPDATE_COUNT_FOR_SOLVE_MINUS);
+                statementForUpdateCountForSolve.setLong(1, id);
+
+                resultFor = statementForUpdateCountForSolve.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCountForSolve != null) {
+                    statementForUpdateCountForSolve.close();
+                }
+            }
+            PreparedStatement statementForUpdateCountOfSolve = null;
+            try {
+                statementForUpdateCountOfSolve = connection.prepareStatement(UPDATE_COUNT_OF_SOLVE_MINUS);
+                statementForUpdateCountOfSolve.setLong(1, id);
+                resultOf = statementForUpdateCountOfSolve.executeUpdate() == 1;
+            } finally {
+                if (statementForUpdateCountOfSolve != null) {
+                    statementForUpdateCountOfSolve.close();
+                }
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException exception) {
+                throw new DaoException(e);
+            }
+
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw new DaoException(e);
+                    //logger
+                }
+            }
+        }
+        logger.debug(result + " " + resultFor + resultOf);
+        return result && resultFor && resultOf;
+    }
 
     @Override
     public boolean markCorrect(long id) throws DaoException {
@@ -134,29 +267,6 @@ public class AnswerDaoImpl implements AnswerDao {
         return arrayDeque;
     }
 
-    @Override
-    public boolean increaseLike(long id) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PLUS_LIKE)) {
-            preparedStatement.setLong(1, id);
-            return (preparedStatement.executeUpdate() == 1);
-        } catch (SQLException e) {
-            logger.error("Can't like", e);
-            throw new DaoException(e);
-        }
-    }
-
-    @Override
-    public boolean decreaseLike(long id) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PLUS_LIKE)) {
-            preparedStatement.setLong(1, id);
-            return (preparedStatement.executeUpdate() == 1);
-        } catch (SQLException e) {
-            logger.error("Can't like", e);
-            throw new DaoException(e);
-        }
-    }
 
     @Override
     public int countOfAnswers(String titleOfTask) throws DaoException {

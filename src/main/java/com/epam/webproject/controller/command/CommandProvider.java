@@ -29,7 +29,6 @@ public class CommandProvider {
         commands.put(CommandType.ADD_ANSWER_COMMAND, new AddAnswerCommand());
         commands.put(CommandType.TASKS_FULL_TEXT_SEARCH_COMMAND, new TasksFullTextSearchCommand());
         commands.put(CommandType.USERS_FULL_TEXT_SEARCH_COMMAND, new UsersFullTextSearchCommand());
-        commands.put(CommandType.LIKE_ANSWER_COMMAND, new LikeAnswerCommand());
         commands.put(CommandType.BLOCK_USER_COMMAND, new BlockUserCommand());
         commands.put(CommandType.UNBLOCK_USER_COMMAND, new UnblockUserCommand());
         commands.put(CommandType.SEND_PASSWORD_COMMAND, new SendPasswordCommand());

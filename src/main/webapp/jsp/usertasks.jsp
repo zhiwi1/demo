@@ -25,9 +25,10 @@
 <a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
     <a class="cntr" href="controller?command=find_answers_of_task_command&title=${task.title}">
         <p class="cntr"> Посмотреть ответы на это задание от пользователей</p></a>
-    <a class="cntr" href="controller?command=delete_task_by_user_command&title=${task.title}">
-        Удалить задание
-    </a>
+
+    <form action="controller?command=delete_task_by_user_command&title=${task.title}" method="post">
+        <input class="pb button bcenter" type="submit" name="button" value="delete task">
+    </form>
     <br>
     </c:forEach>
     <hr>

@@ -2,10 +2,7 @@ package com.epam.webproject.model.service;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.exception.ServiceException;
-import com.epam.webproject.model.entity.RatesType;
-import com.epam.webproject.model.entity.Status;
-import com.epam.webproject.model.entity.Task;
-import com.epam.webproject.model.entity.User;
+import com.epam.webproject.model.entity.*;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -43,5 +40,7 @@ public interface UserService {
     public int countOfUsers() throws ServiceException;
 
     public Deque<User> findAllUsersWithLimit(int offset, int limit) throws ServiceException;
+
+    public Optional<Role> findRoleByLogin(String login) throws ServiceException;
 
 }

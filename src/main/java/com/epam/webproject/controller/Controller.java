@@ -34,6 +34,7 @@ public class Controller extends HttpServlet {
 
         String commandName = request.getParameter(RequestParameter.COMMAND);
         Command command = COMMAND_PROVIDER.getCommand(commandName);
+        logger.info(command);
         Router router = null;
         try {
             router = command.execute(request);

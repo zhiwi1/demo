@@ -272,5 +272,13 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
         }
     }
+    @Override
+    public Optional<Role> findRoleByLogin(String login) throws ServiceException{
+        try {
+      return   userDao.findRoleByLogin(login);
+        } catch (DaoException daoException) {
+            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
+        }
+    }
 }
 //}

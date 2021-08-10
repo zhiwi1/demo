@@ -15,10 +15,10 @@
 
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <body>
-<form name="add-post-form" method="POST" action="controller?command=users_full_text_search_command">
+<form name="add-post-form" method="get" action="controller?">
    <fmt:message key="find" bundle="${ rb }" />
     <input class="textfield" type="text" name="text">
-
+    <input type="hidden" name="command" value = "users_full_text_search_command">
     <button class="pb button" type="submit"> <fmt:message key="go" bundle="${ rb }" /></button>
 </form>
 <br>
@@ -32,8 +32,8 @@
     <p>Status: ${fts_user.status}</p>
 
     <c:if test="${fts_user.status =='NORMAL'}">
-        <form class="form" name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
-            <button type="submit">  <fmt:message key="allusers.block" bundle="${ rb }" /></button>
+        <form  name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
+            <button class="button" type="submit">  <fmt:message key="allusers.block" bundle="${ rb }" /></button>
         </form>
     </c:if>
     <c:if test="${fts_user.status =='BLOCKED'}">

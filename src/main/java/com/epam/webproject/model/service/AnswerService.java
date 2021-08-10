@@ -11,8 +11,6 @@ public interface AnswerService {
 
     public Deque<Answer> findAnswersByTitle(String title,int offset,int limit) throws ServiceException;
 
-    boolean likeOrUnlike(long answerId, boolean flag) throws ServiceException;
-
     public boolean markCorrect(long answerId) throws ServiceException;
 
     public boolean markIncorrect(long answerId) throws ServiceException;

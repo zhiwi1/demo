@@ -18,7 +18,7 @@ public class TasksFullTextSearchCommand implements Command {
         TaskService service = ServiceProvider.getInstance().getTaskService();
         String text = request.getParameter(RequestParameter.TEXT);
         try {
-            Router router = new Router();
+
             Deque<String> arrayDeque = service.findByFullText(text);
             request.setAttribute(RequestAttribute.FULL_TEXT_SEARCH_TITLES, arrayDeque);
             return new Router(RouterType.FORWARD, PagePath.ALL_TASKS_PAGE);

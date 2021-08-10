@@ -19,15 +19,16 @@
 
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
-<form class="form" name="add-post-form" method="POST" action="controller?command=tasks_full_text_search_command">
+<form class="form" name="add-post-form" method="GET" action="controller?">
+    <input type="hidden" name="command" value = "tasks_full_text_search_command">
     <p class="cntr"><fmt:message key="find" bundle="${ rb }"/></p>
     <input class="textfield" type="text" name="text">
     <button class="pb button" type="submit"><fmt:message key="go" bundle="${ rb }"/></button>
 </form>
 
 <c:forEach var="title" items="${fts_titles}">
-    <h3 >${title}</h3>
-    <a  href="controller?command=open_task_page_command&title=${title}">
+    <h3 class="cntr">${title}</h3>
+    <a class="cntr" href="controller?command=open_task_page_command&title=${title}">
         <p ><fmt:message key="alltasks.more" bundle="${ rb }"/></p></a>
     <hr>
 </c:forEach>

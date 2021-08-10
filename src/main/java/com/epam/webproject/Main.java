@@ -19,12 +19,8 @@ class Main {
 
     public static void main(String args[]) throws DaoException , ServiceException
     {
-     AnswerService answerService=ServiceProvider.getInstance().getAnswerService();
-        System.out.println(answerService.countOfAnswers("task"));
-        CommentService commentService=ServiceProvider.getInstance().getCommentService();
-        System.out.println(commentService.countOfComments("task"));
-        System.out.println( answerService.findAnswersByTitle("task",0,4));
-        System.out.println(  commentService.findCommentsByTitle("task",0,4));
+UserDao userDao=DaoProvider.getInstance().getUserDao();
+        System.out.println(userDao.findRoleByLogin("zhiwi"));
 
     }
 }

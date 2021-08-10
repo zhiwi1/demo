@@ -6,8 +6,11 @@ import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeleteTaskByUserCommand implements Command {
+Logger logger= LogManager.getLogger();
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
 
@@ -15,7 +18,9 @@ public class DeleteTaskByUserCommand implements Command {
         TaskService service = ServiceProvider.getInstance().getTaskService();
         try {
             boolean isDeleted = service.deleteTask(title);
+
             Router router = new Router();
+            logger.info(isDeleted);
             if (isDeleted) {
                 router = new Router(RouterType.REDIRECT, PagePath.SHOW_MY_TASKS_COMMAND_PAGE);
             } else {

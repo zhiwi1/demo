@@ -27,6 +27,7 @@ public final class PagePath {
     public static final String SHOW_MY_TASKS_COMMAND_PAGE="controller?command=show_my_tasks_command";
     public static final String FIND_ANSWERS_OF_TASK_COMMAND="controller?command=find_answers_of_task_command";
 
+
     private PagePath() {
     }
 

@@ -14,11 +14,8 @@ public interface AnswerDao {
     public Deque<Answer> findAllWithLimit(int offset, int limit) throws DaoException;
 
     public Deque<Answer> findAnswersByTitleWithLimit(String title, int offset, int limit) throws DaoException;
-
-    public boolean increaseLike(long id) throws DaoException;
-
-    public boolean decreaseLike(long id) throws DaoException;
-
+    public boolean markCorrectTransaction(long id) throws DaoException;
+    public boolean markIncorrectTransaction(long id) throws DaoException;
     public boolean markCorrect(long id) throws DaoException;
 
     public boolean markIncorrect(long id) throws DaoException;

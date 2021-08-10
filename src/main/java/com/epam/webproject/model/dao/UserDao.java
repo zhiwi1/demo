@@ -2,6 +2,7 @@ package com.epam.webproject.model.dao;
 
 import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.entity.RatesType;
+import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.Status;
 import com.epam.webproject.model.entity.User;
 
@@ -47,5 +48,7 @@ public interface UserDao {
     public int countOfUsers() throws DaoException;
 
     public Deque<User> findAll(int offset, int limit) throws DaoException;
+
+    public Optional<Role> findRoleByLogin(String login) throws DaoException;
 }
 

@@ -24,6 +24,8 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_USER_BY_EMAIL = "SELECT id, login, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE email = ? ";
 
+    private static final String FIND_ROLE_BY_LOGIN = "SELECT `role` FROM users WHERE login = ?";
+
     private static final String FIND_LOGIN_DATA_BY_LOGIN = "SELECT password_hash,salt FROM users WHERE login = ?";
 
     private static final String FIND_LOGIN_DATA_BY_EMAIL = "SELECT password_hash, salt FROM users WHERE email = ?";
@@ -32,10 +34,10 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
 
-    private static final String FIND_ALL_USERS_WITH_LIMIT = ""+
-     " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status"+
-    "  FROM `users`"+
-    "  LIMIT ?, ?";
+    private static final String FIND_ALL_USERS_WITH_LIMIT = "" +
+            " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status" +
+            "  FROM `users`" +
+            "  LIMIT ?, ?";
     //            + " JOIN roles ON roles.id = users.role_id ";
 
     private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
@@ -63,7 +65,7 @@ public class UserDaoImpl implements UserDao {
             "join answers on answers.user_id =users.id where users.id =" +
             "(SELECT id FROM users WHERE login = ?);";
     private static final String UPDATE_RATES = "UPDATE `first_project`.`users` SET `rates_of_solve`= ? WHERE  `login`=?;";
-    private static final String COUNT_OF_USERS ="SELECT COUNT(`id`) as `count` FROM `users`";
+    private static final String COUNT_OF_USERS = "SELECT COUNT(`id`) as `count` FROM `users`";
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -163,6 +165,7 @@ public class UserDaoImpl implements UserDao {
         }
         return users;
     }
+
     @Override
     public Deque<User> findAll(int offset, int limit) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -431,6 +434,24 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException sqlException) {
             throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
         }
+    }
+
+    @Override
+    public Optional<Role> findRoleByLogin(String login) throws DaoException {
+        Optional<Role> roleOptional = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROLE_BY_LOGIN)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
+                roleOptional = Optional.ofNullable(role);
+            }
+        } catch (SQLException e) {
+            logger.error("Can't find", e);
+            throw new DaoException(e);
+        }
+        return roleOptional;
     }
 
 }
