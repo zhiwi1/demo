@@ -3,6 +3,7 @@ package com.epam.webproject.controller.command.impl;
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ServiceException;
+import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.Task;
 import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.service.ServiceProvider;
@@ -18,6 +19,11 @@ import java.util.Optional;
 public class ShowMyTasksCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
+        if (role == null) {
+            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+        } else {
         TaskService service = ServiceProvider.getInstance().getTaskService();
         String login = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
         try {
@@ -41,9 +47,9 @@ public class ShowMyTasksCommand implements Command {
             request.setAttribute(RequestAttribute.CURRENT_PAGE, currentPage);
             request.setAttribute(RequestAttribute.MAX_PAGE, maxPage);
 
-            return new Router(RouterType.FORWARD, PagePath.USER_TASKS_PAGE);
+            router= new Router(RouterType.FORWARD, PagePath.USER_TASKS_PAGE);
         } catch (ServiceException e) {
             throw new CommandException("Can't show tasks ", e);
         }
-    }
+    }return router;}
 }

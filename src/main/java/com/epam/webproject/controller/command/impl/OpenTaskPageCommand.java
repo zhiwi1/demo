@@ -3,10 +3,7 @@ package com.epam.webproject.controller.command.impl;
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.exception.ServiceException;
-import com.epam.webproject.model.entity.Answer;
-import com.epam.webproject.model.entity.Comment;
-import com.epam.webproject.model.entity.Task;
-import com.epam.webproject.model.entity.User;
+import com.epam.webproject.model.entity.*;
 import com.epam.webproject.model.service.AnswerService;
 import com.epam.webproject.model.service.CommentService;
 import com.epam.webproject.model.service.ServiceProvider;
@@ -20,6 +17,10 @@ public class OpenTaskPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
+        Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
+        if (role == null) {
+            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+        } else {
         String title = request.getParameter(RequestParameter.TITLE);
         TaskService taskService = ServiceProvider.getInstance().getTaskService();
         AnswerService answerService = ServiceProvider.getInstance().getAnswerService();
@@ -64,6 +65,6 @@ public class OpenTaskPageCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
-        return router;
-    }
+
+    }  return router;}
 }

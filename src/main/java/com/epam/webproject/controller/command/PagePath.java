@@ -2,7 +2,7 @@ package com.epam.webproject.controller.command;
 
 public final class PagePath {
     public static final String HOME_PAGE = "/jsp/home.jsp";
-    public static final String ERROR_PAGE = "404.jsp";
+    public static final String ERROR_PAGE = "/jsp/404.jsp";
     public static final String LOGIN_PAGE = "/jsp/login.jsp";
     public static final String REGISTRATION_PAGE = "/jsp/registration.jsp";
     public static final String ADD_TASK_PAGE = "/jsp/addtask.jsp";
