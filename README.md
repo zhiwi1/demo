@@ -1,11 +1,13 @@
 # System "Tasks"
->  The system helps to solve and distribute
-tasks of a small group of people. Users can publish their problem for solving and after solving the problem by other users, mark the correct answer so that other users can immediately see the correct answer. Users can also post a comment and answer for a problem, and get a rank in accordance with the number of solved problems. 
+>  The system helps to solve and distribute tasks of a small group of people. Users can publish their problem for solving and after solving the problem by other users, mark the correct answer so that other users can immediately see the correct answer. Users can also post a comment and answer for a problem, and get a rank in accordance with the number of solved problems.  
+
 **User groups:**
+
 * User
 * Administrator
 
 **Use cases:**
+
 1.Not authorized users:
 * Login
 * Register
