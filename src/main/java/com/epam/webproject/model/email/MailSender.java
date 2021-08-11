@@ -36,12 +36,6 @@ public class MailSender {
 
     }
 
-    public static String messageEmailUser(String username, String password) {
-        return String.format(MAIN_MESSAGE,
-                username,
-                password
-        );
-    }
 
     public static String messageForgetPassword(String username, String password) {
         return String.format(FORGET_PASSWORD_MESSAGE,

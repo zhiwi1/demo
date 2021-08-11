@@ -12,13 +12,13 @@ public class CommandProviderTest {
     public void badInputTest() {
         Command command = commandProvider.getCommand("dfasdfasdfasdf");
         System.out.println(command);
-        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT.name()));
+        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
     }
 
     @Test
     public void nullInputTest() {
         Command command = commandProvider.getCommand(null);
-        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT.name()));
+        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
     }
 
     @Test

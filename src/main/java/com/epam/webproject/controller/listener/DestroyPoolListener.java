@@ -9,11 +9,12 @@ import jakarta.servlet.annotation.WebListener;
 @WebListener
 public class DestroyPoolListener implements ServletContextListener {
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
 
     }
+
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
         ConnectionPool.INSTANCE.destroyPool();
     }
 

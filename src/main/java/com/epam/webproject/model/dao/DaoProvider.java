@@ -8,7 +8,6 @@ import com.epam.webproject.model.dao.impl.UserDaoImpl;
 
 public class DaoProvider {
     private static DaoProvider instance;
-
     private final UserDao userDao;
     private final TaskDao taskDao;
     private final AnswerDao answerDao;
@@ -18,8 +17,8 @@ public class DaoProvider {
     private DaoProvider() {
         this.userDao = new UserDaoImpl();
         this.taskDao = new TaskDaoImpl();
-        this.answerDao=new AnswerDaoImpl();
-        this.commentDao=new CommentDaoImpl();
+        this.answerDao = new AnswerDaoImpl();
+        this.commentDao = new CommentDaoImpl();
     }
 
     public static DaoProvider getInstance() {

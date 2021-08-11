@@ -3,18 +3,16 @@ package com.epam.webproject.model.entity;
 import java.util.Date;
 import java.util.Objects;
 
-public class Comment  extends Entity{
+public class Comment extends Entity {
     private String text;
     private Date timeCreatedAt;
-    private Date timeUpdatedAt;
     private String loginOfUser;
     private long userId;
     private long postId;
 
-    public Comment(String text, Date timeCreatedAt, Date timeUpdatedAt, long userId, long postId) {
+    public Comment(String text, Date timeCreatedAt, long userId, long postId) {
         this.text = text;
         this.timeCreatedAt = timeCreatedAt;
-        this.timeUpdatedAt = timeUpdatedAt;
         this.userId = userId;
         this.postId = postId;
     }
@@ -22,10 +20,8 @@ public class Comment  extends Entity{
     public Comment(String text, Date timeCreatedAt, Date timeUpdatedAt, String loginOfUser) {
         this.text = text;
         this.timeCreatedAt = timeCreatedAt;
-        this.timeUpdatedAt = timeUpdatedAt;
         this.loginOfUser = loginOfUser;
     }
-
 
 
     public String getText() {
@@ -42,14 +38,6 @@ public class Comment  extends Entity{
 
     public void setTimeCreatedAt(Date timeCreatedAt) {
         this.timeCreatedAt = timeCreatedAt;
-    }
-
-    public Date getTimeUpdatedAt() {
-        return timeUpdatedAt;
-    }
-
-    public void setTimeUpdatedAt(Date timeUpdatedAt) {
-        this.timeUpdatedAt = timeUpdatedAt;
     }
 
     public long getUserId() {
@@ -81,12 +69,22 @@ public class Comment  extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return userId == comment.userId && postId == comment.postId && Objects.equals(text, comment.text) && Objects.equals(timeCreatedAt, comment.timeCreatedAt) && Objects.equals(timeUpdatedAt, comment.timeUpdatedAt);
+        return userId == comment.userId && postId == comment.postId && Objects.equals(text, comment.text) && Objects.equals(timeCreatedAt, comment.timeCreatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, timeCreatedAt, timeUpdatedAt, userId, postId);
+        int result = 1;
+        for (int i = 0; i < text.length(); i++) {
+            result = 31 * result + text.charAt(i);
+        }
+        for (int i = 0; i < loginOfUser.length(); i++) {
+            result = 31 * result + loginOfUser.charAt(i);
+        }
+        result = 31 * result + timeCreatedAt.hashCode();
+        result = 31 * result + (int) (this.userId ^ (this.userId >>> 32));
+        result = 31 * result + (int) (this.postId ^ (this.postId >>> 32));
+        return result;
     }
 
     @Override
@@ -94,7 +92,6 @@ public class Comment  extends Entity{
         final StringBuilder sb = new StringBuilder("Comment{");
         sb.append("text='").append(text).append('\'');
         sb.append(", timeCreatedAt=").append(timeCreatedAt);
-        sb.append(", timeUpdatedAt=").append(timeUpdatedAt);
         sb.append(", loginOfUser='").append(loginOfUser).append('\'');
         sb.append('}');
         return sb.toString();

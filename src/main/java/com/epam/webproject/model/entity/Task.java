@@ -2,21 +2,20 @@ package com.epam.webproject.model.entity;
 
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Task extends Entity {
     private String title;
     private String text;
     private Date timeCreatedAt;
-    private Date timeUpdatedAt;
     private long idOfUser;
     private int complexity;
     private int countForSolve;
 
-    public Task(String title, String text, Date timeCreatedAt, Date timeUpdatedAt, long idOfUser, int complexity, int countForSolve) {
+    public Task(String title, String text, Date timeCreatedAt, long idOfUser, int complexity, int countForSolve) {
         this.title = title;
         this.text = text;
         this.timeCreatedAt = timeCreatedAt;
-        this.timeUpdatedAt = timeUpdatedAt;
         this.idOfUser = idOfUser;
         this.complexity = complexity;
         this.countForSolve = countForSolve;
@@ -46,15 +45,6 @@ public class Task extends Entity {
         this.timeCreatedAt = timeCreatedAt;
     }
 
-    public Date getTimeUpdatedAt() {
-        return timeUpdatedAt;
-    }
-
-    public void setTimeUpdatedAt(Date timeUpdatedAt) {
-        this.timeUpdatedAt = timeUpdatedAt;
-    }
-
-
     public long getIdOfUser() {
         return idOfUser;
     }
@@ -80,12 +70,36 @@ public class Task extends Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return idOfUser == task.idOfUser && complexity == task.complexity && countForSolve == task.countForSolve && Objects.equals(title, task.title) && Objects.equals(text, task.text) && Objects.equals(timeCreatedAt, task.timeCreatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        for (int i = 0; i < title.length(); i++) {
+            result = 31 * result + title.charAt(i);
+        }
+        for (int i = 0; i < text.length(); i++) {
+            result = 31 * result + text.charAt(i);
+        }
+        result = 31 * timeCreatedAt.hashCode();
+        result = 31 * result + (int) (this.idOfUser ^ (this.idOfUser >>> 32));
+        result = 31 * result + complexity;
+        result = 31 * result + countForSolve;
+        return result;
+
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Task{");
         sb.append("title='").append(title).append('\'');
         sb.append(", text='").append(text).append('\'');
         sb.append(", timeCreatedAt=").append(timeCreatedAt);
-        sb.append(", timeUpdatedAt=").append(timeUpdatedAt);
         sb.append(", idOfUser=").append(idOfUser);
         sb.append(", complexity=").append(complexity);
         sb.append(", countForSolve=").append(countForSolve);

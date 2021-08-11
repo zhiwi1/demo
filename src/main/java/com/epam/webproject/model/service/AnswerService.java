@@ -3,7 +3,6 @@ package com.epam.webproject.model.service;
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.entity.Answer;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 
 public interface AnswerService {

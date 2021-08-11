@@ -16,13 +16,13 @@ import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.UserService;
 import com.epam.webproject.util.PasswordEncryptor;
 import com.epam.webproject.validator.UserValidator;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDao userDao = DaoProvider.getInstance().getUserDao();
-
 
 
     public boolean signInUser(String loginOrEmail, String password) throws ServiceException {
@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
             }
 
         } catch (DaoException e) {
-            logger.error("Can't sign in", e.getMessage());
-            throw new ServiceException("Can't sign in", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl: signInUser(String loginOrEmail, String password) {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl: signInUser(String loginOrEmail, String password)  " + e.getMessage(), e);
         }
 
         return result;
@@ -66,16 +66,15 @@ public class UserServiceImpl implements UserService {
                     String salt = encryptor.generateSalt();
                     String hashPassword = encryptor.getHash(password, salt);
                     User user = new User(login, email, Role.USER, RatesType.NEWBIE, Status.NORMAL);
-                    logger.info(user);
                     boolean isCreated = userDao.createNewUser(user, hashPassword, salt);
-
                     if (isCreated) {
                         feedback = Feedback.SUCCESS;
                     } else feedback = Feedback.DATABASE_EXCEPTION;
-                } else feedback = Feedback.LOGIN_OR_EMAIL_EXISTS;
+                } else feedback = Feedback.DATA_EXISTS;
             } catch (DaoException e) {
-                logger.error("Can't create new user : {}", e.getMessage());
-                throw new ServiceException("Can't create new user", e);
+                logger.log(Level.ERROR, "Can not execute UserServiceImpl:  registerUser(String login, String email, String password, String confirmPassword) {}", e.getMessage());
+                throw new ServiceException("Can not execute UserServiceImpl: registerUser(String login, String email, String password, String confirmPassword)   " + e.getMessage(), e);
+
             }
         } else {
             feedback = Feedback.CHECK_DATA;
@@ -95,7 +94,8 @@ public class UserServiceImpl implements UserService {
             }
             return userOptional;
         } catch (DaoException e) {
-            throw new ServiceException("Error occured when finding user by login " + loginOrEmail + " :" + e.getMessage(), e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  findByLoginOrEmail(String loginOrEmail)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl: findByLoginOrEmail(String loginOrEmail) " + e.getMessage(), e);
         }
     }
 
@@ -105,19 +105,22 @@ public class UserServiceImpl implements UserService {
             Deque<User> users = userDao.findAll();
             return users;
         } catch (DaoException e) {
-            logger.error("Can't create task", e.getMessage());
-            throw new ServiceException("Can't create task", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  showAllUsers()  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  showAllUsers()  " + e.getMessage(), e);
+
         }
 
     }
+
     @Override
-    public Deque<User> findAllUsersWithLimit(int offset,int limit) throws ServiceException {
+    public Deque<User> findAllUsersWithLimit(int offset, int limit) throws ServiceException {
         try {
             Deque<User> users = userDao.findAll(offset, limit);
             return users;
         } catch (DaoException e) {
-            logger.error("Can't create task", e.getMessage());
-            throw new ServiceException("Can't create task", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  findAllUsersWithLimit(int offset, int limit)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  findAllUsersWithLimit(int offset, int limit)  " + e.getMessage(), e);
+
         }
 
     }
@@ -138,7 +141,9 @@ public class UserServiceImpl implements UserService {
                 result = userDao.updateUserName(newLogin, newEmail, oldLogin);
             }
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  updateUser(String newLogin, String newEmail, String oldLogin, String oldEmail)  " + e.getMessage(), e);
+
         }
         return result;
     }
@@ -152,8 +157,9 @@ public class UserServiceImpl implements UserService {
             }
             return arrayDeque;
         } catch (DaoException e) {
-            logger.error("Can't find task", e.getMessage());
-            throw new ServiceException("Can't find  task", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  findByFullText(String text)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  findByFullText(String text) " + e.getMessage(), e);
+
         }
 
     }
@@ -164,8 +170,9 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.blockUser(login);
         } catch (DaoException e) {
-            logger.error("Can't block user", e.getMessage());
-            throw new ServiceException("Can't block user", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  blockUser(String login)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  blockUser(String login) " + e.getMessage(), e);
+
         }
     }
 
@@ -175,8 +182,9 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.unblockUser(login);
         } catch (DaoException e) {
-            logger.error("Can't block user", e.getMessage());
-            throw new ServiceException("Can't block user", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  unblockUser(String login)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  unblockUser(String login) " + e.getMessage(), e);
+
         }
     }
 
@@ -186,7 +194,9 @@ public class UserServiceImpl implements UserService {
             Optional<Status> userStatusOptional = userDao.findStatusByLogin(login);
             return (userStatusOptional.isPresent() && userStatusOptional.get() == expectedStatus);
         } catch (DaoException e) {
-            throw new ServiceException("Can not check status: " + e.getMessage(), e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  checkUserStatus(String login, Status expectedStatus)  {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  checkUserStatus(String login, Status expectedStatus) " + e.getMessage(), e);
+
         }
     }
 
@@ -200,7 +210,9 @@ public class UserServiceImpl implements UserService {
                 loginOptional = Optional.of(loginOrEmail);
             }
         } catch (DaoException e) {
-            throw new ServiceException("Can not check status: " + e.getMessage(), e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl: findLogin(String loginOrEmail) {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl: findLogin(String loginOrEmail) " + e.getMessage(), e);
+
         }
         return loginOptional;
     }
@@ -222,7 +234,9 @@ public class UserServiceImpl implements UserService {
                     result = true;
                 }
             } catch (DaoException e) {
-                throw new ServiceException("Can't handle forgetPassword request at UserService", e);
+                logger.log(Level.ERROR, "Can not execute UserServiceImpl: forgetPassword(String email) {}", e.getMessage());
+                throw new ServiceException("Can not execute UserServiceImpl: forgetPassword(String email) " + e.getMessage(), e);
+
             }
         }
         return result;
@@ -249,8 +263,8 @@ public class UserServiceImpl implements UserService {
             }
             return ratesType;
         } catch (DaoException e) {
-            throw new ServiceException("Can't process calculateRatesOfSolve request at UserService", e);
-
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl: calculateRatesOfSolve(String login) {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl: calculateRatesOfSolve(String login) " + e.getMessage(), e);
         }
     }
 
@@ -260,7 +274,9 @@ public class UserServiceImpl implements UserService {
             boolean result = userDao.setRates(login, ratesType);
             return result;
         } catch (DaoException e) {
-            throw new ServiceException("Can't process calculateRatesOfSolve request at UserService", e);
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  setRates(String login, RatesType ratesType) {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  setRates(String login, RatesType ratesType) " + e.getMessage(), e);
+
         }
     }
 
@@ -268,17 +284,20 @@ public class UserServiceImpl implements UserService {
     public int countOfUsers() throws ServiceException {
         try {
             return userDao.countOfUsers();
-        } catch (DaoException daoException) {
-            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl: countOfUsers() {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:  countOfUsers() " + e.getMessage(), e);
+
         }
     }
+
     @Override
-    public Optional<Role> findRoleByLogin(String login) throws ServiceException{
+    public Optional<Role> findRoleByLogin(String login) throws ServiceException {
         try {
-      return   userDao.findRoleByLogin(login);
-        } catch (DaoException daoException) {
-            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
+            return userDao.findRoleByLogin(login);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  findRoleByLogin(String login) {}", e.getMessage());
+            throw new ServiceException("Can not execute UserServiceImpl:   findRoleByLogin(String login) " + e.getMessage(), e);
         }
     }
 }
-//}

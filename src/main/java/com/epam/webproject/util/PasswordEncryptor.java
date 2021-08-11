@@ -13,14 +13,6 @@ public class PasswordEncryptor {
         return instance;
     }
 
-    public boolean checkHash(String password, String hash) {
-        return BCrypt.checkpw(password, hash);
-    }
-
-    public String getHash(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt(12));
-    }
-
     public String generateSalt() {
         return BCrypt.gensalt(12);
     }

@@ -1,6 +1,5 @@
 package com.epam.webproject.model.connection;
 
-import com.epam.webproject.exception.ConnectionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +10,7 @@ import java.util.concurrent.Executor;
 
 
 class ProxyConnection implements Connection {
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
     private final Connection connection;
 
     ProxyConnection(Connection connection) {
@@ -19,11 +18,7 @@ class ProxyConnection implements Connection {
     }
 
     public void close() {
-        try {
-            ConnectionPool.INSTANCE.releaseConnection(this);
-        } catch (ConnectionException exception) {
-           logger.error("Can't release connection");
-        }
+        ConnectionPool.INSTANCE.releaseConnection(this);
     }
 
     void reallyClose() throws SQLException {

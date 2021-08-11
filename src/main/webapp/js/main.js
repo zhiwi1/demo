@@ -62,7 +62,7 @@ function viewBgImage(src) {
     img.src = src;
     img.onload = () => {
         body.style.backgroundImage = `url(${src})`;
-        if (x == 0 || x == 3 || x == 2) {
+        if (x == 0 ||x==1|| x == 3 ) {
             document.body.style.color = 'white';
             colorLinks('#ffffff');
         } else {
@@ -89,7 +89,7 @@ function shuffle(array) {
 }
 
 function getImage() {
-    if (x == 0 || x == 3 || x == 2) {
+    if (x == 0 ||x==1|| x == 3 || x == 2) {
         document.body.style.color = 'white';
 
         colorLinks('#ffffff');

@@ -21,6 +21,7 @@ import java.io.IOException;
 public class BanFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger();
+    private static final String FLAG_OF_BLOCK = "true";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -33,7 +34,7 @@ public class BanFilter implements Filter {
         try {
             if (userService.checkUserStatus(login, Status.BLOCKED)) {
                 httpServletRequest.removeAttribute(RequestAttribute.LOGIN);
-                //todo message of block
+                httpServletRequest.getSession().setAttribute(RequestAttribute.BLOCK_MESSAGE, FLAG_OF_BLOCK);
                 RequestDispatcher dispatcher = httpServletRequest.getRequestDispatcher(PagePath.LOGIN_PAGE);
                 dispatcher.forward(httpServletRequest, httpServletResponse);
                 httpServletResponse.sendRedirect(PagePath.LOGIN_PAGE);

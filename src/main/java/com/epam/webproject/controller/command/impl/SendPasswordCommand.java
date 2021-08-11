@@ -22,13 +22,12 @@ public class SendPasswordCommand implements Command {
         try {
             boolean result = userService.forgetPassword(email);
             if (result) {
-
                 router = new Router(RouterType.REDIRECT, PagePath.GO_TO_LOGIN_PAGE, RequestParameter.PREPARATION_FOR_EMAIL_MESSAGE, RequestParameter.TRUE);
             } else {
                 router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
             }
         } catch (ServiceException e) {
-            logger.error("Error at ForgetPasswordCommand", e);
+            logger.error("Error at ForgetPasswordCommand "+e.getMessage(), e);
             router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
         }
         return router;

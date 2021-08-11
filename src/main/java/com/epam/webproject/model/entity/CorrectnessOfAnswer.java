@@ -13,4 +13,5 @@ public enum CorrectnessOfAnswer {
     public String getValue() {
         return value;
     }
+
 }

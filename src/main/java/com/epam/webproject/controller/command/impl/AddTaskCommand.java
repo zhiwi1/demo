@@ -17,9 +17,7 @@ public class AddTaskCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
+        if (role != null) {
             String title = request.getParameter(RequestParameter.TITLE);
             String text = request.getParameter(RequestParameter.TEXT);
             String complexity = request.getParameter(RequestParameter.COMPLEXITY);
@@ -33,19 +31,22 @@ public class AddTaskCommand implements Command {
                         break;
                     }
                     case CHECK_DATA:
-                    case LOGIN_OR_EMAIL_EXISTS: {
-                        request.setAttribute(RequestAttribute.MESSAGE, feedback);
+                    case DATA_EXISTS: {
+                        request.getSession().setAttribute(RequestAttribute.MESSAGE, feedback);
                         router = new Router(RouterType.REDIRECT, PagePath.GO_TO_ADD_TASK_PAGE_COMMAND);
                         break;
                     }
                     default: {
-                        router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
+                        router = new Router(RouterType.REDIRECT, PagePath.DEFAULT_COMMAND);
                         break;
                     }
                 }
 
             } catch (ServiceException e) {
-                throw new CommandException("Add task error", e);
+                throw new CommandException("AddTaskCommand command error"+e.getMessage(), e);
             }
+        } else {
+            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+
         }return router;}
 }

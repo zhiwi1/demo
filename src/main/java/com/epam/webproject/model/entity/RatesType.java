@@ -7,6 +7,7 @@ public enum RatesType {
     HARDWORKER("HARDWORKER"),
     PROFESSIONAL("PROFESSIONAL");
     private String value;
+
     private RatesType(String value) {
         this.value = value;
     }

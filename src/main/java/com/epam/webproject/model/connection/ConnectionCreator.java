@@ -3,13 +3,10 @@ package com.epam.webproject.model.connection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.MissingResourceException;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
  class ConnectionCreator {
@@ -47,7 +44,7 @@ import java.util.ResourceBundle;
             DATABASE_PASSWORD = properties.getString(PASSWORD);
             Class.forName(driver);
         } catch (ClassNotFoundException | MissingResourceException e) {
-            logger.fatal("fatal error: config file " + e);
+            logger.fatal("Fatal error: config file " + e);
             throw new RuntimeException(e);
         }
     }

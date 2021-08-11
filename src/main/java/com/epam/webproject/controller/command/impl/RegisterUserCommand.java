@@ -2,7 +2,6 @@ package com.epam.webproject.controller.command.impl;
 
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
-import com.epam.webproject.exception.ProjectException;
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.ServiceProvider;
@@ -27,10 +26,9 @@ public class RegisterUserCommand implements Command {
                     router = new Router(RouterType.REDIRECT, PagePath.GO_TO_LOGIN_PAGE);
                     break;
                 }
-                //todo if login and email equals
                 case CHECK_DATA:
-                case LOGIN_OR_EMAIL_EXISTS: {
-                    request.setAttribute(RequestAttribute.MESSAGE, feedback);
+                case DATA_EXISTS: {
+                    request.getSession().setAttribute(RequestAttribute.MESSAGE, feedback);
                     router = new Router(RouterType.REDIRECT, PagePath.GO_TO_REGISTRATION_PAGE_COMMAND, RequestParameter.PREPARATION_FOR_ERROR_MESSAGE, feedback.toString());
                     break;
                 }
@@ -41,7 +39,7 @@ public class RegisterUserCommand implements Command {
             }
             return router;
         } catch (ServiceException e) {
-            throw new CommandException("Registration command error", e);
+            throw new CommandException("Registration command error"+e.getMessage(), e);
         }
     }
 }

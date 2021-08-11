@@ -8,22 +8,18 @@ import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
 
 public class EditPageCommand implements Command {
-    private static final Logger logger = LogManager.getLogger();
+  private static final String FLAG_OF_MESSAGE="true";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
+        if (role != null) {
             String oldLogin = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
             String oldEmail = (String) request.getSession().getAttribute(RequestAttribute.EMAIL);
             String newLogin = request.getParameter(RequestParameter.LOGIN);
@@ -40,14 +36,16 @@ public class EditPageCommand implements Command {
                     request.setAttribute(RequestAttribute.USER, user);
                     router = new Router(RouterType.REDIRECT, PagePath.FIND_PROFILE_INFO_COMMAND);
                 } else {
-                    //todo loginoremail
-                    request.setAttribute(RequestAttribute.MESSAGE, "Login Or Email exists");
+                    request.setAttribute(RequestAttribute.MESSAGE, FLAG_OF_MESSAGE);
                     router = new Router(RouterType.REDIRECT, PagePath.FIND_EDITING_INFO_COMMAND);
                 }
                 return router;
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                throw new CommandException("EditPageCommand command error " + e.getMessage(), e);
             }
+        } else {
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
+
 
         }
         return router;

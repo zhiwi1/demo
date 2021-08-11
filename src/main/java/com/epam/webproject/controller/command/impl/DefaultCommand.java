@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class DefaultCommand implements Command {
 
     @Override
-    public Router execute(HttpServletRequest req) {
-        return new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
+    public Router execute(HttpServletRequest request) {
+        return new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
     }
 }

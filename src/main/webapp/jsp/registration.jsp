@@ -13,6 +13,9 @@
 
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
+<c:if test="${not empty error_message}">
+    <p class="cntr"><c:out value="${error_message}"/></p>
+</c:if>
 <form class="form" name="reg-form" method="POST" action="controller?command=sign_up_command">
 <p class="cntr"><fmt:message key="registration.email" bundle="${ rb }"/></p>
 <input class="textfield" type="text" name="email"/>

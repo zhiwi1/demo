@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Иван
-  Date: 7/18/2021
-  Time: 5:13 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -22,11 +15,13 @@
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
 
-<c:if test="${not empty error_message}">
-    <p class="cntr"><c:out value="${error_message}"/></p>
-</c:if>
+
 <c:if test="${not empty email_message}">
     <p class="cntr"><c:out value="${email_message}"/></p>
+</c:if>
+
+<c:if test="${not empty block_message}">
+    <p class="cntr">You are blocked</p>
 </c:if>
 
 <form class="form" action="controller?command=sign_in_command" method="post">

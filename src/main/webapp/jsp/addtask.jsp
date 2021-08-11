@@ -19,11 +19,12 @@
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
-
+<c:if test="${not empty error_message}">
+    <p class="cntr"><c:out value="${error_message}"/></p>
+</c:if>
 <form class="cntr form" name="add-post-form" method="POST" action="controller?command=add_task_command">
  <p class="cntr"> <fmt:message key="addtask.title" bundle="${ rb }" /> </p>
     <input class="cntr" type="text" name="title">
-<%--    <input type="hidden" name="command" value=""/>--%>
     <br/>
     <p >  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
     <textarea rows = "12" cols = "100" name="text" >Write your task</textarea>

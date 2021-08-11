@@ -7,7 +7,6 @@ import com.epam.webproject.model.entity.RatesType;
 import com.epam.webproject.model.entity.Role;
 import com.epam.webproject.model.entity.User;
 import com.epam.webproject.model.entity.Status;
-import com.epam.webproject.util.PasswordEncryptor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +19,9 @@ import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String FIND_USER_BY_LOGIN = "SELECT id, email, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE login = ? ";
+    private static final String FIND_USER_BY_LOGIN = "SELECT id, email, count_of_solve, rates_of_solve, `role`, status FROM users WHERE login = ? ";
 
-    private static final String FIND_USER_BY_EMAIL = "SELECT id, login, count_of_solve, rates_of_solve, `role`, `status` FROM users WHERE email = ? ";
+    private static final String FIND_USER_BY_EMAIL = "SELECT id, login, count_of_solve, rates_of_solve, `role`, status FROM users WHERE email = ? ";
 
     private static final String FIND_ROLE_BY_LOGIN = "SELECT `role` FROM users WHERE login = ?";
 
@@ -30,31 +29,27 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_LOGIN_DATA_BY_EMAIL = "SELECT password_hash, salt FROM users WHERE email = ?";
 
-    private static final String ADD_USER = "INSERT INTO `users` (`login`, `email`,`rates_of_solve`, `role`, `password_hash`,`salt`,`status`) VALUES ( ?, ?, ?, ?, ?,?,?)";
+    private static final String ADD_USER = "INSERT INTO users (login, email,rates_of_solve, `role`, password_hash,salt,status) VALUES ( ?, ?, ?, ?, ?,?,?)";
 
-    private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM users";
+    private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, status FROM users";
 
-    private static final String FIND_ALL_USERS_WITH_LIMIT = "" +
-            " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status" +
-            "  FROM `users`" +
-            "  LIMIT ?, ?";
-    //            + " JOIN roles ON roles.id = users.role_id ";
+    private static final String FIND_ALL_USERS_WITH_LIMIT = " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status  FROM users  LIMIT ?, ?";
 
     private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
 
     private static final String UNBLOCK_USER = "UPDATE users SET status = 'NORMAL' WHERE login = ?";
 
-    private static final String COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count`FROM `users`WHERE `users`.`email`=?";
+    private static final String COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count` FROM users WHERE users.email = ?";
 
-    private static final String COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM `users`WHERE `users`.`login`=?";
+    private static final String COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM users WHERE users.login = ?";
 
     private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
 
-    private static final String UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE `users` SET `login`=?, `email`=? WHERE `login`=?";
+    private static final String UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE users SET login=?, email=? WHERE login=?";
 
-    private static final String USERS_FULL_TEXT_SEARCH = "SELECT  id, login, email, count_of_solve, rates_of_solve, `role`, `status` FROM `users` WHERE MATCH (login,email) AGAINST (?);";
+    private static final String USERS_FULL_TEXT_SEARCH = "SELECT  id, login, email, count_of_solve, rates_of_solve, `role`, status FROM users WHERE MATCH (login,email) AGAINST (?);";
 
-    private static final String FIND_STATUS_BY_USER_LOGIN = " SELECT `status` FROM users WHERE login = ?";
+    private static final String FIND_STATUS_BY_USER_LOGIN = " SELECT status FROM users WHERE login = ?";
 
     private static final String FIND_LOGIN_BY_EMAIL = "SELECT login FROM users WHERE email = ?";
 
@@ -62,10 +57,10 @@ public class UserDaoImpl implements UserDao {
 
     private static final String FIND_INFO_FOR_RATES = " SELECT count_of_solve , sum(answers.likes) " +
             "FROM users " +
-            "join answers on answers.user_id =users.id where users.id =" +
+            "JOIN answers on answers.user_id =users.id where users.id =" +
             "(SELECT id FROM users WHERE login = ?);";
-    private static final String UPDATE_RATES = "UPDATE `first_project`.`users` SET `rates_of_solve`= ? WHERE  `login`=?;";
-    private static final String COUNT_OF_USERS = "SELECT COUNT(`id`) as `count` FROM `users`";
+    private static final String UPDATE_RATES = "UPDATE first_project.users SET rates_of_solve = ? WHERE  login = ? ;";
+    private static final String COUNT_OF_USERS = "SELECT COUNT(`id`) as `count` FROM users";
 
     @Override
     public boolean existRowsByEmail(String email) throws DaoException {
@@ -78,8 +73,9 @@ public class UserDaoImpl implements UserDao {
                 result = (resultSet.getInt(COUNT) >= 1);
             }
             return result;
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", COUNT_BY_EMAIL, e.getMessage());
+            throw new DaoException("Can not proceed request: " + COUNT_BY_EMAIL, e);
         }
     }
 
@@ -94,8 +90,9 @@ public class UserDaoImpl implements UserDao {
                 result = (resultSet.getInt(COUNT) >= 1);
             }
             return result;
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", COUNT_BY_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + COUNT_BY_LOGIN, e);
         }
     }
 
@@ -134,8 +131,8 @@ public class UserDaoImpl implements UserDao {
                 resultMap.put(USER_PASSWORD_SALT, Optional.ofNullable(resultSet.getString(USER_PASSWORD_SALT)));
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_LOGIN, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_LOGIN_DATA_BY_LOGIN, e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_LOGIN_DATA_BY_EMAIL, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_LOGIN_DATA_BY_EMAIL, e);
         }
         return resultMap;
     }
@@ -187,8 +184,9 @@ public class UserDaoImpl implements UserDao {
                 users.add(user);
             }
             return users;
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_USERS_WITH_LIMIT, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_ALL_USERS_WITH_LIMIT, e);
         }
     }
 
@@ -206,8 +204,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(7, user.getStatus().toString());
             return (statement.executeUpdate() == 1);
         } catch (SQLException e) {
-            logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
-            throw new DaoException("Error with creating new User. ", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", ADD_USER, e.getMessage());
+            throw new DaoException("Can not proceed request: " + ADD_USER, e);
         }
     }
 
@@ -224,8 +222,7 @@ public class UserDaoImpl implements UserDao {
                 String email = resultSet.getString(USER_EMAIL);
                 int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
                 RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-                Role role = Role.valueOf(resultSet.getString(USER_ROLE).toUpperCase());
-                //todo not upper case
+                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
                 User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
                 userOptional = Optional.ofNullable(user);
@@ -255,8 +252,8 @@ public class UserDaoImpl implements UserDao {
                 userOptional = Optional.ofNullable(user);
             }
         } catch (SQLException e) {
-            logger.error("Can't find", e);
-            throw new DaoException(e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_USER_BY_EMAIL, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_USER_BY_EMAIL, e);
         }
         return userOptional;
     }
@@ -271,8 +268,8 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             result = Optional.of(resultSet.getLong(ID));
         } catch (SQLException e) {
-            logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
-            throw new DaoException("Error with search of id. ", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_USER_ID_BY_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_USER_ID_BY_LOGIN, e);
         }
         return result;
     }
@@ -286,7 +283,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(3, oldLogin);
             return (statement.executeUpdate() == 1);
         } catch (SQLException e) {
-            throw new DaoException("SQL request error. " + e.getMessage(), e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", UPDATE_LOGIN_AND_EMAIL, e.getMessage());
+            throw new DaoException("Can not proceed request: " + UPDATE_LOGIN_AND_EMAIL, e);
         }
     }
 
@@ -305,14 +303,13 @@ public class UserDaoImpl implements UserDao {
                 RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
                 Role role = Role.valueOf(resultSet.getString(USER_ROLE));
                 Status status = Status.valueOf(resultSet.getString(USER_STATUS));
-
                 User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
                 arrayDeque.add(user);
 
             }
         } catch (SQLException e) {
-            logger.error("Can't find", e);
-            throw new DaoException(e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", USERS_FULL_TEXT_SEARCH, e.getMessage());
+            throw new DaoException("Can not proceed request: " + USERS_FULL_TEXT_SEARCH, e);
         }
         return arrayDeque;
     }
@@ -324,7 +321,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, login);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DaoException("Error with changing password. ", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", BLOCK_USER, e.getMessage());
+            throw new DaoException("Can not proceed request: " + BLOCK_USER, e);
         }
     }
 
@@ -335,7 +333,8 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, login);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DaoException("Error with changing password. ", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", UNBLOCK_USER, e.getMessage());
+            throw new DaoException("Can not proceed request: " + UNBLOCK_USER, e);
         }
     }
 
@@ -352,8 +351,9 @@ public class UserDaoImpl implements UserDao {
                 userStatus = Status.valueOf(resultSet.getString(USER_STATUS));
             }
             return Optional.ofNullable(userStatus);
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_STATUS_BY_USER_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_STATUS_BY_USER_LOGIN, e);
         }
     }
 
@@ -386,7 +386,8 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", SET_PASSWORD_BY_ID, e.getMessage());
+            throw new DaoException("Can not proceed request: " + SET_PASSWORD_BY_ID, e);
         }
     }
 
@@ -417,7 +418,8 @@ public class UserDaoImpl implements UserDao {
 
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DaoException("Can't handle UserDao.setPasswordByID request", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", UPDATE_RATES, e.getMessage());
+            throw new DaoException("Can not proceed request: " + UPDATE_RATES, e);
         }
     }
 
@@ -431,8 +433,9 @@ public class UserDaoImpl implements UserDao {
                 result = resultSet.getInt(COUNT);
             }
             return result;
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", COUNT_OF_USERS, e.getMessage());
+            throw new DaoException("Can not proceed request: " + COUNT_OF_USERS, e);
         }
     }
 
@@ -448,8 +451,8 @@ public class UserDaoImpl implements UserDao {
                 roleOptional = Optional.ofNullable(role);
             }
         } catch (SQLException e) {
-            logger.error("Can't find", e);
-            throw new DaoException(e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ROLE_BY_LOGIN, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_ROLE_BY_LOGIN, e);
         }
         return roleOptional;
     }

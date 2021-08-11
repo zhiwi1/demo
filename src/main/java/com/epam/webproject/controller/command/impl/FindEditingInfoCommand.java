@@ -17,22 +17,27 @@ public class FindEditingInfoCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
+        if (role != null) {
             String loginOrEmail = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
             UserService userService = ServiceProvider.getInstance().getUserService();
             try {
                 Optional<User> optionalUser = userService.findByLoginOrEmail(loginOrEmail);
-                User user = optionalUser.get();
-
-                request.getSession().setAttribute(RequestAttribute.EMAIL, user.getEmail());
-                request.getSession().setAttribute(RequestAttribute.LOGIN, user.getLogin());
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get();
+                    request.getSession().setAttribute(RequestAttribute.EMAIL, user.getEmail());
+                    request.getSession().setAttribute(RequestAttribute.LOGIN, user.getLogin());
+                } else {
+                    router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+                }
             } catch (ServiceException e) {
-                throw new CommandException(e);
+                throw new CommandException("FindEditingInfoCommand command error: " + e.getMessage(), e);
             }
             router = new Router(RouterType.FORWARD, PagePath.EDITING_INFO_PAGE);
+        } else {
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
         }
         return router;
     }
+
 }
+

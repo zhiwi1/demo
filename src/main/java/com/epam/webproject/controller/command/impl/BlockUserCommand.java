@@ -10,7 +10,7 @@ import com.epam.webproject.model.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Deque;
-import java.util.List;
+
 
 public class BlockUserCommand implements Command {
     @Override
@@ -18,8 +18,6 @@ public class BlockUserCommand implements Command {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
         if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
             UserService userService = ServiceProvider.getInstance().getUserService();
             String login = request.getParameter(RequestParameter.LOGIN);
             try {
@@ -31,11 +29,14 @@ public class BlockUserCommand implements Command {
                 } else {
                     router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
                 }
-                return router;
+
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }
 
+        } else {
+
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
         }
         return router;
     }

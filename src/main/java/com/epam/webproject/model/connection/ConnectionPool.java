@@ -1,6 +1,5 @@
 package com.epam.webproject.model.connection;
 
-import com.epam.webproject.exception.ConnectionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +7,6 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayDeque;
 import java.util.Enumeration;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,7 +40,7 @@ public enum ConnectionPool {
     }
 
 
-    public void releaseConnection(Connection connection) throws ConnectionException {
+    public void releaseConnection(Connection connection)  {
         if (connection instanceof ProxyConnection) {
             usedConnections.remove(connection);
             try {
@@ -77,7 +75,7 @@ public enum ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("error deregisterDriver with driver: " + driver, e);
+                logger.error("Error deregister Drivers with driver: " + driver, e);
             }
         }
     }

@@ -4,16 +4,16 @@ import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
 import com.epam.webproject.util.localization.LocalizationKey;
 import com.epam.webproject.util.localization.LocalizationType;
-import static com.epam.webproject.util.localization.LocalizationKey.*;
 import com.epam.webproject.model.service.Feedback;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class GoToRegistrationPageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        String feedbackToString = request.getParameter(RequestParameter.ERROR_MESSAGE);
-        if (feedbackToString != null) {
-            Feedback feedback = Feedback.valueOf(feedbackToString);
+        Feedback feedback = (Feedback)request.getSession().getAttribute(RequestAttribute.MESSAGE);
+        request.getSession().removeAttribute(RequestAttribute.MESSAGE);
+        if (feedback != null) {
+
             String locale = (String) request.getSession().getAttribute(RequestParameter.LOCALE);
             LocalizationType localization = LocalizationType.valueOf(locale.toUpperCase());
             switch (feedback) {
@@ -22,7 +22,7 @@ public class GoToRegistrationPageCommand implements Command {
                     request.setAttribute(RequestAttribute.ERROR_MESSAGE, errorMessage);
                     break;
                 }
-                case LOGIN_OR_EMAIL_EXISTS: {
+                case DATA_EXISTS: {
                     String errorMessage = localization.getText(LocalizationKey.REGISTRATION_LOGIN_OR_EMAIL_EXISTS);
                     request.setAttribute(RequestAttribute.ERROR_MESSAGE, errorMessage);
                     break;

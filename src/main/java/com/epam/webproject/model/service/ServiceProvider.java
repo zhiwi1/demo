@@ -12,12 +12,11 @@ public class ServiceProvider {
     private final CommentService commentService;
     private final AnswerService answerService;
 
-    //todo other services
     private ServiceProvider() {
         this.taskService = new TaskServiceImpl();
         this.userService = new UserServiceImpl();
         this.commentService = new CommentServiceImpl();
-        this.answerService=new AnswerServiceImpl();
+        this.answerService = new AnswerServiceImpl();
     }
 
     public static ServiceProvider getInstance() {

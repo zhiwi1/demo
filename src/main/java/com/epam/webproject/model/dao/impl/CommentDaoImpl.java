@@ -4,7 +4,6 @@ import com.epam.webproject.exception.DaoException;
 import com.epam.webproject.model.connection.ConnectionPool;
 import com.epam.webproject.model.dao.CommentDao;
 import com.epam.webproject.model.entity.Comment;
-import com.epam.webproject.model.entity.Task;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,26 +16,25 @@ import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 public class CommentDaoImpl implements CommentDao {
 
     private static final Logger logger = LogManager.getLogger();
-    private static final String ADD_СOMMENT = "INSERT INTO `comments` (`created_at`,`comment`,`task_id` , `user_id`) VALUES (?, ?,(SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
-    private static final String FIND_ALL_WITH_LIMIT = "SELECT comment, created_at, updated_at, user_id, task_id FROM comments LIMIT ?, ?";
-    private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at,updated_at , login FROM comments" +
-            " JOIN `users` ON `users`.`id` = `comments`.`user_id`" +
-            "WHERE comments.task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)  LIMIT ?, ?  ";
-    private static final String COUNT_OF_COMMENTS = "SELECT COUNT(`id`) as `count` FROM `comments` " +
-            "WHERE task_id = (SELECT `id` FROM `tasks` WHERE `title` = ?)";
+    private static final String ADD_COMMENT = "INSERT INTO comments (created_at, comment, task_id, user_id) VALUES (?, ?,(SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
+    private static final String FIND_ALL_WITH_LIMIT = "SELECT comment, created_at,  user_id, task_id FROM comments LIMIT ?, ?";
+    private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at, updated_at ,login FROM comments" +
+            " JOIN users ON users.id = comments.user_id " +
+            "WHERE comments.task_id = (SELECT id FROM tasks WHERE title = ?)  LIMIT ?, ?";
+    private static final String COUNT_OF_COMMENTS = "SELECT COUNT(id) as `count` FROM comments " +
+            "WHERE task_id = (SELECT id FROM tasks WHERE title = ?)";
 
     public boolean createNewComment(String text, java.util.Date createdAt, String login, String title) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ADD_СOMMENT);) {
+             PreparedStatement statement = connection.prepareStatement(ADD_COMMENT);) {
             statement.setTimestamp(1, new Timestamp(createdAt.getTime()));
             statement.setString(2, text);
             statement.setString(3, title);
             statement.setString(4, login);
-
             return (statement.executeUpdate() == 1);
         } catch (SQLException e) {
-            logger.info("SQL request error({}). {}", e.getErrorCode(), e.getMessage());
-            throw new DaoException("Error with creating new Comment. ", e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", ADD_COMMENT, e.getMessage());
+            throw new DaoException("Can not proceed request: " + ADD_COMMENT, e);
         }
     }
 
@@ -48,22 +46,18 @@ public class CommentDaoImpl implements CommentDao {
             statement.setInt(1, offset);
             statement.setInt(2, limit);
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 String commentContent = resultSet.getString(COMMENT);
                 java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
-                java.util.Date updated_at = resultSet.getTimestamp(UPDATED_AT);
                 long user_id = resultSet.getLong(USER_ID);
                 long task_id = resultSet.getLong(TASK_ID);
-
-                Comment comment = new Comment(commentContent, created_at, updated_at, user_id, task_id);
+                Comment comment = new Comment(commentContent, created_at, user_id, task_id);
                 comments.add(comment);
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_WITH_LIMIT, e.getMessage());
             throw new DaoException("Can not proceed request: " + FIND_ALL_WITH_LIMIT, e);
         }
-        //   return users;
         return comments;
     }
 
@@ -85,11 +79,12 @@ public class CommentDaoImpl implements CommentDao {
                 arrayDeque.add(comment);
             }
         } catch (SQLException e) {
-            logger.error("Can't find", e);
-            throw new DaoException(e);
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_COMMENTS_BY_TASK_TITLE, e.getMessage());
+            throw new DaoException("Can not proceed request: " + FIND_COMMENTS_BY_TASK_TITLE, e);
         }
         return arrayDeque;
     }
+
     @Override
     public int countOfComments(String titleOfTask) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -101,8 +96,9 @@ public class CommentDaoImpl implements CommentDao {
                 result = resultSet.getInt(COUNT);
             }
             return result;
-        } catch (SQLException sqlException) {
-            throw new DaoException("SQL request error. " + sqlException.getMessage(), sqlException);
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", COUNT_OF_COMMENTS, e.getMessage());
+            throw new DaoException("Can not proceed request: " + COUNT_OF_COMMENTS, e);
         }
     }
 }

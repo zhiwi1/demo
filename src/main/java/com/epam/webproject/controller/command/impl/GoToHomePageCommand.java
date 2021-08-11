@@ -10,10 +10,12 @@ public class GoToHomePageCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
+        request.getSession().removeAttribute(RequestAttribute.BLOCK_MESSAGE);
+        if (role != null) {
             router = new Router(RouterType.FORWARD, PagePath.HOME_PAGE);
+
+        } else {
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
         }
         return router;
     }

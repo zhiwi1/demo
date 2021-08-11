@@ -8,12 +8,12 @@ import com.epam.webproject.model.entity.Task;
 import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.model.service.TaskService;
 import com.epam.webproject.validator.TaskValidator;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
 import java.util.Optional;
 
 public class TaskServiceImpl implements TaskService {
@@ -25,28 +25,30 @@ public class TaskServiceImpl implements TaskService {
         try {
             return taskDao.findTitleById(id);
         } catch (DaoException e) {
-            logger.error("Can't create task", e.getMessage());
-            throw new ServiceException("Can't create task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl:   findTitleById(long id) {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:    findTitleById(long id) " + e.getMessage(), e);
         }
     }
 
     public Feedback createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException {
-        Feedback feedback;
+        Feedback feedback = Feedback.DATABASE_EXCEPTION;
         if (TaskValidator.checkComplexity(complexity)) {
-            int complexityInt = Integer.parseInt(complexity);
             try {
-                boolean isCreated = taskDao.createNewTask(title, text, createdAt, loginOfUser, complexityInt);
-                if (isCreated) {
-                    feedback = Feedback.SUCCESS;
+                if (!taskDao.existRowsByTitle(title)) {
+                    int complexityInt = Integer.parseInt(complexity);
+
+                    boolean isCreated = taskDao.createNewTask(title, text, createdAt, loginOfUser, complexityInt);
+                    if (isCreated) {
+                        feedback = Feedback.SUCCESS;
+                    }
                 } else {
-                    feedback = Feedback.DATABASE_EXCEPTION;
+                    feedback = Feedback.DATA_EXISTS;
                 }
             } catch (DaoException e) {
-                logger.error("Can't create task", e.getMessage());
-                throw new ServiceException("Can't create task", e);
+                logger.log(Level.ERROR, "Can not execute TaskServiceImpl:   createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) {}", e.getMessage());
+                throw new ServiceException("Can not execute TaskServiceImpl:    createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) " + e.getMessage(), e);
+
             }
-
-
         } else {
             feedback = Feedback.CHECK_DATA;
 
@@ -59,8 +61,9 @@ public class TaskServiceImpl implements TaskService {
             Deque<Task> tasks = taskDao.findAll();
             return tasks;
         } catch (DaoException e) {
-            logger.error("Can't show all tasks", e.getMessage());
-            throw new ServiceException("Can't show all task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl:   findAllTasks() {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:    findAllTasks() " + e.getMessage(), e);
+
         }
 
     }
@@ -70,8 +73,9 @@ public class TaskServiceImpl implements TaskService {
             Deque<Task> tasks = taskDao.findAll(offset, limit);
             return tasks;
         } catch (DaoException e) {
-            logger.error("Can't show all tasks", e.getMessage());
-            throw new ServiceException("Can't show all task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl:   findAllTasksWithLimit(int offset, int limit) {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:    findAllTasksWithLimit(int offset, int limit) " + e.getMessage(), e);
+
         }
 
     }
@@ -81,8 +85,9 @@ public class TaskServiceImpl implements TaskService {
         try {
             task = taskDao.findTaskByTitle(title);
         } catch (DaoException e) {
-            logger.error("Can't find task", e.getMessage());
-            throw new ServiceException("Can't find  task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl: findTaskByTitle(String title)  {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:   findTaskByTitle(String title)  " + e.getMessage(), e);
+
         }
         return task;
     }
@@ -95,8 +100,9 @@ public class TaskServiceImpl implements TaskService {
             }
             return arrayDeque;
         } catch (DaoException e) {
-            logger.error("Can't find task", e.getMessage());
-            throw new ServiceException("Can't find  task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl: findByFullText(String text)  {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:   findByFullText(String text)  " + e.getMessage(), e);
+
         }
 
     }
@@ -107,8 +113,9 @@ public class TaskServiceImpl implements TaskService {
             Deque<Task> tasks = taskDao.findTasksByUserLogin(login, offset, limit);
             return tasks;
         } catch (DaoException e) {
-            logger.error("Can't find ", e.getMessage());
-            throw new ServiceException("Can't find", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl: findTasksByUserLogin(String login, int offset, int limit)   {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:   findTasksByUserLogin(String login, int offset, int limit)   " + e.getMessage(), e);
+
         }
 
     }
@@ -119,8 +126,9 @@ public class TaskServiceImpl implements TaskService {
             boolean result = taskDao.deleteTask(title);
             return result;
         } catch (DaoException e) {
-            logger.error("Can't show all tasks", e.getMessage());
-            throw new ServiceException("Can't show all task", e);
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl: deleteTask(String title)   {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:   deleteTask(String title)   " + e.getMessage(), e);
+
         }
     }
 
@@ -128,8 +136,10 @@ public class TaskServiceImpl implements TaskService {
     public int countOfTasks() throws ServiceException {
         try {
             return taskDao.countOfTasks();
-        } catch (DaoException daoException) {
-            throw new ServiceException("Can not read data from database: " + daoException.getMessage(), daoException);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Can not execute TaskServiceImpl: countOfTasks()   {}", e.getMessage());
+            throw new ServiceException("Can not execute TaskServiceImpl:  countOfTasks()   " + e.getMessage(), e);
+
         }
     }
 }

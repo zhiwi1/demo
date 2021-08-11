@@ -1,6 +1,5 @@
 package com.epam.webproject.model.entity;
 
-import java.util.Objects;
 
 public class User extends Entity {
     private long id;
@@ -12,23 +11,22 @@ public class User extends Entity {
     private Status status;
 
 
-
-    public User(long id, String login, String email, int countOfSolve, Role roleType, RatesType ratesType,Status status) {
+    public User(long id, String login, String email, int countOfSolve, Role roleType, RatesType ratesType, Status status) {
         this.id = id;
         this.login = login;
         this.email = email;
         this.countOfSolve = countOfSolve;
         this.roleType = roleType;
         this.ratesType = ratesType;
-        this.status=status;
+        this.status = status;
     }
 
-    public User( String login, String email, Role roleType, RatesType ratesType,Status status) {
+    public User(String login, String email, Role roleType, RatesType ratesType, Status status) {
         this.login = login;
         this.email = email;
         this.roleType = roleType;
         this.ratesType = ratesType;
-        this.status=status;
+        this.status = status;
     }
 
     public long getId() {
@@ -92,13 +90,26 @@ public class User extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && countOfSolve == user.countOfSolve && login.equals( user.login) &&email.equals( user.email)
+        return id == user.id && countOfSolve == user.countOfSolve && login.equals(user.login) && email.equals(user.email)
                 && roleType == user.roleType && ratesType == user.ratesType && status == user.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, email, countOfSolve, roleType, ratesType, status);
+        int result = 1;
+        result = 31 * result + (int) (this.id ^ (this.id >>> 32));
+        for (int i = 0; i < login.length(); i++) {
+            result = 31 * result + login.charAt(i);
+        }
+        for (int i = 0; i < email.length(); i++) {
+            result = 31 * result + email.charAt(i);
+        }
+        result = 31 * result + countOfSolve;
+        result = 31 * result + roleType.hashCode();
+        result = 31 * result + ratesType.hashCode();
+        result = 31 * result + status.hashCode();
+
+        return result;
     }
 
     @Override

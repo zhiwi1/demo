@@ -2,7 +2,6 @@ package com.epam.webproject.controller;
 
 import com.epam.webproject.controller.command.*;
 import com.epam.webproject.exception.CommandException;
-import com.epam.webproject.exception.ProjectException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

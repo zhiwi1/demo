@@ -14,9 +14,7 @@ public class GoToLoginPageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
-        //for localization
         RegexpPropertyUtil regexpPropertyUtil = RegexpPropertyUtil.getInstance();
-
         final String REGEXP_PASSWORD = regexpPropertyUtil.getProperty(REGEXP_PROP_PASSWORD);
         final String REGEXP_EMAIL_OR_LOGIN = regexpPropertyUtil.getProperty(REGEXP_PROP_EMAIL_OR_LOGIN);
 

@@ -8,15 +8,17 @@ import jakarta.servlet.http.HttpSessionListener;
 
 @WebListener
 public class SessionListenerImpl implements HttpSessionListener {
+    private static final String DEFAULT_LANGUAGE = "en";
+
     @Override
-    public void sessionCreated(HttpSessionEvent se) {
-        se.getSession().setAttribute(RequestAttribute.LOCALE,"en");
-        HttpSessionListener.super.sessionCreated(se);
+    public void sessionCreated(HttpSessionEvent sessionEvent) {
+        sessionEvent.getSession().setAttribute(RequestAttribute.LOCALE, DEFAULT_LANGUAGE);
+        HttpSessionListener.super.sessionCreated(sessionEvent);
     }
 
     @Override
-    public void sessionDestroyed(HttpSessionEvent se) {
-        HttpSessionListener.super.sessionDestroyed(se);
+    public void sessionDestroyed(HttpSessionEvent sessionEvent) {
+        HttpSessionListener.super.sessionDestroyed(sessionEvent);
     }
 }
 

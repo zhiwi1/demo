@@ -6,8 +6,8 @@ import com.epam.webproject.model.dao.CommentDao;
 import com.epam.webproject.model.dao.DaoProvider;
 import com.epam.webproject.model.entity.Comment;
 import com.epam.webproject.model.service.CommentService;
-import com.epam.webproject.model.service.Feedback;
 import com.epam.webproject.validator.CommentValidator;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,8 +29,9 @@ public class CommentServiceImpl implements CommentService {
             try {
                 result = commentDao.createNewComment(text, currentDate, login, title);
             } catch (DaoException e) {
-                logger.error("Can't create comment", e.getMessage());
-                throw new ServiceException("Can't create comment", e);
+                logger.log(Level.ERROR, "Can not execute CommentServiceImpl: createComment(String text, String login, String title)   {}", e.getMessage());
+                throw new ServiceException("Can not execute CommentServiceImpl: createComment(String text, String login, String title)   " + e.getMessage(), e);
+
             }
 
         }
@@ -42,8 +43,9 @@ public class CommentServiceImpl implements CommentService {
         try {
             return commentDao.findCommentsByTitleWithLimit(title, offset, limit);
         } catch (DaoException e) {
-            logger.error("Can't find", e.getMessage());
-            throw new ServiceException("Can't find", e);
+            logger.log(Level.ERROR, "Can not execute CommentServiceImpl: findCommentsByTitle(String title, int offset, int limit)  {}", e.getMessage());
+            throw new ServiceException("Can not execute CommentServiceImpl: findCommentsByTitle(String title, int offset, int limit)  " + e.getMessage(), e);
+
         }
 
 
@@ -54,8 +56,9 @@ public class CommentServiceImpl implements CommentService {
         try {
             return commentDao.countOfComments(titleOfTask);
         } catch (DaoException e) {
-            logger.error("Can't find", e.getMessage());
-            throw new ServiceException("Can't find", e);
+            logger.log(Level.ERROR, "Can not execute CommentServiceImpl: countOfComments(String titleOfTask)  {}", e.getMessage());
+            throw new ServiceException("Can not execute CommentServiceImpl: countOfComments(String titleOfTask) " + e.getMessage(), e);
+
         }
     }
 }

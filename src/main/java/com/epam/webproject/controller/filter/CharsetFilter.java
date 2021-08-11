@@ -13,7 +13,7 @@ public class CharsetFilter implements Filter {
     private String encoding;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         encoding = filterConfig.getInitParameter("characterEncoding");
 
     }

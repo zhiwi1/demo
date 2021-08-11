@@ -9,7 +9,6 @@ public class CommandProvider {
     private final EnumMap<CommandType, Command> commands = new EnumMap(CommandType.class);
 
     public CommandProvider() {
-        //todo import static
         commands.put(CommandType.SIGN_UP_COMMAND, new RegisterUserCommand());
         commands.put(CommandType.SIGN_IN_COMMAND, new SignInCommand());
         commands.put(CommandType.GO_TO_LOGIN_PAGE_COMMAND, new GoToLoginPageCommand());
@@ -38,7 +37,7 @@ public class CommandProvider {
         commands.put(CommandType.FIND_ANSWERS_OF_TASK_COMMAND, new FindAnswersOfTaskCommand());
         commands.put(CommandType.MARK_CORRECT_ANSWER_COMMAND, new MarkCorrectAnswerCommand());
         commands.put(CommandType.MARK_INCORRECT_ANSWER_COMMAND, new MarkIncorrectAnswerCommand());
-        commands.put(CommandType.DEFAULT, new DefaultCommand());
+        commands.put(CommandType.DEFAULT_COMMAND, new DefaultCommand());
     }
 
     public static CommandProvider getInstance() {
@@ -50,13 +49,13 @@ public class CommandProvider {
 
     public Command getCommand(String commandName) {
         if (commandName == null) {
-            return commands.get(CommandType.DEFAULT);
+            return commands.get(CommandType.DEFAULT_COMMAND);
         }
         CommandType commandType;
         try {
             commandType = CommandType.valueOf(commandName.toUpperCase());
         } catch (IllegalArgumentException e) {
-            commandType = CommandType.DEFAULT;
+            commandType = CommandType.DEFAULT_COMMAND;
         }
         return commands.get(commandType);
     }

@@ -3,9 +3,7 @@ package com.epam.webproject.model.service;
 import com.epam.webproject.exception.ServiceException;
 import com.epam.webproject.model.entity.Task;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {

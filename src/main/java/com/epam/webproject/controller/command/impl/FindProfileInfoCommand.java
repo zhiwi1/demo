@@ -18,10 +18,7 @@ public class FindProfileInfoCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
-        } else {
-            String login = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
+        if (role != null) { String login = (String) request.getSession().getAttribute(RequestAttribute.LOGIN);
             UserService service = ServiceProvider.getInstance().getUserService();
             try {
 
@@ -34,10 +31,11 @@ public class FindProfileInfoCommand implements Command {
                 } else {
                     router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
                 }
-                return router;
             } catch (ServiceException e) {
-                throw new CommandException("Registration command error", e);
+                throw new CommandException("FindProfileInfoCommand command error: " + e.getMessage(), e);
             }
+        } else {
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
 
         }return router;
     }

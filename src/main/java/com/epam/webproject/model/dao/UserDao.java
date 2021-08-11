@@ -9,9 +9,9 @@ import com.epam.webproject.model.entity.User;
 import java.util.*;
 
 public interface UserDao {
-    Deque<User> findAll() throws DaoException;
+    public Deque<User> findAll() throws DaoException;
 
-    boolean createNewUser(User user, String password, String salt) throws DaoException;
+    public boolean createNewUser(User user, String password, String salt) throws DaoException;
 
     public Map<String, Optional<String>> findUserLoginDataByLogin(String login) throws DaoException;
 

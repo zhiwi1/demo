@@ -4,14 +4,17 @@ public class Router {
     private RouterType routerType;
     private String routerPath;
 
-    public Router( ){}
+    public Router() {
+    }
+
     public Router(RouterType routerType, String routerPath) {
         this.routerType = routerType;
         this.routerPath = routerPath;
     }
-    public Router(RouterType routerType, String routerPath,String preparationForParam,String param) {
+
+    public Router(RouterType routerType, String routerPath, String preparationForParam, String param) {
         this.routerType = routerType;
-        this.routerPath = routerPath+preparationForParam+param;
+        this.routerPath = routerPath + preparationForParam + param;
     }
 
 

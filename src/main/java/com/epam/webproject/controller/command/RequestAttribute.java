@@ -30,6 +30,7 @@ public final class RequestAttribute {
     public static final String MAX_PAGE = "max_page";
     public static final String COMMENT_CURRENT_PAGE = "comment_current_page";
     public static final String COMMENT_MAX_PAGE = "comment_max_page";
+    public static final String BLOCK_MESSAGE = "block_message";
 
     private RequestAttribute() {
     }
