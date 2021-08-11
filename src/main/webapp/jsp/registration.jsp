@@ -36,9 +36,9 @@
 <button class="button bcenter" type="submit"><fmt:message key="registration.signup" bundle="${ rb }"/></button>
 </form>
 
-<p class="cntr">Вы зарегистрированы?</p>
+<p class="cntr"><fmt:message key="registration.are_register" bundle="${ rb }"/></p>
 <a class="cntr" href="controller?command=go_to_login_page_command">
-    Войти</a>
+    <fmt:message key="registration.signin" bundle="${ rb }"/></a>
 
 </body>
 <script src="js/main.js"></script>

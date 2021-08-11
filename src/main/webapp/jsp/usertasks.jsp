@@ -8,7 +8,7 @@
 <fmt:setBundle basename="locale" var="rb"/>
 <html>
 <head>
-    <title><fmt:message key="alltasks.alltasks" bundle="${ rb }"/></title>
+    <title><fmt:message key="usertasks.mytasks" bundle="${ rb }"/></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
@@ -20,14 +20,14 @@
 <h3 class="cntr">${task.title}</h3>
 <div class="cntr">${task.timeCreatedAt}</div>
 <a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
-    <div><fmt:message key="alltasks.more" bundle="${ rb }"/></div>
+    <div><fmt:message key="more" bundle="${ rb }"/></div>
 </a>
 <a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
     <a class="cntr" href="controller?command=find_answers_of_task_command&title=${task.title}">
-        <p class="cntr"> Посмотреть ответы на это задание от пользователей</p></a>
+        <p class="cntr"> <fmt:message key="usertasks.showanswers" bundle="${ rb }"/></p></a>
 
     <form action="controller?command=delete_task_by_user_command&title=${task.title}" method="post">
-        <input class="pb button bcenter" type="submit" name="button" value="delete task">
+        <input class="pb button bcenter" type="submit" name="button" value="<fmt:message key="delete" bundle="${ rb }"/>">
     </form>
     <br>
     </c:forEach>

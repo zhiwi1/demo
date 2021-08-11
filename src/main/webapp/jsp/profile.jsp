@@ -14,16 +14,16 @@
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
-<p class="cntr">Login: ${user.login}</p>
-<p class="cntr">Email: ${user.email}</p>
-<p class="cntr">Count of solve: ${user.countOfSolve}</p>
-<p class="cntr">Role: ${user.roleType}</p>
-<p class="cntr">Rates: ${user.ratesType}</p>
-<p class="cntr">Status: ${user.status}</p>
+<p class="cntr"><fmt:message key="login" bundle="${rb}"/>${user.login}</p>
+<p class="cntr"><fmt:message key="email" bundle="${rb}"/>${user.email}</p>
+<p class="cntr"><fmt:message key="count" bundle="${rb}"/>${user.countOfSolve}</p>
+<p class="cntr"><fmt:message key="role" bundle="${rb}"/>${user.roleType}</p>
+<p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${user.ratesType}</p>
+<p class="cntr"><fmt:message key="status" bundle="${rb}"/>${user.status}</p>
 
-<a class="cntr" href="controller?command=find_editing_info_command">Редактировать страницу</a>
+<a class="cntr" href="controller?command=find_editing_info_command"><fmt:message key="edit" bundle="${rb}"/></a>
 <a class="cntr" href="controller?command=go_to_home_page_command">
-    Вернуться на домашнюю страницу
+    <fmt:message key="return" bundle="${rb}"/>
 </a>
 
 </body>

@@ -27,14 +27,16 @@
     <input class="cntr" type="text" name="title">
     <br/>
     <p >  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
-    <textarea rows = "12" cols = "100" name="text" >Write your task</textarea>
+    <textarea rows = "12" cols = "100" name="text" ><fmt:message key="addtask.write" bundle="${ rb }" /></textarea>
     <br/>
-    <p ><fmt:message key="addtask.complexity" bundle="${ rb }" /></p>
+    <p ><fmt:message key="complexity" bundle="${ rb }" /></p>
     <input class="cntr" type="text" name="complexity" value="">
     <br/>
     <button class="button" type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
 </form>
-
+<a class="cntr" href="controller?command=go_to_home_page_command">
+    <fmt:message key="return" bundle="${rb}"/>
+</a>
 </body>
 <script src="js/main.js"></script>
 </html>

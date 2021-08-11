@@ -26,20 +26,20 @@
 </head>
 <body>
 <header class="header">
-    <button class="button btn float-right"> Change Photo</button>
+    <button class="button btn float-right"> <fmt:message key="changephoto" bundle="${rb}"/></button>
     <button class="button float-right" type="submit" name="locale" value="en" onclick="changeLocaleOnRU()">
-        ru
+        <fmt:message key="ru" bundle="${rb}"/>
     </button>
     <button class="button float-right" type="submit" name="locale" value="ru" onclick="changeLocaleOnEn()">
-        en
+        <fmt:message key="en" bundle="${rb}"/>
     </button>
     <br/>
 
 </header>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
-<h1 class="cntr">Error 404</h1>
-<h2 class="cntr">Not founded</h2>
+<h1 class="cntr">  <fmt:message key="404" bundle="${rb}"/></h1>
+<h2 class="cntr">  <fmt:message key="notfounded" bundle="${rb}"/></h2>
 </body>
 <script src="js/main.js"></script>
 

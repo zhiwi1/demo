@@ -24,43 +24,43 @@
 <br>
 
 <c:forEach var="fts_user" items="${fts_users}">
-    <p >Login: ${fts_user.login}</p>
-    <p>Email: ${fts_user.email}</p>
-    <p>Count of solve: ${fts_user.countOfSolve}</p>
-    <p>Role: ${fts_user.roleType}</p>
-    <p>Rates: ${fts_user.ratesType}</p>
-    <p>Status: ${fts_user.status}</p>
+    <p class="cntr"><fmt:message key="login" bundle="${rb}"/>${fts_user.login}</p>
+    <p class="cntr"><fmt:message key="email" bundle="${rb}"/>${fts_user.email}</p>
+    <p class="cntr"><fmt:message key="count" bundle="${rb}"/>${fts_user.countOfSolve}</p>
+    <p class="cntr"><fmt:message key="role" bundle="${rb}"/>${fts_user.roleType}</p>
+    <p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${fts_user.ratesType}</p>
+    <p class="cntr"><fmt:message key="status" bundle="${rb}"/>${fts_user.status}</p>
 
     <c:if test="${fts_user.status =='NORMAL'}">
         <form  name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
-            <button class="button" type="submit">  <fmt:message key="allusers.block" bundle="${ rb }" /></button>
+            <button class="button bcenter" type="submit">  <fmt:message key="allusers.block" bundle="${ rb }" /></button>
         </form>
     </c:if>
     <c:if test="${fts_user.status =='BLOCKED'}">
         <form class="form" name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
-            <button class="button" type="submit">  <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
+            <button class="button bcenter" type="submit">  <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
         </form>
     </c:if>
     <hr>
 </c:forEach>
 
 <c:forEach var="user" items="${users}">
-    <p>Login: ${user.login}</p>
-    <p>Email: ${user.email}</p>
-    <p>Count of solve: ${user.countOfSolve}</p>
-    <p>Role: ${user.roleType}</p>
-    <p>Rates: ${user.ratesType}</p>
-    <p>Status: ${user.status}</p>
+    <p class="cntr"><fmt:message key="login" bundle="${rb}"/>${user.login}</p>
+    <p class="cntr"><fmt:message key="email" bundle="${rb}"/>${user.email}</p>
+    <p class="cntr"><fmt:message key="count" bundle="${rb}"/>${user.countOfSolve}</p>
+    <p class="cntr"><fmt:message key="role" bundle="${rb}"/>${user.roleType}</p>
+    <p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${user.ratesType}</p>
+    <p class="cntr"><fmt:message key="status" bundle="${rb}"/>${user.status}</p>
 
     <c:if test="${user.status =='NORMAL'}">
         <form  name="reg-form" method="POST" action="controller?command=block_user_command&login=${user.login}">
-            <button class="button" type="submit">
+            <button class="button bcenter" type="submit">
                <fmt:message key="allusers.block" bundle="${ rb }" /></button>
         </form>
     </c:if>
     <c:if test="${user.status =='BLOCKED'}">
         <form  name="reg-form" method="POST" action="controller?command=unblock_user_command&login=${user.login}">
-            <button class="button" type="submit"> <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
+            <button class="button bcenter" type="submit"> <fmt:message key="allusers.unblock" bundle="${ rb }" /></button>
         </form>
     </c:if>
 <hr>

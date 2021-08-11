@@ -7,8 +7,8 @@
 <fmt:setBundle basename="locale" var="rb" />
 <div class="time-weather"></div>
 <div class='title'>
-    <time id="time"> Monday, 25 September, 8:00:13 PM</time>
-    <div class="city" contenteditable="true">Minsk</div>
+    <time id="time"></time>
+    <div class="city" contenteditable="true"> <fmt:message key="minsk" bundle="${rb}"/></div>
 </div>
 <div class="box">
     <div class="temperature"></div>
@@ -17,7 +17,9 @@
     <div class="airHumidity"></div>
 </div>
 <div class="box"><i class="weather-icon owf"></i></div>
-<h1 class="cntr"> <span id="greeting"></span>
+<h1 class="cntr"> <span id="greeting">
+    <fmt:message key="welcome" bundle="${rb}"/>
+</span>
 </h1>
 
 

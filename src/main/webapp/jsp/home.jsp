@@ -21,12 +21,12 @@
 </a>
 <br>
 <a class="cntr" href="controller?command=show_my_tasks_command"  role="button">
-Show my tasks
+    <fmt:message key="home.showmy" bundle="${rb}"/>
 </a>
 <br>
-<div class="cntr"><c:out value="${role}"/></div>
-<c:if test = "${role == 'ADMIN'}">
 
+<c:if test = "${role == 'ADMIN'}">
+    <div class="cntr"><fmt:message key="admin" bundle="${rb}"/></div>
 <a class="cntr" href="controller?command=show_all_users_command">
     <fmt:message key="home.a_show" bundle="${rb}"/>
 </a>

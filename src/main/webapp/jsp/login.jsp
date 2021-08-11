@@ -7,7 +7,7 @@
 <fmt:setBundle basename="locale" var="rb"/>
 <html>
 <head>
-    <title>LogInPage</title>
+    <title><fmt:message key="login.title" bundle="${rb}"/></title>
 </head>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 
@@ -21,7 +21,7 @@
 </c:if>
 
 <c:if test="${not empty block_message}">
-    <p class="cntr">You are blocked</p>
+    <p class="cntr"><fmt:message key="login.block" bundle="${rb}"/></p>
 </c:if>
 
 <form class="form" action="controller?command=sign_in_command" method="post">
@@ -31,7 +31,7 @@
     <p class="cntr"><fmt:message key="login.password" bundle="${ rb }"/></p>
     <input class="textfield" type="password" name="password" pattern="${requestScope.regexp_password}">
     <br>
-    <input class="bcenter button" type="submit" name="button" value="login">
+    <input class="bcenter button" type="submit" name="button" value="<fmt:message key="signin" bundle="${rb}"/>">
 </form>
 <hr>
 <p class="cntr"><fmt:message key="login.are_register" bundle="${rb}"/></p>

@@ -1,20 +1,13 @@
-//lol\
-
-// DOM Elements
-const time = document.getElementById('time'),
-    greeting = document.getElementById('greeting');
+const time = document.getElementById('time');
 let x = 0;
 let statIndex = -1;
 let background = document.querySelector('body');
-// Options
-// const showAmPm = true;
+
 function colorLinks(hex) {
     let links = document.getElementsByTagName("a");
     for (let i = 0; i < links.length; i++) {
         if (links[i].href) {
             links[i].style.color = hex;
-
-
         }
     }
 }
@@ -24,26 +17,11 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-
-const btnText = document.querySelector('.btn-text');
-
-// если в ссылке заменить lang=en на lang=ru, цитаты будут на русском языке
-// префикс https://cors-anywhere.herokuapp.com используем для доступа к данным с других сайтов если браузер возвращает ошибку Cross-Origin Request Blocked
-// async function getQuote() {
-//     const url = ' https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en';
-//     const res = await fetch(url);
-//     const data = await res.json();
-//     blockquote.textContent = data.quoteText;
-//     figcaption.textContent = data.quoteAuthor;
-// }
-// Show Time
 function showTime() {
     let today = new Date(),
-
         hour = today.getHours(),
         min = today.getMinutes(),
         sec = today.getSeconds();
-    // Output Time
     time.innerHTML = `${addZero(hour)}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
     setTimeout(showTime, 1000);
 }
@@ -56,47 +34,35 @@ const body = document.querySelector('body');
 const btn = document.querySelector('.btn');
 
 function viewBgImage(src) {
-
     const img = new Image();
-
     img.src = src;
     img.onload = () => {
         body.style.backgroundImage = `url(${src})`;
-        if (x == 0 ||x==1|| x == 3 ) {
-            document.body.style.color = 'white';
-            colorLinks('#ffffff');
-        } else {
-            colorLinks('#000000');
-            document.body.style.color = 'black';
-        }
+
+        document.body.style.color = 'white';
+        colorLinks('#ffffff');
+
     };
 }
 
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (0 !== currentIndex) {
-
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
 function getImage() {
-    if (x == 0 ||x==1|| x == 3 || x == 2) {
-        document.body.style.color = 'white';
 
-        colorLinks('#ffffff');
-    } else {
-        colorLinks('#000000');
-        document.body.style.color = 'black';
-    }
+    document.body.style.color = 'white';
+
+    colorLinks('#ffffff');
+
     let images2 = shuffle(images);
     let index = 0;
     do {
@@ -123,41 +89,27 @@ function getImage() {
     setTimeout(getImage, 3600000);
 }
 
-//Name of day pf the week
-
-//Add Zeros
 function addZero(n) {
 
     return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
-//Set Background and Greeting
 function setBgGreet() {
     let today = new Date(),
         hour = today.getHours();
 
     if (hour < 6) {
-        // Night
         x = 0;
         getImage();
-        greeting.textContent = 'Good Night'
-
     } else if (hour < 12) {
-        // Morning
         x = 1;
         getImage();
-        greeting.textContent = 'Good Morning';
     } else if (hour < 18) {
-        // Afternoon
         x = 2;
         getImage();
-        greeting.textContent = 'Good Afternoon';
     } else {
-        //evening
         x = 3;
         getImage();
-        greeting.textContent = 'Good Evening';
-
     }
     setTimeout(setBgGreet, 3600000);
 }
@@ -170,10 +122,8 @@ function getCity() {
     }
 }
 
-// Set Name
 function setCity(e) {
     if (e.type === 'keypress') {
-        // Make sure enter is pressed
         if (e.which == 13 || e.keyCode == 13) {
             if (city.innerText.length == 0 || !city.innerText.trim()) {
                 city.innerText = localStorage.getItem('city');
@@ -192,7 +142,6 @@ function setCity(e) {
     }
 }
 
-// Get Focus
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -221,13 +170,10 @@ async function getWeather() {
 
 const createLinksForPagination = () => {
     let paginationItems = document.querySelectorAll("a.pagination__item");
-
     if (paginationItems.length > 0) {
-
-
         paginationItems.forEach((link) => {
             let page = link.innerText;
-            let str2=window.location.href;
+            let str2 = window.location.href;
             console.log(str2);
             let str = str2.replace(/&page=\d+/, '');
             link.href = str + "&page=" + page;
@@ -242,38 +188,20 @@ const createLinksForPaginationComments = () => {
 
         paginationItems.forEach((link) => {
             let page = link.innerText;
-            let str2=window.location.href;
+            let str2 = window.location.href;
             console.log(str2);
             let str = str2.replace(/&comment_page=\d+/, '');
             link.href = str + "&comment_page=" + page;
         });
     }
 }
-// const createLinksForPaginationComments = () => {
-//     let paginationItems = document.querySelectorAll("a.pagination__item");
-//
-//     if (paginationItems.length > 0) {
-//
-//         let command = window.location.search.match(/command=([a-z_])+/i)
-//         let currentPageLink = window.location.pathname + ((command != null) ? `?${command[0]}&` : '?');
-//
-//         paginationItems.forEach((link) => {
-//             let page = link.innerText;
-//             link.href = currentPageLink + "comment_page=" + page;
-//         });
-//     }
-// }
 document.addEventListener('DOMContentLoaded', getWeather);
 
 city.addEventListener('keypress', setCity);
 city.addEventListener('blur', setCity);
 
-
-// Run
 showTime();
-
 setBgGreet();
-
 getCity();
 getWeather();
 btn.addEventListener('click', getImage);

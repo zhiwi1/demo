@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="task.profile" bundle="${ rb }"/></title>
+    <title><fmt:message key="task.task" bundle="${ rb }"/></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
@@ -20,29 +20,28 @@
 <hr>
 <blockquote class="cntr"><c:out value="${task.text}"/></blockquote>
 <hr>
-<h4 class="cntr">Complexity: <c:out value="${task.complexity}"/></h4>
+<h4 class="cntr"><fmt:message key="complexity" bundle="${ rb }"/><c:out value="${task.complexity}"/></h4>
 <hr>
-<h3 >ANSWERS</h3>
+<h3 ><fmt:message key="task.answers" bundle="${ rb }"/></h3>
 <br>
 
 <form  action="controller?command=add_answer_command&title=${task.title}" method="post">
-    <input class="textfield" type="text" name="answer" value="Your answer">
-    <input class="pb button" type="submit" name="button" value="answer">
+    <input class="textfield" type="text" name="answer" value="">
+    <input class="pb button" type="submit" name="button" value="<fmt:message key="task.add_answer" bundle="${ rb }"/>">
 </form>
 <c:forEach var="answer" items="${answers}">
-    <p > ${answer.userLogin}: ${answer.content} <c:if test="${answer.correctness=='CORRECT'}">Помечено автором задания как правильный
-    ответ</c:if></p>
+    <p > ${answer.userLogin}: ${answer.content} <c:if test="${answer.correctness=='CORRECT'}"><fmt:message key="task.mark" bundle="${ rb }"/></c:if></p>
     <br>
 </c:forEach>
 <mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}"/>
 <br>
 <hr>
-<h3 >COMMENTS</h3>
+<h3 ><fmt:message key="task.comments" bundle="${ rb }"/></h3>
 <br>
 
 <form  action="controller?command=add_comment_command&title=${task.title}" method="post">
-    <input class=" textfield" type="text" name="comment" value="Your comment">
-    <input class=" pb button" type="submit" name="button" value="comment">
+    <input class=" textfield" type="text" name="comment" value="">
+    <input class=" pb button" type="submit" name="button" value="<fmt:message key="task.add_comment" bundle="${ rb }"/>">
 
 </form>
 <c:forEach var="comment" items="${comments}">
@@ -50,6 +49,10 @@
     <br>
 </c:forEach>
 <mytag:pagination_comment commentPage="${requestScope.comment_current_page}" maxPage="${requestScope.comment_max_page}"/>
+<hr>
+<a class="cntr" href="controller?command=go_to_home_page_command">
+    <fmt:message key="return" bundle="${rb}"/>
+</a>
 </script>
 </body>
 <script src="js/main.js"></script>
