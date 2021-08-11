@@ -15,6 +15,8 @@
 * Change password with message on your email
 * Change background image
 * Change language
+* View current time
+* View current weather
 
 2. All authorized users:
 * Change profile data
