@@ -24,7 +24,7 @@ public class SendPasswordCommand implements Command {
             if (result) {
                 router = new Router(RouterType.REDIRECT, PagePath.GO_TO_LOGIN_PAGE, RequestParameter.PREPARATION_FOR_EMAIL_MESSAGE, RequestParameter.TRUE);
             } else {
-                router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
+                router = new Router(RouterType.REDIRECT, PagePath.GO_TO_SEND_PASSWORD_COMMAND);
             }
         } catch (ServiceException e) {
             logger.error("Error at ForgetPasswordCommand "+e.getMessage(), e);

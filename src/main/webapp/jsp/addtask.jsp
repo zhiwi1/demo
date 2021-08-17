@@ -7,14 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:if test="${not empty sessionScope.locale}">
     <fmt:setLocale value="${sessionScope.locale}"/>
 </c:if>
-<fmt:setBundle basename="locale" var="rb" />
+<fmt:setBundle basename="locale" var="rb"/>
 <html>
 <head>
-    <title>   <fmt:message key="addtask.addtask" bundle="${rb}"/></title>
+    <title><fmt:message key="addtask.addtask" bundle="${rb}"/></title>
 </head>
 <body>
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
@@ -23,17 +23,21 @@
     <p class="cntr"><c:out value="${error_message}"/></p>
 </c:if>
 <form class="cntr form" name="add-post-form" method="POST" action="controller?command=add_task_command">
- <p class="cntr"> <fmt:message key="addtask.title" bundle="${ rb }" /> </p>
-    <input class="cntr" type="text" name="title">
+    <p class="cntr"><fmt:message key="addtask.title" bundle="${ rb }"/></p>
+    <input class="cntr" type="text" name="title" required pattern="${requestScope.regexp_title}">
     <br/>
-    <p >  <fmt:message key="addtask.text" bundle="${ rb }" /></p>
-    <textarea rows = "12" cols = "100" name="text" ><fmt:message key="addtask.write" bundle="${ rb }" /></textarea>
+    <p><fmt:message key="addtask.text" bundle="${ rb }"/></p>
+    <input class="input-textarea" type="text" name="text" required pattern="${requestScope.regexp_task}">
+    <br>
+        <fmt:message key="addtask.write" bundle="${ rb }"/>
     <br/>
-    <p ><fmt:message key="complexity" bundle="${ rb }" /></p>
-    <input class="cntr" type="text" name="complexity" value="">
+    <p><fmt:message key="complexity" bundle="${ rb }"/></p>
+    <input class="cntr" type="text" name="complexity" value="" required pattern="${requestScope.regexp_complexity}">
     <br/>
-    <button class="button" type="submit"> <fmt:message key="addtask.submit" bundle="${ rb }" /></button>
+    <p><fmt:message key="addtask.complexity" bundle="${ rb }"/></p>
+    <button class="button" type="submit"><fmt:message key="addtask.submit" bundle="${ rb }"/></button>
 </form>
+
 <a class="cntr" href="controller?command=go_to_home_page_command">
     <fmt:message key="return" bundle="${rb}"/>
 </a>

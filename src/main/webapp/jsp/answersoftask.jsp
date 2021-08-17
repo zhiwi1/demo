@@ -16,7 +16,7 @@
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 <c:forEach var="answer" items="${answers}">
     <c:if test="${answer.correctness =='INCORRECT'}">
-        <p>${answer.userLogin}:${answer.content}</p>
+        <p><c:out value="${answer.userLogin}:${answer.content}"/></p>
         <p><fmt:message key="answersoftask.incorrect" bundle="${ rb }"/></p>
         <form action="controller?command=mark_correct_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}"
               method="post">
@@ -24,7 +24,7 @@
         </form>
     </c:if>
     <c:if test="${answer.correctness =='CORRECT'}">
-        <p>${answer.userLogin}:${answer.content}</p>
+        <p><c:out value="${answer.userLogin}:${answer.content}"/></p>
         <p><fmt:message key="answersoftask.correct" bundle="${ rb }"/></p>
         <form action="controller?command=mark_incorrect_answer_command&answer_id=${answer.answerId}&task_id=${answer.taskId}"
               method="post">

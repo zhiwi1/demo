@@ -19,19 +19,13 @@ public class AddAnswerCommand implements Command {
             AnswerService answerService = ServiceProvider.getInstance().getAnswerService();
 
             try {
-                boolean isCreated = answerService.createAnswer(text, loginOfUser, titleOfTask);
-                if (isCreated) {
-                    router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND + titleOfTask);
-                } else {
-                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
-                }
-                return router;
-
+                answerService.createAnswer(text, loginOfUser, titleOfTask);
+                router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND + titleOfTask);
             } catch (ServiceException e) {
                 throw new CommandException("AddAnswerCommand command error" + e.getMessage(), e);
             }
         } else {
-            router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
 
 
         }

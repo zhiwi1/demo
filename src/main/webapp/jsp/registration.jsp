@@ -18,18 +18,18 @@
 </c:if>
 <form class="form" name="reg-form" method="POST" action="controller?command=sign_up_command">
 <p class="cntr"><fmt:message key="registration.email" bundle="${ rb }"/></p>
-<input class="textfield" type="text" name="email"/>
+<input  class="textfield" required pattern="${requestScope.regexp_email}" type="text" name="email"/>
 <input  type="hidden" name="command" value="register"/>
 <br/>
     <p class="cntr"><fmt:message key="registration.login" bundle="${ rb }"/></p>
-<input class="textfield" type="text" name="login" value=""/>
+<input class="textfield" type="text" required pattern="${requestScope.regexp_email_or_login}" name="login" value=""/>
 <br/>
 <p class="cntr"><fmt:message key="registration.password" bundle="${ rb }"/></p>
 
-<input class="textfield" type="password" name="password" value="">
+<input class="textfield" type="password" name="password" value="" required pattern="${requestScope.regexp_password}">
 <br/>
 <p class="cntr"><fmt:message key="registration.confirm" bundle="${ rb }"/></p>
-<input class="textfield cntr" type="password" name="confirm-password" value="">
+<input class="textfield" type="password" name="confirm-password" value="" required pattern="${requestScope.regexp_password}">
 <br/>
 
 
@@ -42,4 +42,5 @@
 
 </body>
 <script src="js/main.js"></script>
+<script src="js/validation_alert.js"></script>
 </html>

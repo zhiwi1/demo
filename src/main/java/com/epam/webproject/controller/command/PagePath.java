@@ -27,6 +27,7 @@ public final class PagePath {
     public static final String FIND_ANSWERS_OF_TASK_COMMAND="controller?command=find_answers_of_task_command";
     public static final String DEFAULT_COMMAND="controller?command=default_command";
     public static final String PREPARATION_FOR_PARAM_TITLE="&title=";
+    public static final String GO_TO_SEND_PASSWORD_COMMAND="controller?command=go_to_send_password_command";
 
 
     private PagePath() {

@@ -31,33 +31,8 @@
         <fmt:message key="en" bundle="${rb}"/>
     </button>
     <br/>
-    <script>
-        let PROJECT_ROOT = 'http://localhost:8080/demo_war/'
-        function changeLocaleOnRU(event) {
-            let currentPage = encodeURIComponent(window.location.pathname + window.location.search);
-            document.location.href = PROJECT_ROOT + "controller?command=change_locale_command&locale=" + 'ru' + "&prev_request=" + currentPage;
-        }
-
-        function changeLocaleOnEn(event) {
-            let currentPage = encodeURIComponent(window.location.pathname + window.location.search);
-            document.location.href = PROJECT_ROOT + "controller?command=change_locale_command&locale=" + 'en' + "&prev_request=" + currentPage;
-
-        }
-    </script>
-    <script type="text/javascript">
-        var speed = 'slow';
-        $('html, body').hide();
-        $(document).ready(function () {
-            $('html, body').fadeIn(speed, function () {
-                $('a[href], button[href]').click(function (event) {
-                    var url = $(this).attr('href');
-                    if (url.indexOf('#') == 0 || url.indexOf('javascript:') == 0) return;
-                    event.preventDefault();
-                    $('html, body').fadeOut(speed, function () {
-                        window.location = url;
-                    });
-                });
-            });
-        });
-    </script>
+    <div hidden class="valueMissing" ><fmt:message key="valueMissing" bundle="${rb}"/></div>
+    <div hidden class="typeMismatch" ><fmt:message key="typeMismatch" bundle="${rb}"/></div>
+    <div hidden class="patternMismatching" >    <fmt:message key="patternMismatching" bundle="${rb}"/></div>
+    <script src="js/localization.js"></script>
 </header>

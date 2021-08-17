@@ -31,6 +31,12 @@ public final class RequestAttribute {
     public static final String COMMENT_CURRENT_PAGE = "comment_current_page";
     public static final String COMMENT_MAX_PAGE = "comment_max_page";
     public static final String BLOCK_MESSAGE = "block_message";
+    public static final String REGEXP_TITLE = "regexp_title";
+    public static final String REGEXP_TASK = "regexp_task";
+    public static final String REGEXP_COMPLEXITY = "regexp_complexity";
+    public static final String REGEXP_COMMENT = "regexp_comment";
+    public static final String REGEXP_ANSWER = "regexp_answer";
+
 
     private RequestAttribute() {
     }

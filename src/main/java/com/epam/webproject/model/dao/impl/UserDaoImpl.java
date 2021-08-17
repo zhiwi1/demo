@@ -55,9 +55,9 @@ public class UserDaoImpl implements UserDao {
 
     private static final String SET_PASSWORD_BY_ID = "UPDATE users SET password_hash = ? , salt = ? WHERE id = ?";
 
-    private static final String FIND_INFO_FOR_RATES = " SELECT count_of_solve , sum(answers.likes) " +
+    private static final String FIND_INFO_FOR_RATES = " SELECT count_of_solve , count(tasks.id) as `count` " +
             "FROM users " +
-            "JOIN answers on answers.user_id =users.id where users.id =" +
+            "JOIN tasks ON tasks.user_id =users.id WHERE users.id =" +
             "(SELECT id FROM users WHERE login = ?);";
     private static final String UPDATE_RATES = "UPDATE first_project.users SET rates_of_solve = ? WHERE  login = ? ;";
     private static final String COUNT_OF_USERS = "SELECT COUNT(`id`) as `count` FROM users";
@@ -400,7 +400,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 map.put(COUNT_OF_SOLVE, resultSet.getLong(COUNT_OF_SOLVE));
-                map.put(LIKES, resultSet.getLong(SUM_OF_LIKES));
+                map.put(COUNT, resultSet.getLong(COUNT));
             }
             return map;
         } catch (SQLException e) {

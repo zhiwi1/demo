@@ -17,14 +17,12 @@ public class BlockUserCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
-        if (role == null) {
+        if (role != null) {
             UserService userService = ServiceProvider.getInstance().getUserService();
             String login = request.getParameter(RequestParameter.LOGIN);
             try {
                 boolean result = userService.blockUser(login);
                 if (result) {
-                    Deque<User> users = userService.showAllUsers();
-                    request.setAttribute(RequestAttribute.USERS, users);
                     router = new Router(RouterType.REDIRECT, PagePath.SHOW_ALL_USERS_COMMAND);
                 } else {
                     router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);

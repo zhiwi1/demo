@@ -8,6 +8,7 @@ import com.epam.webproject.model.service.AnswerService;
 import com.epam.webproject.model.service.CommentService;
 import com.epam.webproject.model.service.ServiceProvider;
 import com.epam.webproject.model.service.TaskService;
+import com.epam.webproject.util.RegexpPropertyUtil;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.*;
@@ -16,21 +17,28 @@ import java.util.stream.Collectors;
 public class OpenTaskPageCommand implements Command {
     private static final int LIMIT = 8;
     private static final String FIRST_PAGE = "1";
+    private static final String REGEXP_PROP_COMMENT = "regexp.comment";
+    private static final String REGEXP_PROP_ANSWER = "regexp.answer";
 
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         Role role = (Role) request.getSession().getAttribute(RequestAttribute.ROLE);
         if (role != null) {
+
             String title = request.getParameter(RequestParameter.TITLE);
             TaskService taskService = ServiceProvider.getInstance().getTaskService();
             AnswerService answerService = ServiceProvider.getInstance().getAnswerService();
             CommentService commentService = ServiceProvider.getInstance().getCommentService();
 
             try {
+                RegexpPropertyUtil propertyUtil = RegexpPropertyUtil.getInstance();
+                final String REGEXP_ANSWER = propertyUtil.getProperty(REGEXP_PROP_ANSWER);
+                final String REGEXP_COMMENT = propertyUtil.getProperty(REGEXP_PROP_COMMENT);
+                request.setAttribute(RequestAttribute.REGEXP_ANSWER, REGEXP_ANSWER);
+                request.setAttribute(RequestAttribute.REGEXP_COMMENT, REGEXP_COMMENT);
                 Optional<Task> optionalTask = taskService.findTaskByTitle(title);
                 if (optionalTask.isPresent()) {
-                    ;
                     String pageStringComment = Optional.ofNullable(request.getParameter(RequestParameter.COMMENT_PAGE))
                             .orElse(FIRST_PAGE);
                     int currentPageComment = Integer.parseInt(pageStringComment);

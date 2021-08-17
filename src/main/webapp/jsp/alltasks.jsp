@@ -21,14 +21,14 @@
     <button class="pb button" type="submit"><fmt:message key="go" bundle="${ rb }"/></button>
 </form>
 <c:forEach var="title" items="${fts_titles}">
-    <h3 class="cntr">${title}</h3>
+<h3 class="cntr"><c:out value="${title}"/></h3>
     <a class="cntr" href="controller?command=open_task_page_command&title=${title}">
         <p><fmt:message key="more" bundle="${ rb }"/></p></a>
     <hr>
 </c:forEach>
 <hr>
 <c:forEach var="task" items="${tasks}">
-    <h3 class="cntr">${task.title}</h3>
+    <h3 class="cntr"><c:out value="${task.title}"/></h3>
     <div class="cntr">${task.timeCreatedAt}</div>
     <a class="cntr" href="controller?command=open_task_page_command&title=${task.title}">
         <div><fmt:message key="more" bundle="${ rb }"/></div>

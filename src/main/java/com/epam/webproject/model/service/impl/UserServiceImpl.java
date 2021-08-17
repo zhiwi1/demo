@@ -33,9 +33,10 @@ public class UserServiceImpl implements UserService {
             if (UserValidator.checkPassword(password)) {
                 if (UserValidator.checkEmail(loginOrEmail)) {
                     loginData = userDao.findUserLoginDataByEmail(loginOrEmail);
-                } else if (UserValidator.checkLength(loginOrEmail)) {
+                } else if (UserValidator.checkLogin(loginOrEmail)) {
                     loginData = userDao.findUserLoginDataByLogin(loginOrEmail);
                 }
+
             }
 
             if (loginData.containsKey(USER_PASSWORD_HASH) && loginData.get(USER_PASSWORD_HASH).isPresent() &&
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     public Feedback registerUser(String login, String email, String password, String confirmPassword) throws ServiceException {
         Feedback feedback;
-        if (UserValidator.checkEmail(email) && UserValidator.checkPassword(password) &&
+        if (UserValidator.checkLogin(login)&&UserValidator.checkEmail(email) && UserValidator.checkPassword(password) &&
                 UserValidator.checkPasswordAndConfirmPassword(password, confirmPassword)) {
             try {
 
@@ -152,7 +153,7 @@ public class UserServiceImpl implements UserService {
     public Deque<User> findByFullText(String text) throws ServiceException {
         try {
             Deque<User> arrayDeque = new ArrayDeque<>();
-            if (UserValidator.checkLength(text)) {
+            if (UserValidator.checkLogin(text)) {
                 arrayDeque = userDao.findByFullText(text);
             }
             return arrayDeque;
@@ -206,7 +207,7 @@ public class UserServiceImpl implements UserService {
         try {
             if (UserValidator.checkEmail(loginOrEmail)) {
                 loginOptional = userDao.findLoginByEmail(loginOrEmail);
-            } else if (UserValidator.checkLength(loginOrEmail)) {
+            } else if (UserValidator.checkLogin(loginOrEmail)) {
                 loginOptional = Optional.of(loginOrEmail);
             }
         } catch (DaoException e) {
@@ -245,20 +246,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public RatesType calculateRatesOfSolve(String login) throws ServiceException {
         final class RatesBall {
-            private static final int BALL_OF_LIKE = 1;
-            private static final int BALL_OF_SOLVE = 5;
+            private static final int SCORE_OF_SOLVE = 5;
+            private static final int SCORE_OF_CREATED_TASK = 1;
+            private static final int SCORE_OF_STUDENT = 10;
+            private static final int SCORE_OF_HARDWORKER = 20;
+            private static final int SCORE_OF_PROFFESIONAL = 30;
         }
         try {
             RatesType ratesType = RatesType.NEWBIE;
             Map<String, Long> infoForCalculating = userDao.findInfoForRates(login);
-            long countOfLikes = infoForCalculating.get(LIKES);
             long countOfSolve = infoForCalculating.get(COUNT_OF_SOLVE);
-            long rates = RatesBall.BALL_OF_SOLVE * countOfSolve + countOfLikes * RatesBall.BALL_OF_LIKE;
-            if (rates > 10 && rates < 20) {
+            long countOfCreatedTasks = infoForCalculating.get(COUNT);
+            long rates = RatesBall.SCORE_OF_SOLVE * countOfSolve + RatesBall.SCORE_OF_CREATED_TASK * countOfCreatedTasks;
+            if (rates > RatesBall.SCORE_OF_STUDENT && rates < RatesBall.SCORE_OF_HARDWORKER) {
                 ratesType = RatesType.STUDENT;
-            } else if (rates >= 20 && rates < 30) {
+            } else if (rates >= RatesBall.SCORE_OF_HARDWORKER && rates < RatesBall.SCORE_OF_PROFFESIONAL) {
                 ratesType = RatesType.HARDWORKER;
-            } else if (rates >= 30) {
+            } else if (rates >= RatesBall.SCORE_OF_PROFFESIONAL) {
                 ratesType = RatesType.PROFESSIONAL;
             }
             return ratesType;

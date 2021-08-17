@@ -22,11 +22,11 @@ public class DeleteTaskByUserCommand implements Command {
                 if (isDeleted) {
                     router = new Router(RouterType.REDIRECT, PagePath.SHOW_MY_TASKS_COMMAND_PAGE);
                 } else {
-                    router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);
+                    router = new Router(RouterType.REDIRECT, PagePath.DEFAULT_COMMAND);
                 }
                 return router;
             } catch (ServiceException e) {
-                throw new CommandException("eleteTaskByUserCommand command error"+e.getMessage(), e);
+                throw new CommandException("DeleteTaskByUserCommand command error"+e.getMessage(), e);
             }
         } else {
             router = new Router(RouterType.FORWARD, PagePath.ERROR_PAGE);

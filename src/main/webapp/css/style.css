@@ -53,9 +53,11 @@ html {
 .button:active {
     background-color: #999999;
 }
-.float-right{
+
+.float-right {
     float: right;
 }
+
 @media all and (max-width: 30em) {
     .button {
         display: block;
@@ -72,14 +74,15 @@ html {
     height: 30px;
     padding: 0.2em 1.45em;
     margin: 0.1em;
-
 }
+
 .profile {
-    font-family: 'Segoe UI','Roboto',sans-serif;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-weight: 400;
     color: #000000;
     text-align: right;
 }
+
 body {
 
     font-family: 'Quicksand', sans-serif;
@@ -89,7 +92,6 @@ body {
     background-position: center center;
     overflow: hidden;
 }
-
 
 
 .box {
@@ -154,7 +156,6 @@ h2 {
 .btn-text:hover {
     filter: grayscale(.8);
     cursor: pointer;
-    /* background-color:#16a085; */
     transition-duration: 1s;
 }
 
@@ -165,6 +166,14 @@ h2 {
 
 .btn-text:active {
     transform: scale(1.02)
+}
+
+.input-textarea {
+
+    height: 500px;
+    width: 500px;
+    word-break: break-word;
+
 }
 
 

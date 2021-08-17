@@ -14,8 +14,8 @@
 <c:import url="/jsp/templates/header.jsp" charEncoding="utf-8"/>
 <body>
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
-<p class="cntr"><fmt:message key="login" bundle="${rb}"/>${user.login}</p>
-<p class="cntr"><fmt:message key="email" bundle="${rb}"/>${user.email}</p>
+<p class="cntr"><fmt:message key="login" bundle="${rb}"/><c:out value="${user.login}"/></p>
+<p class="cntr"><fmt:message key="email" bundle="${rb}"/><c:out value="${user.email}"/></p>
 <p class="cntr"><fmt:message key="count" bundle="${rb}"/>${user.countOfSolve}</p>
 <p class="cntr"><fmt:message key="role" bundle="${rb}"/>${user.roleType}</p>
 <p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${user.ratesType}</p>

@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
 
     public Feedback createTask(String title, String text, java.util.Date createdAt, String loginOfUser, String complexity) throws ServiceException {
         Feedback feedback = Feedback.DATABASE_EXCEPTION;
-        if (TaskValidator.checkComplexity(complexity)) {
+        if (TaskValidator.checkComplexity(complexity) && TaskValidator.checkLength(text) && TaskValidator.checkTitle(title)) {
             try {
                 if (!taskDao.existRowsByTitle(title)) {
                     int complexityInt = Integer.parseInt(complexity);

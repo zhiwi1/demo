@@ -1,8 +1,7 @@
-const time = document.getElementById('time');
+const time = document.querySelector('time');
+const background = document.querySelector('body');
 let x = 0;
 let statIndex = -1;
-let background = document.querySelector('body');
-
 function colorLinks(hex) {
     let links = document.getElementsByTagName("a");
     for (let i = 0; i < links.length; i++) {
@@ -115,7 +114,7 @@ function setBgGreet() {
 }
 
 function getCity() {
-    if (localStorage.getItem('city') === null || localStorage.getItem('city') == '') {
+    if (localStorage.getItem('city') === null || localStorage.getItem('city') === '') {
         city.textContent = '[Enter Name]';
     } else {
         city.textContent = localStorage.getItem('city');
@@ -124,8 +123,8 @@ function getCity() {
 
 function setCity(e) {
     if (e.type === 'keypress') {
-        if (e.which == 13 || e.keyCode == 13) {
-            if (city.innerText.length == 0 || !city.innerText.trim()) {
+        if (e.which === 13 || e.keyCode === 13) {
+            if (city.innerText.length === 0 || !city.innerText.trim()) {
                 city.innerText = localStorage.getItem('city');
             } else {
                 localStorage.setItem('city', e.target.innerText);
@@ -134,7 +133,7 @@ function setCity(e) {
             }
         }
     } else {
-        if (city.innerText.length == 0 || !city.innerText.trim()) {
+        if (city.innerText.length === 0 || !city.innerText.trim()) {
             city.innerText = localStorage.getItem('city');
         }
         getWeather();
@@ -180,6 +179,21 @@ const createLinksForPagination = () => {
         });
     }
 }
+var speed = 'slow';
+$('html, body').hide();
+$(document).ready(function () {
+    $('html, body').fadeIn(speed, function () {
+        $('a[href], button[href]').click(function (event) {
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0 || url.indexOf('javascript:') == 0) return;
+            event.preventDefault();
+            $('html, body').fadeOut(speed, function () {
+                window.location = url;
+            });
+        });
+    });
+});
+
 const createLinksForPaginationComments = () => {
     let paginationItems = document.querySelectorAll("a.pagination_item_comment");
 

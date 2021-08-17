@@ -24,8 +24,8 @@
 <br>
 
 <c:forEach var="fts_user" items="${fts_users}">
-    <p class="cntr"><fmt:message key="login" bundle="${rb}"/>${fts_user.login}</p>
-    <p class="cntr"><fmt:message key="email" bundle="${rb}"/>${fts_user.email}</p>
+    <p class="cntr"><fmt:message key="login" bundle="${rb}"/><c:out value="${fts_user.login}"/></p>
+    <p class="cntr"><fmt:message key="email" bundle="${rb}"/><c:out value="${fts_user.email}"/></p>
     <p class="cntr"><fmt:message key="count" bundle="${rb}"/>${fts_user.countOfSolve}</p>
     <p class="cntr"><fmt:message key="role" bundle="${rb}"/>${fts_user.roleType}</p>
     <p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${fts_user.ratesType}</p>
@@ -45,8 +45,8 @@
 </c:forEach>
 
 <c:forEach var="user" items="${users}">
-    <p class="cntr"><fmt:message key="login" bundle="${rb}"/>${user.login}</p>
-    <p class="cntr"><fmt:message key="email" bundle="${rb}"/>${user.email}</p>
+    <p class="cntr"><fmt:message key="login" bundle="${rb}"/><c:out value="${user.login}"/></p>
+    <p class="cntr"><fmt:message key="email" bundle="${rb}"/><c:out value="${user.email}"/></p>
     <p class="cntr"><fmt:message key="count" bundle="${rb}"/>${user.countOfSolve}</p>
     <p class="cntr"><fmt:message key="role" bundle="${rb}"/>${user.roleType}</p>
     <p class="cntr"><fmt:message key="rates" bundle="${rb}"/>${user.ratesType}</p>

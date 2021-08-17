@@ -17,11 +17,8 @@ public class GoToLoginPageCommand implements Command {
         RegexpPropertyUtil regexpPropertyUtil = RegexpPropertyUtil.getInstance();
         final String REGEXP_PASSWORD = regexpPropertyUtil.getProperty(REGEXP_PROP_PASSWORD);
         final String REGEXP_EMAIL_OR_LOGIN = regexpPropertyUtil.getProperty(REGEXP_PROP_EMAIL_OR_LOGIN);
-
         request.setAttribute(RequestAttribute.REGEXP_PASSWORD, REGEXP_PASSWORD);
         request.setAttribute(RequestAttribute.REGEXP_EMAIL_OR_LOGIN, REGEXP_EMAIL_OR_LOGIN);
-
-
         String flagOfError = request.getParameter(RequestParameter.ERROR_MESSAGE);
         if (flagOfError != null && flagOfError.equals(FLAG_OF_ERROR)) {
             String locale = (String) request.getSession().getAttribute(RequestParameter.LOCALE);

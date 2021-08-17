@@ -18,14 +18,10 @@ public class AddCommentCommand implements Command {
             String titleOfTask = request.getParameter(RequestParameter.TITLE);
             CommentService commentService = ServiceProvider.getInstance().getCommentService();
             try {
-                boolean isCreated = commentService.createComment(text, loginOfUser, titleOfTask);
-                if (isCreated) {
-                    router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND + titleOfTask);
-                } else {
-                    router = new Router(RouterType.REDIRECT, PagePath.DEFAULT_COMMAND);
-                }
+                commentService.createComment(text, loginOfUser, titleOfTask);
+                router = new Router(RouterType.REDIRECT, PagePath.OPEN_TASK_PAGE_COMMAND + titleOfTask);
             } catch (ServiceException e) {
-                throw new CommandException("Add AddCommentCommand error "+e.getMessage(), e);
+                throw new CommandException("Add AddCommentCommand error " + e.getMessage(), e);
             }
 
         } else {

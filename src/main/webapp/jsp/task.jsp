@@ -16,7 +16,7 @@
 <c:import url="/jsp/templates/timeweather.jsp" charEncoding="utf-8"/>
 
 <body>
-<h2 class="cntr">${task.title}</h2>
+<h2 class="cntr"><c:out value="${task.title}"/></h2>
 <hr>
 <blockquote class="cntr"><c:out value="${task.text}"/></blockquote>
 <hr>
@@ -26,11 +26,12 @@
 <br>
 
 <form  action="controller?command=add_answer_command&title=${task.title}" method="post">
-    <input class="textfield" type="text" name="answer" value="">
+    <input class="textfield" type="text" name="answer" value="" required pattern="${requestScope.regexp_answer}">
     <input class="pb button" type="submit" name="button" value="<fmt:message key="task.add_answer" bundle="${ rb }"/>">
 </form>
 <c:forEach var="answer" items="${answers}">
-    <p > ${answer.userLogin}: ${answer.content} <c:if test="${answer.correctness=='CORRECT'}"><fmt:message key="task.mark" bundle="${ rb }"/></c:if></p>
+    <p ><c:out value="${answer.userLogin}"/>: <c:out value="${answer.content}"/> <c:if test="${answer.correctness=='CORRECT'}">
+        <fmt:message key="task.mark" bundle="${ rb }"/></c:if></p>
     <br>
 </c:forEach>
 <mytag:pagination page="${requestScope.current_page}" maxPage="${requestScope.max_page}"/>
@@ -40,12 +41,12 @@
 <br>
 
 <form  action="controller?command=add_comment_command&title=${task.title}" method="post">
-    <input class=" textfield" type="text" name="comment" value="">
+    <input class=" textfield" type="text" name="comment" value="" required pattern="${requestScope.regexp_comment}">
     <input class=" pb button" type="submit" name="button" value="<fmt:message key="task.add_comment" bundle="${ rb }"/>">
 
 </form>
 <c:forEach var="comment" items="${comments}">
-    <p > ${comment.loginOfUser}: ${comment.text}</p>
+    <p ><c:out value="${comment.loginOfUser}"/>:<c:out value="${comment.text}"/></p>
     <br>
 </c:forEach>
 <mytag:pagination_comment commentPage="${requestScope.comment_current_page}" maxPage="${requestScope.comment_max_page}"/>
@@ -56,4 +57,5 @@
 </script>
 </body>
 <script src="js/main.js"></script>
+<script src="js/validation_alert.js"></script>
 </html>

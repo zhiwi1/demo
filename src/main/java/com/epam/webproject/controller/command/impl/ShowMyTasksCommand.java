@@ -43,7 +43,7 @@ public class ShowMyTasksCommand implements Command {
 
             }
         } else {
-            router = new Router(RouterType.FORWARD, PagePath.HOME_PAGE);
+            router = new Router(RouterType.FORWARD, PagePath.LOGIN_PAGE);
         }
         return router;
     }
