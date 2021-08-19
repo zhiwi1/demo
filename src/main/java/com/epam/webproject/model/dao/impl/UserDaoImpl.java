@@ -31,8 +31,6 @@ public class UserDaoImpl implements UserDao {
 
     private static final String ADD_USER = "INSERT INTO users (login, email,rates_of_solve, `role`, password_hash,salt,status) VALUES ( ?, ?, ?, ?, ?,?,?)";
 
-    private static final String FIND_ALL = "SELECT id, login, email, count_of_solve, rates_of_solve, `role`, status FROM users";
-
     private static final String FIND_ALL_USERS_WITH_LIMIT = " SELECT id, login , email,count_of_solve, rates_of_solve, `role`, status  FROM users  LIMIT ?, ?";
 
     private static final String BLOCK_USER = "UPDATE users SET status = 'BLOCKED' WHERE login = ?";
@@ -42,8 +40,6 @@ public class UserDaoImpl implements UserDao {
     private static final String COUNT_BY_EMAIL = "  SELECT COUNT(`email`) as `count` FROM users WHERE users.email = ?";
 
     private static final String COUNT_BY_LOGIN = "  SELECT COUNT(`login`) as `count`FROM users WHERE users.login = ?";
-
-    private static final String FIND_USER_ID_BY_LOGIN = "SELECT id FROM users WHERE login = ?";
 
     private static final String UPDATE_LOGIN_AND_EMAIL = "UPDATE IGNORE users SET login=?, email=? WHERE login=?";
 
@@ -137,31 +133,6 @@ public class UserDaoImpl implements UserDao {
         return resultMap;
     }
 
-    @Override
-    public Deque<User> findAll() throws DaoException {
-        Deque<User> users = new ArrayDeque<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
-
-            while (resultSet.next()) {
-                long id = resultSet.getInt(ID);
-                String login = resultSet.getString(USER_LOGIN);
-                String email = resultSet.getString(USER_EMAIL);
-                int countOfSolve = resultSet.getInt(COUNT_OF_SOLVE);
-                RatesType ratesOfSolve = RatesType.valueOf(resultSet.getString(RATES_OF_SOLVE));
-                Role role = Role.valueOf(resultSet.getString(USER_ROLE));
-                Status status = Status.valueOf(resultSet.getString(USER_STATUS));
-
-                User user = new User(id, login, email, countOfSolve, role, ratesOfSolve, status);
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL, e);
-        }
-        return users;
-    }
 
     @Override
     public Deque<User> findAll(int offset, int limit) throws DaoException {
@@ -256,22 +227,6 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Can not proceed request: " + FIND_USER_BY_EMAIL, e);
         }
         return userOptional;
-    }
-
-
-    @Override
-    public Optional<Long> findUserIdByLogin(String login) throws DaoException {
-        Optional<Long> result = Optional.empty();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_USER_ID_BY_LOGIN);) {
-            statement.setString(1, login);
-            ResultSet resultSet = statement.executeQuery();
-            result = Optional.of(resultSet.getLong(ID));
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_USER_ID_BY_LOGIN, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_USER_ID_BY_LOGIN, e);
-        }
-        return result;
     }
 
     @Override

@@ -13,8 +13,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayDeque;
-import java.util.Date;
 import java.util.Deque;
 
 public class AnswerServiceImpl implements AnswerService {
@@ -55,7 +53,7 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean markCorrect(long answerId) throws ServiceException {
 
         try {
-            return answerDao.markCorrectTransaction(answerId);
+            return answerDao.markCorrect(answerId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Can not execute AnswerServiceImpl: markCorrect(long answerId)  {}", e.getMessage());
             throw new ServiceException("Can not execute AnswerServiceImpl: markCorrect(long answerId) " + e.getMessage(), e);
@@ -67,7 +65,7 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean markIncorrect(long answerId) throws ServiceException {
 
         try {
-            return answerDao.markIncorrectTransaction(answerId);
+            return answerDao.markIncorrect(answerId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Can not execute AnswerServiceImpl: markIncorrect(long answerId)  {}", e.getMessage());
             throw new ServiceException("Can not execute AnswerServiceImpl: markIncorrect(long answerId) " + e.getMessage(), e);

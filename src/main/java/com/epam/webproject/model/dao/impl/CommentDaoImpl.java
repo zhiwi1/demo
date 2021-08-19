@@ -17,7 +17,6 @@ public class CommentDaoImpl implements CommentDao {
 
     private static final Logger logger = LogManager.getLogger();
     private static final String ADD_COMMENT = "INSERT INTO comments (created_at, comment, task_id, user_id) VALUES (?, ?,(SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
-    private static final String FIND_ALL_WITH_LIMIT = "SELECT comment, created_at,  user_id, task_id FROM comments LIMIT ?, ?";
     private static final String FIND_COMMENTS_BY_TASK_TITLE = "SELECT comment, created_at, updated_at ,login FROM comments" +
             " JOIN users ON users.id = comments.user_id " +
             "WHERE comments.task_id = (SELECT id FROM tasks WHERE title = ?)  LIMIT ?, ?";
@@ -36,29 +35,6 @@ public class CommentDaoImpl implements CommentDao {
             logger.log(Level.ERROR, "Can not proceed `{}` request: {}", ADD_COMMENT, e.getMessage());
             throw new DaoException("Can not proceed request: " + ADD_COMMENT, e);
         }
-    }
-
-
-    public Deque<Comment> findAllWithLimit(int offset, int limit) throws DaoException {
-        Deque<Comment> comments = new ArrayDeque<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_LIMIT)) {
-            statement.setInt(1, offset);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String commentContent = resultSet.getString(COMMENT);
-                java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
-                long user_id = resultSet.getLong(USER_ID);
-                long task_id = resultSet.getLong(TASK_ID);
-                Comment comment = new Comment(commentContent, created_at, user_id, task_id);
-                comments.add(comment);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_WITH_LIMIT, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL_WITH_LIMIT, e);
-        }
-        return comments;
     }
 
     @Override

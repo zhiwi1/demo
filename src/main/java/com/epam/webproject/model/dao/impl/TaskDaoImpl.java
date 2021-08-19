@@ -18,8 +18,6 @@ public class TaskDaoImpl implements TaskDao {
 
     private static final String ADD_TASK = "INSERT INTO tasks (title, content, created_at,  user_id, complexity) VALUES (?, ?, ?, (SELECT users.id FROM users WHERE login=?), ?)";
 
-    private static final String FIND_ALL = "SELECT title, content, created_at, user_id, complexity, count_for_solve FROM tasks";
-
     private static final String FIND_TASK_BY_TITLE = "SELECT  title, content, created_at, user_id,complexity,count_for_solve FROM tasks WHERE title = ? ";
 
     private static final String TASKS_FULL_TEXT_SEARCH = "SELECT title FROM tasks WHERE MATCH (title,content) AGAINST (?);";
@@ -71,30 +69,6 @@ public class TaskDaoImpl implements TaskDao {
         }
     }
 
-
-    @Override
-    public Deque<Task> findAll() throws DaoException {
-        Deque<Task> tasks = new ArrayDeque<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(FIND_ALL);) {
-
-            while (resultSet.next()) {
-                String title = resultSet.getString(TASK_TITLE);
-                String content = resultSet.getString(CONTENT);
-                java.util.Date created_at = resultSet.getTimestamp(CREATED_AT);
-                long user_id = resultSet.getLong(USER_ID);
-                int complexity = resultSet.getInt(TASK_COMPLEXITY);
-                int count_for_solve = resultSet.getInt(TASK_COUNT_FOR_SOLVE);
-                Task task = new Task(title, content, created_at, user_id, complexity, count_for_solve);
-                tasks.add(task);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL, e);
-        }
-        return tasks;
-    }
 
     @Override
     public Deque<Task> findAll(int offset, int limit) throws DaoException {

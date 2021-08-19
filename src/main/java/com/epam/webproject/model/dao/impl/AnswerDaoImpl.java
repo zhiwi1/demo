@@ -18,7 +18,6 @@ import static com.epam.webproject.model.dao.DatabaseColumnName.*;
 public class AnswerDaoImpl implements AnswerDao {
     public static final Logger logger = LogManager.getLogger();
     private static final String ADD_ANSWER = "INSERT INTO answers (content, task_id, user_id) VALUES (?, (SELECT tasks.id FROM tasks WHERE title=?), (SELECT users.id FROM users WHERE login=?))";
-    private static final String FIND_ALL_WITH_LIMIT = "SELECT content,  user_id, task_id FROM comments  LIMIT ?, ?";
     private static final String FIND_ANSWERS_BY_TASK_TITLE = "SELECT answers.id, content, login,correctness,task_id FROM answers " +
             " JOIN users ON users.id = answers.user_id" +
             " WHERE answers.task_id = (SELECT id FROM tasks WHERE title = ?)  LIMIT ?, ?";
@@ -41,7 +40,7 @@ public class AnswerDaoImpl implements AnswerDao {
     private static final String COUNT_OF_ANSWERS_OF_TASK = "SELECT COUNT(`id`) as `count` FROM `answers` WHERE `task_id` =(SELECT `id` FROM `tasks` WHERE `title` = ?)";
 
     @Override
-    public boolean markCorrectTransaction(long id) throws DaoException {
+    public boolean markCorrect(long id) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         boolean result = false;
         boolean resultOf = false;
@@ -91,6 +90,7 @@ public class AnswerDaoImpl implements AnswerDao {
         } finally {
             if (connection != null) {
                 try {
+                    connection.setAutoCommit(true);
                     connection.close();
                 } catch (SQLException e) {
                     logger.log(Level.ERROR, "Can not proceed `{}`= and {} and {}  " + UPDATE_CORRECTNESS, UPDATE_COUNT_FOR_SOLVE_PLUS, UPDATE_COUNT_OF_SOLVE_PLUS, e.getMessage());
@@ -104,7 +104,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
 
     @Override
-    public boolean markIncorrectTransaction(long id) throws DaoException {
+    public boolean markIncorrect(long id) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         boolean result = false;
         boolean resultOf = false;
@@ -155,6 +155,7 @@ public class AnswerDaoImpl implements AnswerDao {
         } finally {
             if (connection != null) {
                 try {
+                    connection.setAutoCommit(true);
                     connection.close();
                 } catch (SQLException e) {
                     logger.log(Level.ERROR, "Can not proceed `{}`= and {} and {}  " + UPDATE_INCORRECTNESS, UPDATE_COUNT_FOR_SOLVE_MINUS, UPDATE_COUNT_OF_SOLVE_MINUS, e.getMessage());
@@ -180,29 +181,6 @@ public class AnswerDaoImpl implements AnswerDao {
         }
     }
 
-
-    public Deque<Answer> findAllWithLimit(int offset, int limit) throws DaoException {
-        Deque<Answer> answers = new ArrayDeque<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL_WITH_LIMIT);) {
-            statement.setInt(1, offset);
-            statement.setInt(2, limit);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String answerContent = resultSet.getString(CONTENT);
-                long user_id = resultSet.getLong(USER_ID);
-                long task_id = resultSet.getLong(TASK_ID);
-                Answer answer = new Answer(answerContent, task_id, user_id);
-                answers.add(answer);
-
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can not proceed `{}` request: {}", FIND_ALL_WITH_LIMIT, e.getMessage());
-            throw new DaoException("Can not proceed request: " + FIND_ALL_WITH_LIMIT, e);
-        }
-        return answers;
-    }
 
     @Override
     public Deque<Answer> findAnswersByTitleWithLimit(String title, int offset, int limit) throws DaoException {
