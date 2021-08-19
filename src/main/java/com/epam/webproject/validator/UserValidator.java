@@ -1,13 +1,9 @@
 package com.epam.webproject.validator;
 
-
-import com.epam.webproject.util.RegexpPropertyUtil;
-
-public class UserValidator {
+public class UserValidator extends BaseValidator {
     private static final String REGEXP_EMAIL_PROP = "regexp.email";
     private static final String REGEXP_PASSWORD_PROP = "regexp.password";
     private static final String REGEXP_LOGIN_PROP = "regexp.login";
-    private static final RegexpPropertyUtil regexpPropertyUtil = RegexpPropertyUtil.getInstance();
 
     private UserValidator() {
     }
@@ -37,8 +33,6 @@ public class UserValidator {
 
     }
 
-    private static boolean isMatchFounded(String text, String regexp) {
-        return text != null && text.matches(regexp);
-    }
+
 }
 

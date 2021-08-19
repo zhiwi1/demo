@@ -84,7 +84,6 @@ html {
 }
 
 body {
-
     font-family: 'Quicksand', sans-serif;
     display: flex;
     flex-direction: column;
@@ -93,9 +92,7 @@ body {
     overflow: hidden;
 }
 
-
 .box {
-
     text-align: end;
     height: 20px;
 }
@@ -128,7 +125,6 @@ body {
 
 .time {
     font-size: 8rem;
-
     margin: auto;
 }
 
