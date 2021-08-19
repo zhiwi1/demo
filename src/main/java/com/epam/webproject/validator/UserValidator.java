@@ -14,21 +14,31 @@ public class UserValidator {
 
     public static boolean checkEmail(String email) {
         final String EMAIL_REGEXP = regexpPropertyUtil.getProperty(REGEXP_EMAIL_PROP);
-        return email.matches(EMAIL_REGEXP);
+        return isMatchFounded(email, EMAIL_REGEXP);
     }
 
     public static boolean checkPassword(String password) {
         final String PASSWORD_REGEXP = regexpPropertyUtil.getProperty(REGEXP_PASSWORD_PROP);
-        return password.matches(PASSWORD_REGEXP);
+        return isMatchFounded(password, PASSWORD_REGEXP);
+
     }
 
     public static boolean checkPasswordAndConfirmPassword(String password, String confirmPassword) {
-        return password.equals(confirmPassword);
+        boolean result = false;
+        if (password != null && confirmPassword != null) {
+            result = password.equals(confirmPassword);
+        }
+        return result;
     }
 
-    public static boolean checkLogin(String text) {
+    public static boolean checkLogin(String login) {
         final String LOGIN_REGEXP = regexpPropertyUtil.getProperty(REGEXP_LOGIN_PROP);
-        return text.matches(LOGIN_REGEXP);
+        return isMatchFounded(login, LOGIN_REGEXP);
+
+    }
+
+    private static boolean isMatchFounded(String text, String regexp) {
+        return text != null && text.matches(regexp);
     }
 }
 

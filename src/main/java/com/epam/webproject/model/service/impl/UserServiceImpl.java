@@ -100,18 +100,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public Deque<User> showAllUsers() throws ServiceException {
-        try {
-            Deque<User> users = userDao.findAll();
-            return users;
-        } catch (DaoException e) {
-            logger.log(Level.ERROR, "Can not execute UserServiceImpl:  showAllUsers()  {}", e.getMessage());
-            throw new ServiceException("Can not execute UserServiceImpl:  showAllUsers()  " + e.getMessage(), e);
 
-        }
-
-    }
 
     @Override
     public Deque<User> findAllUsersWithLimit(int offset, int limit) throws ServiceException {

@@ -23,8 +23,6 @@ public class UnblockUserCommand implements Command {
 
                 boolean result = userService.unblockUser(login);
                 if (result) {
-                    Deque<User> users = userService.showAllUsers();
-                    request.setAttribute(RequestAttribute.USERS, users);
                     router = new Router(RouterType.REDIRECT, PagePath.SHOW_ALL_USERS_COMMAND);
                 } else {
                     router = new Router(RouterType.REDIRECT, PagePath.ERROR_PAGE);

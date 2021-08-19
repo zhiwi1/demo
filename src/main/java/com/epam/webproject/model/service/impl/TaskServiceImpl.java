@@ -56,18 +56,6 @@ public class TaskServiceImpl implements TaskService {
         return feedback;
     }
 
-    public Deque<Task> findAllTasks() throws ServiceException {
-        try {
-            Deque<Task> tasks = taskDao.findAll();
-            return tasks;
-        } catch (DaoException e) {
-            logger.log(Level.ERROR, "Can not execute TaskServiceImpl:   findAllTasks() {}", e.getMessage());
-            throw new ServiceException("Can not execute TaskServiceImpl:    findAllTasks() " + e.getMessage(), e);
-
-        }
-
-    }
-
     public Deque<Task> findAllTasksWithLimit(int offset, int limit) throws ServiceException {
         try {
             Deque<Task> tasks = taskDao.findAll(offset, limit);

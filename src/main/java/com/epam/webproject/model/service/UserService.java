@@ -43,13 +43,6 @@ public interface UserService {
      */
     public Optional<User> findByLoginOrEmail(String login) throws ServiceException;
 
-    /**
-     * find all users .
-     *
-     * @return the deque with user
-     * @throws ServiceException the service exception
-     */
-    public Deque<User> showAllUsers() throws ServiceException;
 
     /**
      * Update user boolean.

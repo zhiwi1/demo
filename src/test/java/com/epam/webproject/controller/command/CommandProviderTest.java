@@ -1,6 +1,5 @@
 package com.epam.webproject.controller.command;
 
-import com.epam.webproject.controller.command.impl.AddAnswerCommand;
 import com.epam.webproject.controller.command.impl.AddTaskCommand;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,7 +10,6 @@ public class CommandProviderTest {
     @Test
     public void badInputTest() {
         Command command = commandProvider.getCommand("dfasdfasdfasdf");
-        System.out.println(command);
         Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
     }
 
