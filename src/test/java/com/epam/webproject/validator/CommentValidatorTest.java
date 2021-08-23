@@ -14,6 +14,7 @@ public class CommentValidatorTest {
     public void checkCommentPositiveTest(String comment) {
         Assert.assertTrue(CommentValidator.checkComment(comment));
     }
+
     @DataProvider(name = "invalidComment")
     public static Object[][] invalidComment() {
         return new Object[][]{{""}, {null}};

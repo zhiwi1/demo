@@ -2,22 +2,26 @@ package com.epam.webproject.controller.command;
 
 import com.epam.webproject.controller.command.impl.AddTaskCommand;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class CommandProviderTest {
-    CommandProvider commandProvider = CommandProvider.getInstance();
+    private static final CommandProvider commandProvider = CommandProvider.getInstance();
 
-    @Test
-    public void badInputTest() {
-        Command command = commandProvider.getCommand("dfasdfasdfasdf");
-        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
+    @DataProvider(name = "invalidCommandNames")
+    public static Object[][] invalidCommandNames() {
+        return new Object[][]{ {"dfasdfasdfasdf"}, {null}};
     }
 
-    @Test
-    public void nullInputTest() {
-        Command command = commandProvider.getCommand(null);
-        Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
+
+    @Test(dataProvider = "invalidCommandNames")
+    public void getCommandTest(String comment) {
+        {
+            Command command = commandProvider.getCommand(comment);
+            Assert.assertEquals(command, commandProvider.getCommand(CommandType.DEFAULT_COMMAND.name()));
+        }
     }
+
 
     @Test
     public void openHomePageTest() {
