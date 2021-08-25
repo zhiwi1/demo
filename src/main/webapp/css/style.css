@@ -166,11 +166,14 @@ h2 {
 
 .input-textarea {
 
-    height: 500px;
+    color: #333;
     width: 500px;
-    word-break: break-word;
+    height: 100px;
+
+    font: 16px/1.5 sans-serif;
 
 }
+
 
 
 
